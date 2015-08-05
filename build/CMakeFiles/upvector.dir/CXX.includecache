@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/heinen/gazebo-personal/fifth-icub/VectorView.cpp
+VectorView.h
+/home/heinen/gazebo-personal/fifth-icub/VectorView.h
+
+/home/heinen/gazebo-personal/fifth-icub/VectorView.h
+gazebo.hh
+-
+rendering/Visual.hh
+-
+rendering/rendering.hh
+-
+msgs/msgs.hh
+-
+common/common.hh
+-
+iostream
+-
+fstream
+-
+string
+-
+vector
+-
+
