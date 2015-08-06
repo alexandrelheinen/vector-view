@@ -1,0 +1,4 @@
+/build*/
+/history*
+/scilab/old_history/
+/scilab/*.png

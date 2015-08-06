@@ -1,4 +1,0 @@
-/home/heinen/gazebo-personal/fifth-icub/build/CMakeFiles/linkview.dir
-/home/heinen/gazebo-personal/fifth-icub/build/CMakeFiles/linkview_automoc.dir
-/home/heinen/gazebo-personal/fifth-icub/build/CMakeFiles/upvector.dir
-/home/heinen/gazebo-personal/fifth-icub/build/CMakeFiles/upvector_automoc.dir
