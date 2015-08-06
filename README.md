@@ -28,10 +28,8 @@ And compile it at `build` folder
 ## Dependencies ##
 
 Just a list of required packages (and each one has it own dependencies):
- * Gazebo: http://gazebosim.org/tutorials?tut=install_from_source&cat=install
-  ** whit SDFormat
- * iCub: http://wiki.icub.org/wiki/Linux:Installation_from_sources
-  ** whit YARP 
+ * Gazebo: http://gazebosim.org/tutorials?tut=install_from_source&cat=install with **SDFormat**
+ * iCub: http://wiki.icub.org/wiki/Linux:Installation_from_sources with **YARP** 
  * [gazebo-yarp-plugins](https://github.com/robotology/gazebo-yarp-plugins)
  * [icub-gazebo](https://github.com/robotology-playground/icub-gazebo)
  * It should be all, however [codyco-superbuild](https://github.com/robotology/codyco-superbuild) with [`ISIR_MODULES`](https://github.com/robotology/codyco-superbuild#a-note-on-ocra-wbi-plugins) and [ocra-core](https://github.com/ocra-recipes/ocra-core) are also used in this project. Look at https://github.com/alexandrelheinen/codyco-superbuild at the branch `stage` to find out some changes that were made to the contact forces analysis.
