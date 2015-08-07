@@ -7,7 +7,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 
-## JUST ASSURE THAT THE GAZEBO PACKAGE IS WELL INPUT
 include (FindPkgConfig)
 find_package(PkgConfig REQUIRED)
 
@@ -34,13 +33,8 @@ target_link_libraries(upvector
   ${GAZEBO_LIBRARIES}
 )
 
-## GENERATES THE SHARED LIBRARIES
-add_library(linkview SHARED LinkManager.cpp)
-target_link_libraries(linkview
-  ${GAZEBO_LIBRARIES}
-)
-
 # add_library(contact SHARED ContactManager.cpp)
 # target_link_libraries(contact
 #  ${GAZEBO_LIBRARIES}
+#	 ${QT_LIBRARIES}
 # )
