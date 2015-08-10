@@ -48,4 +48,4 @@ Execute those three commands in this order in your terminal to plugin test (give
 
 `cd $VECTOR_VIEW && gazebo robot.world`
 
-`ISIRWholeBodyController`
+`ISIRWholeBodyController --sequence StageTestTasks`
