@@ -4,7 +4,6 @@
 #define FORCE_SCALE 2E-2 // scale between the forces intensities and the vectors length (unity N^-1)
 #define NOISE_THRESHOLD 1E-6
 #define ARROW_LENGTH .05
-#define FILE_NAME "history.txt"
 
 // Gazebo includes
 #include <gazebo.hh>
@@ -30,14 +29,13 @@ namespace gazebo
     VectorView();
     ~VectorView();
     // FUNCTIONS
-    void Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf); // executed once the plugin is loaded, just set this class as a sensor's subscriber
-    void VectorViewUpdate(ConstContactsPtr &_msg);  // executed everytime a message is published by the sensor: updates the vector visual
+    void Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf); // executed once the plugin is loaded
+    void VectorViewUpdate(ConstContactsPtr &_msg);                 // executed everytime a message is published by the sensor: updates the vector visual
 
   private:
     // FUNCTIONS
-    std::string FindName();  // find the topic name and stores it at "topic_path"
-    void PrintContact(math::Vector3 force);  // print the n-th data on the terminal
-    void UpdateVector(math::Vector3 force);  // update the n-th vector based on the current contacts
+    std::vector<std::string> FindName();     // find the topic, output history and collision names based on the visual
+    void UpdateVector(math::Vector3 force);  // update visual from the vector
     // VARIABLES
     rendering::VisualPtr visual;
     transport::SubscriberPtr subs;
@@ -46,8 +44,8 @@ namespace gazebo
     rendering::DynamicLines* forceVector; // the vector representation line, a vector is used because the same sensor can have many contacts
 
     std::ofstream *output_history;
-    std::string fileName;
+    std::string conllisionName;
   };
 }
 
-#endif // MY_PLUGIN_H
+#endif

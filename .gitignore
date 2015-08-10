@@ -1,5 +1,7 @@
 /build*/
-history*
+/*~
+/history*
+/ocra_debug*
+/scialb/*~
 /scilab/old_history/
 /scilab/*.png
-*~
