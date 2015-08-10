@@ -44,7 +44,7 @@ As the VectorView project is a Gazebo Plugin, some environment variables must be
 
 Execute those three commands in this order in your terminal to plugin test (give your computer some time to process each command):
 
-`yarpserserver`
+`yarpserver`
 
 `cd $VECTOR_VIEW && gazebo robot.world`
 
