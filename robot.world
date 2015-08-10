@@ -32,6 +32,19 @@
           </geometry>
         </visual>
       </link>
+
+      <joint name="fixed to ground" type="revolute">
+      <parent>box</parent>
+      <child>ground_plane::link</child>
+       <axis>
+        <limit>
+          <lower>-.05</lower>
+          <upper>0.05</upper>
+        </limit>
+        <xyz>0 0 1</xyz>
+        </axis>
+      </joint>
+
     </model>
 
   </world>
