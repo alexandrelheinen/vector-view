@@ -11,15 +11,11 @@ There is as well a folder where all **old plugins** are abandoned. Generally the
 
 ## Installation ##
 
-To use the VectorView Plugin you just need to compile it and set the [environmental variables](#useful-environment-variables) whom able Gazebo to find the libraries you just built.
+To use the VectorView Plugin you just need to compile it and set the [environmental variables](#useful-environment-variables) whom able Gazebo to find the libraries you just built
 
 `git clone https://github.com/alexandrelheinen/vector-view.git && cd vector-view`
 
-Just pick this branch: fifth-icub (good question why this brach has this name) as
-
-`git checkout fifth-icub`
-
-And compile it at `build` folder
+and compile it at `build` folder
 
 `mkdir build && cd build`
 
@@ -43,3 +39,13 @@ As the VectorView project is a Gazebo Plugin, some environment variables must be
 `export GAZEBO_PLUGIN_PATH=$VECTOR_VIEW/build:${GAZEBO_PLUGIN_PATH}`
 
 `export GAZEBO_MODEL_PATH=$VECTOR_VIEW/models:${GAZEBO_MODEL_PATH}`
+
+## Run it! ##
+
+Execute those three commands in this order in your terminal to plugin test (give your computer some time to process each command):
+
+`yarpserserver`
+
+`cd $VECTOR_VIEW && gazebo robot.world`
+
+`ISIRWholeBodyController`
