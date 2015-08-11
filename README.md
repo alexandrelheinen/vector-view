@@ -21,26 +21,27 @@ Just a list of required packages (and each one has it own dependencies):
 ## Installation ##
 
 To use the VectorView Plugin you just need to compile it and set the [environmental variables](#useful-environment-variables) whom able Gazebo to find the libraries you just built
-
-    git clone https://github.com/alexandrelheinen/vector-view.git && cd vector-view
-    
+```
+git clone https://github.com/alexandrelheinen/vector-view.git && cd vector-view
+```
 and compile it at `build` folder
-
-    mkdir build && cd build
-    cmake .. && make
-
+```
+mkdir build && cd build
+cmake .. && make
+```
 ## Useful environmental variables ##
 
 As the VectorView project is a Gazebo Plugin, some environment variables must be set up to assure that the plugin will find out all files that it needs:
-
-    export VECTOR_VIEW = where_you_cloned_the_repository/vector-view
-    export GAZEBO_PLUGIN_PATH=$VECTOR_VIEW/build:${GAZEBO_PLUGIN_PATH}
-    export GAZEBO_MODEL_PATH=$VECTOR_VIEW/models:${GAZEBO_MODEL_PATH}
-
+```
+export VECTOR_VIEW = where_you_cloned_the_repository/vector-view
+export GAZEBO_PLUGIN_PATH=$VECTOR_VIEW/build:${GAZEBO_PLUGIN_PATH}
+export GAZEBO_MODEL_PATH=$VECTOR_VIEW/models:${GAZEBO_MODEL_PATH}
+```
 ## Test it! ##
 
 Execute those three commands in this order in different terminals to plugin test (give your computer some time to process each command):
-
-    yarpserver
-    cd $VECTOR_VIEW && gazebo robot.world
-    ISIRWholeBodyController --sequence StageTestTasks
+```
+yarpserver
+cd $VECTOR_VIEW && gazebo robot.world
+ISIRWholeBodyController --sequence StageTestTasks
+```
