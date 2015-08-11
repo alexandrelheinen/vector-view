@@ -1,7 +1,8 @@
 /build*/
 /*~
-/history*
+/history_*
 /ocra_debug*
 /scialb/*~
-/scilab/old_history/
+/scilab/old_histories/
 /scilab/*.png
+/scilab/terminal_output.txt

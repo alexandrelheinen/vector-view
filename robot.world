@@ -38,8 +38,8 @@
       <child>ground_plane::link</child>
        <axis>
         <limit>
-          <lower>-.05</lower>
-          <upper>0.05</upper>
+          <lower>0.00</lower>
+          <upper>0.00</upper>
         </limit>
         <xyz>0 0 1</xyz>
         </axis>

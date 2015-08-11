@@ -1,5 +1,5 @@
-names = ["history_iCub_fixed_l_hand";
-         "history_iCub_fixed_r_hand"];
+names = ["history_iCub_fixed_iCub_l_hand";
+         "history_iCub_fixed_iCub_r_hand"];
 [dim1, dim2] = size(names);
 
 while(1)
