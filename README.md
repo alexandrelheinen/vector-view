@@ -1,6 +1,6 @@
 # VectorView #
 
-**VectorView** (or libupvector.so) is a *Gazebo Visual Plugin* that, once it's added to a visual on an *iCub model*, will display a vector which represents all contact forces of this link's contact sensor.
+**VectorView** (or libvectorview.so) is a *Gazebo Visual Plugin* that, once it's added to a visual on an *iCub model*, will display a vector which represents all contact forces of this link's contact sensor.
 
 Some name rules to the plugin:
 The name of the contact sensor must be "LINK_NAME_contact". For instance if you set it at the "l_hand" link, your contact sensor should be "l_hand_contact". Anyway be free to change this rule to something more intelligent. Furthermore, all the output data concerning the contact forces' history will be saved at the "history_ROBOT_NAME_iCub_LINK_NAME.txt" file.
