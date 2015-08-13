@@ -1,4 +1,4 @@
-#include "Interface.h"
+#include "plugins/include/Interface.h"
 
 using namespace gazebo;
 

@@ -1378,7 +1378,7 @@
         </geometry>
       </collision>
       <visual name='l_hand_visual'>
-        <plugin name='l_hand_force' filename='libupvector.so'/>
+        <plugin name='l_hand_force' filename='libvectorview.so'/>
         <pose>-1.25973e-12 0.0204334 -0.000143922 5.10271e-12 -2.64186e-12 1.49622e-11</pose>
         <geometry>
           <mesh>
@@ -1929,7 +1929,7 @@
         </geometry>
       </collision>
       <visual name='r_hand_visual'>
-        <plugin name='r_hand_force' filename='libupvector.so'/>
+        <plugin name='r_hand_force' filename='libvectorview.so'/>
         <pose>1.0721e-12 0.0204334 0.000143922 1.53098e-11 2.00656e-11 -3.14159</pose>
         <geometry>
           <mesh>

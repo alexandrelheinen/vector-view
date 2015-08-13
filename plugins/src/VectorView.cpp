@@ -1,4 +1,4 @@
-#include "VectorView.h"
+#include "plugins/include/VectorView.h"
 using namespace gazebo;
 
 // Register this plugin with the simulator
@@ -57,7 +57,7 @@ void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf)
 {
   this->visual = _parent;
   this->visual->SetVisible(true);
-  std::vector<std::string> name = this->FindName(); // get 
+  std::vector<std::string> name = this->FindName(); // get
 
   transport::NodePtr node(new gazebo::transport::Node()); // define this plugin as a listener of the sensor topic defined in topic_path
   node->Init();

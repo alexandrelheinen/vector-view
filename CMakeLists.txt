@@ -1,40 +1,53 @@
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
-project(iCubStage)
+project(vector-view)
 
-# Find includes in corresponding build directories
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-# Instruct CMake to run moc automatically when needed.
-set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)	# Find includes in corresponding build directories
+set(CMAKE_AUTOMOC ON)							# Instruct CMake to run moc automatically when needed.
 
 include (FindPkgConfig)
 find_package(PkgConfig REQUIRED)
 
 if (PKG_CONFIG_FOUND)
 	pkg_check_modules(GAZEBO gazebo)
+	pkg_check_modules(OGRE OGRE)
+	pkg_check_modules(OGRE-Terrain OGRE-Terrain)
 endif()
-
-find_package(GAZEBO)
 
 # FIND QT4 PACKAGES
 find_package(Qt4 REQUIRED QtGui QtXml)
+include(${QT_USE_FILE})
+add_definitions(${QT_DEFINITIONS})
 
 ## AND SO INCLUDE THE PACKAGE DIRECTORIES
-include_directories(${GAZEBO_INCLUDE_DIRS}
+include_directories(${PROJECT_SOURCE_DIR}/plugins/include
+										${GAZEBO_INCLUDE_DIRS}
 										${QT_INCLUDE_DIRS}
+										${OGRE_INCLUDE_DIRS}
+										${OGRE-Terrain_INCLUDE_DIRS}
 										)
 link_directories(		${GAZEBO_LIBRARY_DIRS}
 										${QT_LIBRARY_DIRS}
+										${OGRE_LIBRARY_DIRS}
 										)
 
 ## GENERATES THE SHARED LIBRARIES
-add_library(upvector SHARED VectorView.cpp)
-target_link_libraries(upvector
-  ${GAZEBO_LIBRARIES}
-)
+add_library(vectorview SHARED plugins/src/VectorView.cpp)
+target_link_libraries(vectorview
+  										${GAZEBO_LIBRARIES}
+											)
 
-# add_library(contact SHARED ContactManager.cpp)
-# target_link_libraries(contact
-#  ${GAZEBO_LIBRARIES}
-#	 ${QT_LIBRARIES}
-# )
+add_library(interface SHARED plugins/src/Interface.cpp)
+target_link_libraries(interface
+											${GAZEBO_libraries}
+											${OGRE_LIBRARIES}
+											${QT_LIBRARY_DIRS}
+										 )
+
+add_library(system_gui SHARED plugins/src/SystemGUI.cpp)
+target_link_libraries(systemgui
+											${GAZEBO_libraries}
+											${OGRE_LIBRARIES}
+											${QT_LIBRARY_DIRS}
+											interface
+										 )
