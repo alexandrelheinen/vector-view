@@ -44,7 +44,7 @@ target_link_libraries(interface
 											${QT_LIBRARY_DIRS}
 										 )
 
-add_library(system_gui SHARED plugins/src/SystemGUI.cpp)
+add_library(systemgui SHARED plugins/src/SystemGUI.cpp)
 target_link_libraries(systemgui
 											${GAZEBO_libraries}
 											${OGRE_LIBRARIES}
