@@ -10,8 +10,6 @@ find_package(PkgConfig REQUIRED)
 
 if (PKG_CONFIG_FOUND)
 	pkg_check_modules(GAZEBO gazebo)
-	pkg_check_modules(OGRE OGRE)
-	pkg_check_modules(OGRE-Terrain OGRE-Terrain)
 endif()
 
 # FIND QT4 PACKAGES
@@ -23,12 +21,10 @@ add_definitions(${QT_DEFINITIONS})
 include_directories(${PROJECT_SOURCE_DIR}/plugins/include
 										${GAZEBO_INCLUDE_DIRS}
 										${QT_INCLUDE_DIRS}
-										${OGRE_INCLUDE_DIRS}
-										${OGRE-Terrain_INCLUDE_DIRS}
 										)
 link_directories(		${GAZEBO_LIBRARY_DIRS}
 										${QT_LIBRARY_DIRS}
-										${OGRE_LIBRARY_DIRS}
+										${PROJECT_SOURCE_DIR}/build
 										)
 
 ## GENERATES THE SHARED LIBRARIES
@@ -39,15 +35,13 @@ target_link_libraries(vectorview
 
 add_library(interface SHARED plugins/src/Interface.cpp)
 target_link_libraries(interface
-											${GAZEBO_libraries}
-											${OGRE_LIBRARIES}
+											${GAZEBO_LIBRARIES}
 											${QT_LIBRARY_DIRS}
 										 )
 
 add_library(systemgui SHARED plugins/src/SystemGUI.cpp)
 target_link_libraries(systemgui
-											${GAZEBO_libraries}
-											${OGRE_LIBRARIES}
+											${GAZEBO_LIBRARIES}
 											${QT_LIBRARY_DIRS}
 											interface
 										 )
