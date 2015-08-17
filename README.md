@@ -35,7 +35,7 @@ cmake .. && make
 
 As the VectorView project is a Gazebo Plugin, some environment variables must be set up to assure that the plugin will find out all files that it needs:
 ```
-export VECTOR_VIEW=where_you_cloned_the_repository/vector-view
+export VECTOR_VIEW=where_you_cloned_it/vector-view
 export PATH=$VECTOR_VIEW/build:${PATH}
 export GAZEBO_PLUGIN_PATH=$VECTOR_VIEW/build:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_MODEL_PATH=$VECTOR_VIEW/models:${GAZEBO_MODEL_PATH}
@@ -58,3 +58,10 @@ to run the external interface. On this window the contact object name is display
 ![interface window example](/images/gui_example.png "Interface window example")
 
 By choosing the model in the drop down menu, you can spawn this model in a set position by clicking on *Spawn* button.
+
+### SHELL SCRIPT ###
+
+To easily start the plugin, just run the shell script `run.sh` as follows It will trigger out all modules of the application (maybe you should change its permissions by typing `chmod +x run.sh` on your terminal), including the test sequence tasks.
+```
+cd $VECTOR_VIEW && ./run.sh
+```
