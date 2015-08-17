@@ -36,9 +36,9 @@ cmake .. && make
 As the VectorView project is a Gazebo Plugin, some environment variables must be set up to assure that the plugin will find out all files that it needs:
 ```
 export VECTOR_VIEW=where_you_cloned_the_repository/vector-view
+export PATH=$VECTOR_VIEW/build:${PATH}
 export GAZEBO_PLUGIN_PATH=$VECTOR_VIEW/build:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_MODEL_PATH=$VECTOR_VIEW/models:${GAZEBO_MODEL_PATH}
-export PATH=$VECTOR_VIEW/build:${PATH}
 ```
 ## Test it! ##
 
@@ -53,4 +53,8 @@ While the simulation is running, in another terminal execute
 ```
 VectorGUI
 ```
-to run the external interface. Each button spawns a different model on the scene at the given position and orientation.
+to run the external interface. On this window the contact object name is displayed as well as the forces involved in this contact and where it has take place.
+
+![interface window example](/images/gui_example.png "Interface window example")
+
+By choosing the model in the drop down menu, you can spawn this model in a set position by clicking on *Spawn* button.

@@ -9,9 +9,9 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   counter = 0;
 
   models.push_back("sphere");
-  models.push_back("robot");
   models.push_back("cylinder");
   models.push_back("box");
+  models.push_back("robot");
   models.push_back("table");
 
   mainLayout    = new QGridLayout(this);
@@ -40,9 +40,9 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   infoLayout->addWidget(buttonFrame,  0, 1);
 
   // labels initialization
-  contactLabels.push_back(new QLabel("Object:",this));    contactData.push_back(new QLabel("ground",this));
-  contactLabels.back()->setAlignment(Qt::AlignRight);
-
+  contactLabels.push_back(new QLabel("Object:",this));    contactData.push_back(new QLabel("ground::ground",this));
+  contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(NULL);
+                                                          contactData.push_back(NULL);
   contactLabels.push_back(new QLabel("Position:",this));  contactData.push_back(new QLabel("1.5",   this));
   contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(new QLabel("-2.0",  this));
                                                           contactData.push_back(new QLabel("1.0",   this));
@@ -57,14 +57,21 @@ Interface::Interface(std::string _path) : QWidget(NULL)
     contactLayout->addWidget(contactLabels.at(k), 3*k, 0);
 
   for (k = 0; k < contactData.size(); ++k)
-    contactLayout->addWidget(contactData.at(k), k, 1);
+  {
+    if(contactData.at(k) != NULL)
+    {
+      contactData.at(k)->setMaximumWidth(150);
+      contactData.at(k)->setMinimumWidth(150);
+      contactLayout->addWidget(contactData.at(k), k, 1);
+    }
+  }
 
+  // buttons and menu initialization
   dropMenu = new QComboBox;
-  // buttons initialization
   for (k = 0; k < models.size(); ++k)
     dropMenu->addItem(models.at(k).c_str());
 
-  okButton = new QPushButton("Ok");
+  okButton = new QPushButton("Spawn");
   connect(okButton, SIGNAL(clicked()), this, SLOT(SpawnModel()));
 
   QLabel *title;
@@ -77,7 +84,7 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   {
     title = new QLabel(flags.at(k).c_str());
     title->setAlignment(Qt::AlignRight);
-    entries.push_back(new QLineEdit());
+    entries.push_back(new QLineEdit("0.00"));
     entriesLayout->addWidget(title, k, 0);
     entriesLayout->addWidget(entries.back(), k, 1);
     entries.back()->setMaximumWidth(50);
@@ -86,8 +93,6 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   buttonLayout->addWidget(dropMenu);
   buttonLayout->addWidget(entriesFrame);
   buttonLayout->addWidget(okButton);
-  buttonLayout->addWidget(new QLabel(""));
-  buttonLayout->addWidget(new QLabel(""));
 
   // window setup
   this->setWindowTitle(tr("Contact Sensor Data"));
@@ -162,8 +167,12 @@ void Interface::Update(ConstContactsPtr &message)
 	{
 		math::Vector3 position = msgs::Convert(message->contact(0).position(0));
 		math::Vector3 force = msgs::Convert(message->contact(0).wrench(0).body_1_wrench().force());
-		std::string name = message->contact(0).wrench(0).body_2_name();
-		if(force.GetLength() > .001)
+
+    std::string name = message->contact(0).wrench(0).body_2_name();
+    if (name.find("iCub") != std::string::npos)
+      name = message->contact(0).wrench(0).body_1_name();
+
+		if(force.GetLength() > NOISE_THRESHOLD)
 		{
 			this->setObjectContact(name);
 			this->setPosition(position);
@@ -174,20 +183,11 @@ void Interface::Update(ConstContactsPtr &message)
 
 void Interface::SpawnModel()
 {
-  try
-  {
-    Spawn("model://" + dropMenu->currentText().toStdString(),
-          math::Pose(entries.at(0)->text().toDouble(),
-                     entries.at(1)->text().toDouble(),
-                     entries.at(2)->text().toDouble(),
-                     0, 0, 0));
-  } catch(int e)
-  {
-    std::cout << "Impossible add model at (" << entries.at(0)->text().toStdString() << ", "
-                                             << entries.at(1)->text().toStdString() << ", "
-                                             << entries.at(2)->text().toStdString() << ");"
-                                             << std::endl;
-  }
+  Spawn("model://" + dropMenu->currentText().toStdString(),
+        math::Pose(entries.at(0)->text().toDouble(),
+                   entries.at(1)->text().toDouble(),
+                   entries.at(2)->text().toDouble(),
+                   0, 0, 0));
 }
 
 void Interface::Spawn(std::string model, math::Pose pose)

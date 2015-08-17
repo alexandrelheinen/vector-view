@@ -1,6 +1,8 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
+#define NOISE_THRESHOLD 1E-6
+
 // Qt includes
 #include <QtGui>
 #include <QWidget>
