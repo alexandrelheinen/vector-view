@@ -8,28 +8,31 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   this->factoryPath = "~/factory";
   counter = 0;
 
-  models.push_back("Sphere");
-  models.push_back("Robot");
-  models.push_back("Cylinder");
-  models.push_back("Box");
-  models.push_back("Table");
+  models.push_back("sphere");
+  models.push_back("robot");
+  models.push_back("cylinder");
+  models.push_back("box");
+  models.push_back("table");
 
   mainLayout    = new QGridLayout(this);
 
-  QGridLayout *topicLayout = new QGridLayout();
-  QGridLayout *infoLayout  = new QGridLayout();
-  contactLayout            = new QGridLayout();
-  buttonLayout             = new QGridLayout();
+  QGridLayout *topicLayout   = new QGridLayout();
+  QGridLayout *infoLayout    = new QGridLayout();
+  contactLayout              = new QGridLayout();
+  buttonLayout               = new QGridLayout();
+  QGridLayout *entriesLayout = new QGridLayout();
 
   QFrame *infoFrame       = new QFrame();
   QGroupBox *topicFrame   = new QGroupBox(tr("Current topic path"));
   QGroupBox *contactFrame = new QGroupBox(tr("Contacts"));
   QGroupBox *buttonFrame  = new QGroupBox(tr("Spawn Objects"));
+  QFrame *entriesFrame    = new QFrame();
 
   infoFrame->setLayout(infoLayout);
   topicFrame->setLayout(topicLayout);
   contactFrame->setLayout(contactLayout);
   buttonFrame->setLayout(buttonLayout);
+  entriesFrame->setLayout(entriesLayout);
 
   mainLayout->addWidget(topicFrame,   0, 0);
   mainLayout->addWidget(infoFrame,    1, 0);
@@ -38,8 +41,8 @@ Interface::Interface(std::string _path) : QWidget(NULL)
 
   // labels initialization
   contactLabels.push_back(new QLabel("Object:",this));    contactData.push_back(new QLabel("ground",this));
-  contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(NULL);
-                                                          contactData.push_back(NULL);
+  contactLabels.back()->setAlignment(Qt::AlignRight);
+
   contactLabels.push_back(new QLabel("Position:",this));  contactData.push_back(new QLabel("1.5",   this));
   contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(new QLabel("-2.0",  this));
                                                           contactData.push_back(new QLabel("1.0",   this));
@@ -48,6 +51,7 @@ Interface::Interface(std::string _path) : QWidget(NULL)
                                                           contactData.push_back(new QLabel("0.0",   this));
 
   // input those labels on the layout
+  contactLayout->setSizeConstraint(QLayout::SetFixedSize);
   unsigned int k;
   for (k = 0; k < contactLabels.size(); ++k)
     contactLayout->addWidget(contactLabels.at(k), 3*k, 0);
@@ -55,13 +59,35 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   for (k = 0; k < contactData.size(); ++k)
     contactLayout->addWidget(contactData.at(k), k, 1);
 
+  dropMenu = new QComboBox;
   // buttons initialization
   for (k = 0; k < models.size(); ++k)
+    dropMenu->addItem(models.at(k).c_str());
+
+  okButton = new QPushButton("Ok");
+  connect(okButton, SIGNAL(clicked()), this, SLOT(SpawnModel()));
+
+  QLabel *title;
+  std::vector<std::string> flags;
+  flags.push_back("x:");
+  flags.push_back("y:");
+  flags.push_back("z:");
+
+  for (k = 0; k < flags.size(); ++k)
   {
-    buttons.push_back(new QPushButton(models.at(k).c_str()));
-    connect(buttons.back(), SIGNAL(clicked()), this, SLOT(SpawnSphere())); // with "bind" we can set each button to a different model
-    buttonLayout->addWidget(buttons.back(), k, 0);
+    title = new QLabel(flags.at(k).c_str());
+    title->setAlignment(Qt::AlignRight);
+    entries.push_back(new QLineEdit());
+    entriesLayout->addWidget(title, k, 0);
+    entriesLayout->addWidget(entries.back(), k, 1);
+    entries.back()->setMaximumWidth(50);
   }
+
+  buttonLayout->addWidget(dropMenu);
+  buttonLayout->addWidget(entriesFrame);
+  buttonLayout->addWidget(okButton);
+  buttonLayout->addWidget(new QLabel(""));
+  buttonLayout->addWidget(new QLabel(""));
 
   // window setup
   this->setWindowTitle(tr("Contact Sensor Data"));
@@ -146,9 +172,22 @@ void Interface::Update(ConstContactsPtr &message)
 	}
 }
 
-void Interface::SpawnSphere()
+void Interface::SpawnModel()
 {
-  Spawn("model://bookshelf", math::Pose(1, 1, 1, 1, 1, 1));
+  try
+  {
+    Spawn("model://" + dropMenu->currentText().toStdString(),
+          math::Pose(entries.at(0)->text().toDouble(),
+                     entries.at(1)->text().toDouble(),
+                     entries.at(2)->text().toDouble(),
+                     0, 0, 0));
+  } catch(int e)
+  {
+    std::cout << "Impossible add model at (" << entries.at(0)->text().toStdString() << ", "
+                                             << entries.at(1)->text().toStdString() << ", "
+                                             << entries.at(2)->text().toStdString() << ");"
+                                             << std::endl;
+  }
 }
 
 void Interface::Spawn(std::string model, math::Pose pose)

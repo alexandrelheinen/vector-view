@@ -21,7 +21,7 @@ class Interface : public QWidget
   Q_OBJECT
 
 protected slots:
-  void SpawnSphere();
+  void SpawnModel();
 
 public:
   Interface(std::string _path);
@@ -40,7 +40,9 @@ private:
   // labels and buttons
   std::vector<QLabel*> contactLabels;
   std::vector<QLabel*> contactData;
-  std::vector<QPushButton*> buttons;
+  QPushButton* okButton;
+  QComboBox* dropMenu;
+  std::vector<QLineEdit*> entries;
   // auxiliar
   static std::string d2s(double d);
   int counter;
