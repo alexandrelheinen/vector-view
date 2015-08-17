@@ -18,30 +18,30 @@ include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
 
 ## AND SO INCLUDE THE PACKAGE DIRECTORIES
-include_directories(${PROJECT_SOURCE_DIR}/plugins/include
-										${GAZEBO_INCLUDE_DIRS}
+include_directories(${GAZEBO_INCLUDE_DIRS}
 										${QT_INCLUDE_DIRS}
 										)
 link_directories(		${GAZEBO_LIBRARY_DIRS}
 										${QT_LIBRARY_DIRS}
-										${PROJECT_SOURCE_DIR}/build
 										)
 
 ## GENERATES THE SHARED LIBRARIES
-add_library(vectorview SHARED plugins/src/VectorView.cpp)
+add_library(vectorview SHARED VectorView.cpp)
 target_link_libraries(vectorview
   										${GAZEBO_LIBRARIES}
 											)
 
-add_library(interface SHARED plugins/src/Interface.cpp)
+add_library(interface SHARED Interface.cpp)
 target_link_libraries(interface
-											${GAZEBO_LIBRARIES}
-											${QT_LIBRARY_DIRS}
-										 )
+  										${GAZEBO_LIBRARIES}
+											${Boost_LIBRARIES}
+											${PROTUBUF_LIBRARIES}
+											${QT_LIBRARIES}
+											)
 
-add_library(systemgui SHARED plugins/src/SystemGUI.cpp)
-target_link_libraries(systemgui
-											${GAZEBO_LIBRARIES}
-											${QT_LIBRARY_DIRS}
+add_executable(VectorGUI VectorGUI.cpp)
+target_link_libraries(VectorGUI
+  										${GAZEBO_LIBRARIES}
+											${QT_LIBRARIES}
 											interface
-										 )
+											)
