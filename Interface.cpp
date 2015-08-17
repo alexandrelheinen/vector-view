@@ -59,7 +59,7 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   for (k = 0; k < models.size(); ++k)
   {
     buttons.push_back(new QPushButton(models.at(k).c_str()));
-    connect(buttons.back(), SIGNAL(clicked()), this, SLOT(OnButton()));
+    connect(buttons.back(), SIGNAL(clicked()), this, SLOT(SpawnSphere())); // with "bind" we can set each button to a different model
     buttonLayout->addWidget(buttons.back(), k, 0);
   }
 
@@ -67,12 +67,14 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   this->setWindowTitle(tr("Contact Sensor Data"));
   //this->resize(200, 100);
   this->move(10, 10);
+
   // gazebo setup
+  transport::init();
+  transport::run();
   transport::NodePtr node(new transport::Node()); // define this plugin as a listener of the sensor topic defined in topic_path
   node->Init("default");
   this->pub  = node->Advertise<msgs::Factory>(factoryPath);
   this->subs = node->Subscribe(this->topicPath, &Interface::Update, this);
-  transport::init();
   // info initialization
   topicLayout->addWidget(new QLabel(pub->GetTopic().c_str()),  0, 0);
   topicLayout->addWidget(new QLabel(subs->GetTopic().c_str()), 1, 0);
@@ -80,7 +82,8 @@ Interface::Interface(std::string _path) : QWidget(NULL)
 
 Interface::~Interface()
 {
-    std::cout << "Vector interface ended" << std::endl;
+  transport::fini();
+  std::cout << "Vector interface ended" << std::endl;
 }
 
 // set object name
@@ -143,10 +146,19 @@ void Interface::Update(ConstContactsPtr &message)
 	}
 }
 
-void Interface::OnButton()
+void Interface::SpawnSphere()
+{
+  Spawn("model://bookshelf", math::Pose(1, 1, 1, 1, 1, 1));
+}
+
+void Interface::Spawn(std::string model, math::Pose pose)
 {
   msgs::Factory msg;
-  msg.set_sdf_filename("model://cylinder");
-  msgs::Set(msg.mutable_pose(), math::Pose(math::Vector3(1, -2, 0), math::Quaternion(0, 0, 0)));
+  msg.set_sdf_filename(model);
+  msgs::Set(msg.mutable_pose(), pose);
+  this->pub->WaitForConnection();
   this->pub->Publish(msg);
+  std::cout << " >> " << model << " spawned at "                                             << std::endl
+            << "   pos: (" << pose.pos.x << ", " << pose.pos.y << ", " << pose.pos.z << ");" << std::endl
+            << "   rot: (" << pose.rot.x << ", " << pose.rot.y << ", " << pose.rot.z << ");" << std::endl;
 }

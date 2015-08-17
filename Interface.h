@@ -21,7 +21,7 @@ class Interface : public QWidget
   Q_OBJECT
 
 protected slots:
-  void OnButton();
+  void SpawnSphere();
 
 public:
   Interface(std::string _path);
@@ -30,6 +30,7 @@ public:
   void setObjectContact(std::string name);
   void setForce(math::Vector3 force);
   void Update(ConstContactsPtr &_msg);
+  void Spawn(std::string model, math::Pose pose);
   std::vector<std::string> models;
 
 private:
