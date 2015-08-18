@@ -4,8 +4,6 @@
 
 This plugin is set up to use the icub-gazebo model that can be found on [its official git repository] (https://github.com/robotology-playground/icub-gazebo), and copies of used models are saved on **model folder**. Those models were already set up with contact sensor as needed. Futhermore, any name logic or model reference are based on the given model standards.
 
-There is as well a folder where all **old plugins** are abandoned. Generally they are secondary plugins whose attempt to give extra informations about the iCub model's behavior.
-
 **VectorGUI** is an extern application that allows to spawn objects during Gazebo simulation and displays contacts informations retrieved from VectorView.
 
 #### Some name rules to the plugin ####

@@ -31,20 +31,11 @@ public:
   void setPosition(math::Vector3 position);
   void setObjectContact(std::string name);
   void setForce(math::Vector3 force);
-  void Update(ConstContactsPtr &_msg);
   void Spawn(std::string model, math::Pose pose);
+  void Update(ConstContactsPtr &_msg);
   std::vector<std::string> models;
 
 private:
-  // frame and layouts
-  QGridLayout *mainLayout, *contactLayout, *buttonLayout;
-  QFrame *mainFrame;
-  // labels and buttons
-  std::vector<QLabel*> contactLabels;
-  std::vector<QLabel*> contactData;
-  QPushButton* okButton;
-  QComboBox* dropMenu;
-  std::vector<QLineEdit*> entries;
   // auxiliar
   static std::string d2s(double d);
   int counter;
@@ -53,6 +44,12 @@ private:
   std::string factoryPath;
   transport::PublisherPtr pub;
   transport::SubscriberPtr subs;
+  // labels, buttons and menus
+  std::vector<QLabel*> contactLabels;
+  std::vector<QLabel*> contactData;
+  QComboBox* dropMenu;
+  std::vector<QLineEdit*> entries;
+  QPushButton* okButton;
 };
 
 #endif

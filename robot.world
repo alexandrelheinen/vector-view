@@ -14,7 +14,7 @@
       <pose>0 0 -.4 0 0 0</pose>
     </include>
 
-    <model name='table'>
+    <model name='box_table'>
       <pose>0.40 0 0 0 0 0</pose>
       <link name='box'>
         <pose>0 0 0 0 0 0</pose>
@@ -56,7 +56,7 @@
         <collision name ='collision'>
           <geometry>
             <cylinder>
-              <radius>.1</radius>
+              <radius>.13</radius>
               <length>.3</length>
             </cylinder>
           </geometry>
@@ -64,7 +64,7 @@
         <visual name ='visual'>
           <geometry>
             <cylinder>
-              <radius>.1</radius>
+              <radius>.13</radius>
               <length>.3</length>
             </cylinder>
           </geometry>
