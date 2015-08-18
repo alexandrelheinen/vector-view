@@ -11,9 +11,7 @@ VectorView::~VectorView()
   output_history->close();
 }
 
-// find out the topic path string
-// example of the visual name: robot::left_leg::vis_foot
-// in this case we need 4 informations: robot, left, leg, foot (model, side, member and visual)
+// find out contact, output history file and collision names
 std::vector<std::string> VectorView::FindName()
 {
   std::vector<std::string> out(3);
@@ -25,7 +23,7 @@ std::vector<std::string> VectorView::FindName()
     names.push_back(std::string(name, 0, name.find("::")));
     name.erase(0, name.find("::") + 2);
   }
-  out.at(0) += "/gazebo/default";
+  out.at(0) += "~";
   out.at(1) += "history";
   int i;
   for(i = 0; i < names.size(); ++i )
@@ -43,21 +41,20 @@ std::vector<std::string> VectorView::FindName()
   std::cout << "______ VECTOR VIEW LOADED ______"  << std::endl;
   std::cout << "Robot:\t"       << names.at(0)     << std::endl;
   std::cout << "  Model    :\t" << names.at(1)     << std::endl;
-  std::cout << "  Member   :\t"  << names.at(2)    << std::endl;
-  std::cout << "  Topic    :\t"  << out.at(0)      << std::endl;
-  std::cout << "  File     :\t"  << out.at(1)      << std::endl;
-  std::cout << "  Collision:\t"  << out.at(2)      << std::endl;
+  std::cout << "  Member   :\t" << names.at(2)    << std::endl;
+  std::cout << "  Topic    :\t" << out.at(0)      << std::endl;
+  std::cout << "  File     :\t" << out.at(1)      << std::endl;
+  std::cout << "  Collision:\t" << out.at(2)      << std::endl;
   std::cout << "________________________________"  << std::endl;
   // ***********************************************************/
-
-  return out;
+  return out; // contact topic // output file // collision name
 }
 
 void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf)
 {
   this->visual = _parent;
   this->visual->SetVisible(true);
-  std::vector<std::string> name = this->FindName(); // get 
+  std::vector<std::string> name = this->FindName();
 
   transport::NodePtr node(new gazebo::transport::Node()); // define this plugin as a listener of the sensor topic defined in topic_path
   node->Init();
@@ -75,7 +72,7 @@ void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf)
 
 void VectorView::UpdateVector(math::Vector3 force)
 {
-  math::Vector3 begin = math::Vector3::Zero; // this->GetPosition(n);
+  math::Vector3 begin = math::Vector3::Zero;
   math::Vector3 end   = begin + FORCE_SCALE*force;
   // draw a cute arrow, just as a vector should be represented
   this->forceVector->SetPoint(0, begin);
@@ -88,12 +85,12 @@ void VectorView::UpdateVector(math::Vector3 force)
 // called when a new message is received
 void VectorView::VectorViewUpdate(ConstContactsPtr &_msg)
 {
-  gazebo::msgs::Contacts c = *_msg;
+  msgs::Contacts c = *_msg;
   this->contacts = &c; // update contacts
   math::Vector3 force = math::Vector3::Zero;
-  unsigned int n, m;
 
-  for(n = 0; n < this->contacts->contact_size(); ++n) // maybe we could change it for a for_each with a lamda function inside it
+  unsigned int n, m;
+  for(n = 0; n < this->contacts->contact_size(); ++n)
   {
     for (m = 0; m < this->contacts->contact(n).wrench_size(); ++m)
     {

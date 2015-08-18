@@ -14,21 +14,21 @@
       <pose>0 0 -.4 0 0 0</pose>
     </include>
 
-    <model name="obstacle">
-      <pose>0 0 0 0 0 0</pose>
+    <model name='box_table'>
+      <pose>0.40 0 0 0 0 0</pose>
       <link name='box'>
-        <pose>.45 0 1 0 0 0</pose>
+        <pose>0 0 0 0 0 0</pose>
         <inertial>
           <mass>1000</mass>
         </inertial>
         <collision name ='collision'>
           <geometry>
-            <box><size>.2 .8 1.1</size></box>
+            <box><size>0.4 0.6 0.5</size></box>
           </geometry>
         </collision>
         <visual name ='visual'>
           <geometry>
-            <box><size>.2 .8 1.1</size></box>
+            <box><size>0.4 0.6 0.5</size></box>
           </geometry>
         </visual>
       </link>
@@ -44,7 +44,32 @@
         <xyz>0 0 1</xyz>
         </axis>
       </joint>
+    </model>
 
+    <model name='object'>
+      <pose>0.33 0 0.5 0 0 0</pose>
+      <link name='main'>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <mass>.1</mass>
+        </inertial>
+        <collision name ='collision'>
+          <geometry>
+            <cylinder>
+              <radius>.13</radius>
+              <length>.3</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name ='visual'>
+          <geometry>
+            <cylinder>
+              <radius>.13</radius>
+              <length>.3</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
     </model>
 
   </world>
