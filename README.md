@@ -2,12 +2,12 @@
 
 **VectorView** (or libvectorview.so) is a *Gazebo Visual Plugin* that, once added to a `<visual>` element of *iCub model*, will display a vector which represents all contact forces of this link's contact sensor.
 
-This plugin is set up to use the icub-gazebo model that can be found on [its official git repository] (https://github.com/robotology-playground/icub-gazebo), and copies of used models are saved on **model folder**. Those models were already set up with contact sensor as needed. Futhermore, any name logic or model reference are based on the given model standards.
+This plugin is set up to use the icub-gazebo model that can be found on [its official git repository] (https://github.com/robotology-playground/icub-gazebo), and copies of used models are saved on **models** folder. Those models were already set up with contact sensor as needed. Furthermore, any name logic or model reference are based on the given model standards.
 
 **VectorGUI** is an extern application that allows to spawn objects during Gazebo simulation and displays contacts informations retrieved from VectorView.
 
 #### Some name rules to the plugin ####
-The name of the contact sensor must be "LINK_NAME_contact". For instance if you set it at the "l_hand" link, your contact sensor should be "l_hand_contact". Anyway be free to change this rule to something more intelligent. Moreover, all the output data concerning the contact forces' history will be saved at the "history_ROBOT_NAME_iCub_LINK_NAME.txt" file and can be ploted and afterwards analysed from **scilab scripts**.
+The name of the contact sensor must be "LINK_NAME_contact". For instance if you set it at the "l_hand" link, your contact sensor should be "l_hand_contact". Anyway be free to change this rule to something more intelligent. Moreover, all the output data concerning the contact forces' history will be saved at the "history_ROBOT_NAME_iCub_LINK_NAME.txt" file and can be plotted and afterwards analyzed from **scilab scripts**.
 
 ## Dependencies ##
 
@@ -55,7 +55,7 @@ to pop out the external interface. On this window the contact object name is dis
 
 ![interface window example](/images/gui_example.png "Interface window example")
 
-By clicking on **Spawn** button, the model choosed in the drop down menu is spawn at the set cartisian location (x, y, z).
+By clicking on **Spawn** button, the chosen model in the drop down menu is spawn at set Cartesian location (x, y, z).
 
 ### SHELL SCRIPT ###
 
@@ -63,3 +63,5 @@ To easily start the plugin, just run the shell script `run.sh` as follows. It wi
 ```
 cd $VECTOR_VIEW && ./run.sh
 ```
+The execution should be something like in the figure below
+![shell script execution example](/images/execution_example.png "shell script execution example")
