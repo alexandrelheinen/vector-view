@@ -32,17 +32,11 @@ void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf)
   this->conllisionName = name.at(2);
   // Filters setup
   Dsp::Params params;
-  params[0] = 1/(this->time_step); // sample rate
-  params[1] = 5;                   // order
-  params[2] = 1000;                // cutoff frequency
-  std::cout << "Filters";
-  for(int k = 0; k < 3; ++k)
-  {
-    this->filters.push_back(new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 1>);
-    this->filters.back()->setParams(params);
-    std::cout << (k+1) << ".  " << this->filters.back()->getName() << std::endl;
-  }
-  std::cout << "succesfully started." << std::endl << std::endl;
+  params[0] = 100;                 // sample rate
+  params[1] = 4;                   // order
+  params[2] = 3;                   // cutoff frequency
+  this->filter = new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 3>; // 3 channel filter to 3 dimention vector :)
+  this->filter->setParams(params);
 }
 
 void VectorView::UpdateVector(math::Vector3 force)
@@ -99,9 +93,11 @@ std::vector<std::string> VectorView::FindName()
 // called when a new message is received
 void VectorView::VectorViewUpdate(ConstContactsPtr &_msg)
 {
+  // update contacts
   msgs::Contacts c = *_msg;
-  this->contacts = &c; // update contacts
+  this->contacts = &c;
   math::Vector3 force = math::Vector3::Zero;
+
   // sum of all forces
   unsigned int n, m;
   for(n = 0; n < this->contacts->contact_size(); ++n)
@@ -117,10 +113,14 @@ void VectorView::VectorViewUpdate(ConstContactsPtr &_msg)
       }
     }
   }
-  /* // force filtering
-  filters.at(0)->process(1, &force.x);
-  filters.at(1)->process(1, &force.y);
-  filters.at(2)->process(1, &force.z);
+
+  // force filtering
+  double* values[3];
+  values[0] = &(force.x);
+  values[1] = &(force.y);
+  values[2] = &(force.z);
+  filter->process(1, values);
+
   // write output_history */
   if (output_history->is_open())
     *output_history << contacts->time().sec() + 0.000000001*contacts->time().nsec() << " "
@@ -131,6 +131,7 @@ void VectorView::VectorViewUpdate(ConstContactsPtr &_msg)
                     << std::endl;
   else
     std::cout << "Unable to update de the contact history file. ["<< this->FindName().at(1) <<"];" << std::endl;
+
   // update visual DynamicLines
   this->UpdateVector(force);
 }

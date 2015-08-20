@@ -46,39 +46,37 @@ find_package(Protobuf REQUIRED)
 ## DEFAULT GAZEBO, PROTOBUF AND LOCAL DIRS INCLUDES
 include_directories(${GAZEBO_INCLUDE_DIRS}
                     ${PROTOBUF_INCLUDE_DIR}
-                    ${INCLUDE_DIR}
-                    ${VECTORVIEW_INCLUDE})
+                    ${INCLUDE_DIR})
 link_directories   (${GAZEBO_LIBRARY_DIRS})
 
 ## IF VECTOR IS BUILD, QT IS NEEDED AS WELL
 if(BUILD_VECTORGUI)
 	# FIND QT4 PACKAGES
-	find_package   (Qt4 REQUIRED QtGui QtXml)
-	include        (${QT_USE_FILE})
-	add_definitions(${QT_DEFINITIONS})
+	find_package       (Qt4 REQUIRED QtGui QtXml)
+	include            (${QT_USE_FILE})
+	add_definitions    (${QT_DEFINITIONS})
 
-	include_directories(${QT_INCLUDE_DIRS}
-											${VECTORGUI_INCLUDE})
+	include_directories(${QT_INCLUDE_DIRS})
 	link_directories   (${QT_LIBRARY_DIRS})
 endif()
 
 ## GENERATES SHARED LIBRARIES AND EXECUTABLES
-add_library(${FILTERNAME}  SHARED ${filter_source} ${filter_header})
+add_library(${FILTERNAME}   SHARED ${filter_source} ${filter_header})
 
-add_library(${PROJECTNAME} SHARED ${VECTORVIEW_SOURCE}/VectorView.cpp)
-target_link_libraries(${PROJECTNAME}
-                      ${GAZEBO_LIBRARIES}
-											${FILTERNAME}
-											${Boost_FILESYSTEM_LIBRARY}
-									    ${Boost_SYSTEM_LIBRARY}
-									    ${PROTOBUF_LIBRARY})
+add_library(${PROJECTNAME}  SHARED ${VECTORVIEW_SOURCE}/VectorView.cpp)
+target_link_libraries(      ${PROJECTNAME}
+                            ${GAZEBO_LIBRARIES}
+											      ${FILTERNAME}
+											      ${Boost_FILESYSTEM_LIBRARY}
+									          ${Boost_SYSTEM_LIBRARY}
+									          ${PROTOBUF_LIBRARY})
 
 if(BUILD_VECTORGUI)
   add_executable(${GUINAME} ${vectorgui_source} ${vectorgui_header})
-  target_link_libraries(${GUINAME}
-                        ${GAZEBO_LIBRARIES}
-                        ${QT_LIBRARIES}
-												${Boost_FILESYSTEM_LIBRARY}
-										    ${Boost_SYSTEM_LIBRARY}
-										    ${PROTOBUF_LIBRARY})
+  target_link_libraries(    ${GUINAME}
+		                        ${GAZEBO_LIBRARIES}
+		                        ${QT_LIBRARIES}
+														${Boost_FILESYSTEM_LIBRARY}
+												    ${Boost_SYSTEM_LIBRARY}
+												    ${PROTOBUF_LIBRARY})
 endif()

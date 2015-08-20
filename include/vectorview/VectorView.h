@@ -46,7 +46,7 @@ namespace gazebo
     transport::SubscriberPtr subs;
     // filters
     double time_step;
-    std::vector<Dsp::Filter*> filters;
+    Dsp::Filter* filter;
   };
 }
 
