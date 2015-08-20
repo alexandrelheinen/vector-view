@@ -15,7 +15,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+// filter includes
+#include "DspFilters/Dsp.h"
+#include "DspFilters/Filter.h"
 
 namespace gazebo
 {
@@ -36,14 +38,15 @@ namespace gazebo
     std::vector<std::string> FindName();     // find the topic, output history and collision names based on the visual
     void UpdateVector(math::Vector3 force);  // update visual from the vector
     // VARIABLES
-    rendering::VisualPtr visual;
-    transport::SubscriberPtr subs;
-
     ContactsPtr contacts;  // current contacts
     rendering::DynamicLines* forceVector; // the vector representation line, a vector is used because the same sensor can have many contacts
-
+    rendering::VisualPtr visual;
     std::ofstream *output_history;
     std::string conllisionName;
+    transport::SubscriberPtr subs;
+    // filters
+    double time_step;
+    Dsp::Filter* filter;
   };
 }
 
