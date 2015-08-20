@@ -61,7 +61,7 @@ public:
 
   virtual const std::string getName () const = 0;
 
-  virtual int getNumParams () const = 0;  
+  virtual int getNumParams () const = 0;
 
   virtual ParamInfo getParamInfo (int index) const = 0;
 
@@ -101,7 +101,7 @@ public:
   void copyParamsFrom (Dsp::Filter const* other);
 
   virtual std::vector<PoleZeroPair> getPoleZeros() const = 0;
- 
+
   virtual complex_t response (double normalizedFrequency) const = 0;
 
   virtual int getNumChannels() = 0;
@@ -173,7 +173,7 @@ public:
   {
     return m_design.getPoleZeros();
   }
- 
+
   complex_t response (double normalizedFrequency) const
   {
     return m_design.response (normalizedFrequency);

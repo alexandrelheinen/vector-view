@@ -2,7 +2,7 @@
 #include <string>
 #include <gazebo.hh>
 #include <iostream>
-#include "Interface.h"
+#include "vectorGUI/Interface.h"
 
 using namespace gazebo;
 int main(int _argc, char** _argv)
@@ -12,7 +12,7 @@ int main(int _argc, char** _argv)
     std::string path(_argv[1]);
     if(path.find("/") == std::string::npos)
       path = "/gazebo/default/iCub_fixed/iCub/" + path + "/" + path + "_contact";
-    
+
     QApplication app(_argc, _argv);
     Interface interface(path);
     interface.show();

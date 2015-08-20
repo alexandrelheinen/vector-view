@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 ## INITIAL DEFINITIONS
 SET(PROJECTNAME vectorview)
 SET(GUINAME vectorGUI)
-set(FILTERNAME DSPFilters)
+set(FILTERNAME DspFilters)
 project(${PROJECTNAME})
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)	# Find includes in corresponding build directories
