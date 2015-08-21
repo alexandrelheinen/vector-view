@@ -163,10 +163,26 @@ void Interface::Update(ConstContactsPtr &message)
 	if(message->contact_size() > 0)
 	{
 		math::Vector3 position = msgs::Convert(message->contact(0).position(0));
-		math::Vector3 force = msgs::Convert(message->contact(0).wrench(0).body_1_wrench().force());
+		math::Vector3 force = math::Vector3::Zero;
+    std::string robotName = "iCub";
+    int n, m;
+
+    for(n = 0; n < message->contact_size(); ++n)
+    {
+      for (m = 0; m < message->contact(n).wrench_size(); ++m)
+      {
+        if (message->contact(n).wrench(m).body_1_name().find(robotName) != std::string::npos)
+        {
+          force += msgs::Convert(message->contact(n).wrench(m).body_1_wrench().force());
+        } else if (message->contact(n).wrench(m).body_2_name().find(robotName) != std::string::npos);
+        {
+          force -= msgs::Convert(message->contact(n).wrench(m).body_1_wrench().force());
+        }
+      }
+    }
 
     std::string name = message->contact(0).wrench(0).body_2_name();
-    if (name.find("iCub") != std::string::npos)
+    if (name.find(robotName) != std::string::npos)
       name = message->contact(0).wrench(0).body_1_name();
 
 		if(force.GetLength() > NOISE_THRESHOLD)

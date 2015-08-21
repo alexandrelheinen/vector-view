@@ -29,26 +29,29 @@ void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf)
     this->forceVector->AddPoint(math::Vector3::Zero);
   // output history
   output_history = new std::ofstream(name.at(1).c_str());
-  this->conllisionName = name.at(2);
+  this->collisionName = name.at(2);
   // Filters setup
   Dsp::Params params;
   params[0] = 100;                 // sample rate
   params[1] = 4;                   // order
-  params[2] = 3;                   // cutoff frequency
+  params[2] = 1.5;                 // cutoff frequency
   this->filter = new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 3>; // 3 channel filter to 3 dimention vector :)
   this->filter->setParams(params);
 }
 
 void VectorView::UpdateVector(math::Vector3 force)
 {
-  math::Vector3 begin = math::Vector3::Zero;
-  math::Vector3 end   = begin + FORCE_SCALE*force;
+  math::Quaternion orientation = visual->GetWorldPose().rot.GetInverse();
+  math::Quaternion rotation    = visual->GetRotation();
+  math::Vector3 begin          = math::Vector3::Zero;
+  math::Vector3 end            = begin + FORCE_SCALE*(rotation.RotateVector(
+                                                                            orientation.RotateVector(force)));
   // draw a cute arrow, just as a vector should be represented
   this->forceVector->SetPoint(0, begin);
   this->forceVector->SetPoint(1, end);
-  this->forceVector->SetPoint(2, end - ARROW_LENGTH*math::Matrix3(1, 0, 0, 0, 0.9848, -0.1736, 0,  0.1736, 0.9848)*force.Normalize());
+  this->forceVector->SetPoint(2, end - ARROW_LENGTH*math::Matrix3(1, 0, 0, 0, 0.9848, -0.1736, 0,  0.1736, 0.9848)*(end - begin).Normalize());
   this->forceVector->SetPoint(3, end);
-  this->forceVector->SetPoint(4, end - ARROW_LENGTH*math::Matrix3(1, 0, 0, 0, 0.9848,  0.1736, 0, -0.1736, 0.9848)*force.Normalize());
+  this->forceVector->SetPoint(4, end - ARROW_LENGTH*math::Matrix3(1, 0, 0, 0, 0.9848,  0.1736, 0, -0.1736, 0.9848)*(end - begin).Normalize());
 }
 
 // find out contact, output history file and collision names
@@ -104,10 +107,10 @@ void VectorView::VectorViewUpdate(ConstContactsPtr &_msg)
   {
     for (m = 0; m < this->contacts->contact(n).wrench_size(); ++m)
     {
-      if (this->contacts->contact(n).wrench(m).body_1_name().find(conllisionName) != std::string::npos)
+      if (this->contacts->contact(n).wrench(m).body_1_name().find(collisionName) != std::string::npos)
       {
         force += msgs::Convert(this->contacts->contact(n).wrench(m).body_1_wrench().force());
-      } else if (this->contacts->contact(n).wrench(m).body_2_name().find(conllisionName) != std::string::npos);
+      } else if (this->contacts->contact(n).wrench(m).body_2_name().find(collisionName) != std::string::npos);
       {
         force -= msgs::Convert(this->contacts->contact(n).wrench(m).body_1_wrench().force());
       }
@@ -133,5 +136,7 @@ void VectorView::VectorViewUpdate(ConstContactsPtr &_msg)
     std::cout << "Unable to update de the contact history file. ["<< this->FindName().at(1) <<"];" << std::endl;
 
   // update visual DynamicLines
+  if(force.GetLength() < NOISE_THRESHOLD)
+    force = math::Vector3::Zero;
   this->UpdateVector(force);
 }

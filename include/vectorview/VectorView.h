@@ -1,8 +1,8 @@
 #ifndef VECTORVIEW_H
 #define VECTORVIEW_H
 
-#define FORCE_SCALE 2E-2 // scale between the forces intensities and the vectors length (unity N^-1)
-#define NOISE_THRESHOLD 1E-6
+#define FORCE_SCALE 3E-2 // scale between the forces intensities and the vectors length (unity N^-1)
+#define NOISE_THRESHOLD 1E-3
 #define ARROW_LENGTH .05
 
 // Gazebo includes
@@ -42,7 +42,7 @@ namespace gazebo
     rendering::DynamicLines* forceVector; // the vector representation line, a vector is used because the same sensor can have many contacts
     rendering::VisualPtr visual;
     std::ofstream *output_history;
-    std::string conllisionName;
+    std::string collisionName;
     transport::SubscriberPtr subs;
     // filters
     double time_step;
