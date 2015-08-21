@@ -33,8 +33,8 @@ void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf)
   // Filters setup
   Dsp::Params params;
   params[0] = 100;                 // sample rate
-  params[1] = 4;                   // order
-  params[2] = 1.5;                 // cutoff frequency
+  params[1] = 5;                   // order
+  params[2] = 3;                   // cutoff frequency
   this->filter = new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 3>; // 3 channel filter to 3 dimention vector :)
   this->filter->setParams(params);
 }
@@ -118,6 +118,7 @@ void VectorView::VectorViewUpdate(ConstContactsPtr &_msg)
   }
 
   // force filtering
+  double length = force.GetLength();
   double* values[3];
   values[0] = &(force.x);
   values[1] = &(force.y);
@@ -126,11 +127,12 @@ void VectorView::VectorViewUpdate(ConstContactsPtr &_msg)
 
   // write output_history */
   if (output_history->is_open())
-    *output_history << contacts->time().sec() + 0.000000001*contacts->time().nsec() << " "
-                    << force.GetLength()                                            << " "
-                    << force.x                                                      << " "
-                    << force.y                                                      << " "
-                    << force.z                                                      << " "
+    *output_history << contacts->time().sec() + 0.000000001*contacts->time().nsec() << " " // 1
+                    << force.GetLength()                                            << " " // 2
+                    << force.x                                                      << " " // 3
+                    << force.y                                                      << " " // 4
+                    << force.z                                                      << " " // 5
+                    << length                                                       << " " // 6
                     << std::endl;
   else
     std::cout << "Unable to update de the contact history file. ["<< this->FindName().at(1) <<"];" << std::endl;
