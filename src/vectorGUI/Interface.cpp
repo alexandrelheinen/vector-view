@@ -128,6 +128,8 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   plot->graph(0)->setName("original");
   plot->graph(1)->setName("filtered");
   plot->setBackground(QColor(242, 241, 240, 127));
+  plot->legend->setVisible(true);
+  //plot->legend->setFont(QFont("Helvetica",9));
   // fix graphic size
   plot->setMaximumWidth(420);
   plot->setMinimumWidth(420);

@@ -4,10 +4,12 @@
 
 This plugin is set up to use the icub-gazebo model that can be found on [its official git repository] (https://github.com/robotology-playground/icub-gazebo), and copies of used models are saved on **models** folder. Those models were already set up with contact sensor as needed. Furthermore, any name logic or model reference are based on the given model standards.
 
-**VectorGUI** (or binary vectorGUI) is an extern application that allows to spawn objects during Gazebo simulation and displays contacts informations retrieved from VectorView.
+**VectorGUI** (or binary vectorGUI) is an extern application that allows to spawn objects during Gazebo simulation, displays contacts informations retrieved from VectorView and a real-time plot of (filtered) force magnitude.
 
 #### Some name rules to the plugin ####
-The name of the contact sensor must be "LINK_NAME_contact". For instance if you set it at the "l_hand" link, your contact sensor should be "l_hand_contact". Anyway be free to change this rule to something more intelligent. Moreover, all the output data concerning the contact forces' history will be saved at the "history_ROBOT_NAME_iCub_LINK_NAME.txt" file and can be plotted and afterwards analyzed from **scilab scripts**.
+The name of the contact sensor must be "LINK_NAME_contact". For instance if you set it at the "l_hand" link, your contact sensor should be "l_hand_contact". Anyway be free to change this rule to something more intelligent.
+
+Even if force magnitude is plotted in real-ime, all output data concerning the contact forces' history will be saved at the "history_ROBOT_NAME_iCub_LINK_NAME.txt" file and can be plotted and afterwards analyzed from **scilab scripts**.
 
 ## Dependencies ##
 
@@ -19,8 +21,6 @@ Just a list of required packages (and each one has it own dependencies):
  * It should be all, however [ocra-core](https://github.com/ocra-recipes/ocra-core) and [codyco-superbuild](https://github.com/alexandrelheinen/codyco-superbuild) with [`ISIR_MODULES`](https://github.com/alexandrelheinen/codyco-superbuild#a-note-on-ocra-wbi-plugins) are also used in this project. Those are versions from my own repository where some changes were made the contact forces analysis.
 
  VectorView uses [DSPFilters](https://github.com/vinniefalco/DSPFilters), a collection of C++ classes for digital signal filtering, and [QCustomPlot](http://www.qcustomplot.com/), a Qt C++ widget for plotting and data visualization, but source and headers files from both projects are already included in `src` and `include` folders respectively, so VectorView has no direct dependency of those packages.
-
- To more information about QCustomPlot projet, look at `qcustomplot-info` folder that contains the version changelog and its general public license.
 
 ## Installation ##
 
@@ -60,6 +60,8 @@ to pop out the external interface. On this window the contact object name is dis
 ![interface window example](/images/gui_example.png "Interface window example")
 
 By clicking on **Spawn** button, the chosen model in the drop down menu is spawn at set Cartesian location (x, y, z).
+
+
 
 ### SHELL SCRIPT ###
 
