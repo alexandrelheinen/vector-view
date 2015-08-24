@@ -52,7 +52,10 @@ link_directories   (${GAZEBO_LIBRARY_DIRS})
 ## IF VECTOR IS BUILD, QT IS NEEDED AS WELL
 if(BUILD_VECTORGUI)
 	# FIND QT4 PACKAGES
-	find_package       (Qt4 REQUIRED QtGui QtXml)
+	find_package       (Qt4 REQUIRED
+																		QtGui
+																		QtXml
+																		QtCore)
 	include            (${QT_USE_FILE})
 	add_definitions    (${QT_DEFINITIONS})
 
@@ -74,6 +77,7 @@ target_link_libraries(      ${PROJECTNAME}
 if(BUILD_VECTORGUI)
   add_executable(${GUINAME} ${vectorgui_source} ${vectorgui_header})
   target_link_libraries(    ${GUINAME}
+														${FILTERNAME}
 		                        ${GAZEBO_LIBRARIES}
 		                        ${QT_LIBRARIES}
 														${Boost_FILESYSTEM_LIBRARY}

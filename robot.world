@@ -47,26 +47,24 @@
     </model>
 
     <model name='object'>
-      <pose>0.32 0 0.5 0 0 0</pose>
+      <pose>0.33 0 0.5 0 0 0</pose>
       <link name='main'>
         <pose>0 0 0 0 0 0</pose>
         <inertial>
-          <mass>.1</mass>
+          <mass>0.5</mass>
         </inertial>
         <collision name ='collision'>
           <geometry>
-            <cylinder>
-              <radius>.12</radius>
-              <length>.3</length>
-            </cylinder>
+            <box>
+              <size>0.25 0.25 0.3</size>
+            </box>
           </geometry>
         </collision>
         <visual name ='visual'>
           <geometry>
-            <cylinder>
-              <radius>.12</radius>
-              <length>.3</length>
-            </cylinder>
+            <box>
+              <size>0.25 0.25 0.3</size>
+            </box>
           </geometry>
         </visual>
       </link>

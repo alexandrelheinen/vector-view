@@ -45,7 +45,7 @@ namespace gazebo
     std::string collisionName;
     transport::SubscriberPtr subs;
     // filters
-    double time_step;
+    double fc;
     Dsp::Filter* filter;
   };
 }

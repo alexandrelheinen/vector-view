@@ -22,18 +22,21 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   QGridLayout *contactLayout = new QGridLayout();
   QGridLayout *buttonLayout  = new QGridLayout();
   QGridLayout *entriesLayout = new QGridLayout();
+  QGridLayout *plotLayout    = new QGridLayout();
 
   QFrame    *infoFrame    = new QFrame();
   QGroupBox *topicFrame   = new QGroupBox(tr("Current topic path"));
-  QGroupBox *contactFrame = new QGroupBox(tr("Contacts"));
-  QGroupBox *buttonFrame  = new QGroupBox(tr("Spawn Objects"));
+  QGroupBox *contactFrame = new QGroupBox(tr("Contact info"));
+  QGroupBox *buttonFrame  = new QGroupBox(tr("Spawn models"));
   QFrame    *entriesFrame = new QFrame();
+  QGroupBox *plotFrame    = new QGroupBox(tr("Magnitude plot"));
 
   infoFrame->setLayout(infoLayout);
   topicFrame->setLayout(topicLayout);
   contactFrame->setLayout(contactLayout);
   buttonFrame->setLayout(buttonLayout);
   entriesFrame->setLayout(entriesLayout);
+  plotFrame->setLayout(plotLayout);
   entriesFrame->setMaximumWidth(100);
   entriesFrame->setMinimumWidth(100);
   buttonFrame->setMaximumWidth(120);
@@ -41,6 +44,7 @@ Interface::Interface(std::string _path) : QWidget(NULL)
 
   mainLayout->addWidget(topicFrame,   0, 0);
   mainLayout->addWidget(infoFrame,    1, 0);
+  mainLayout->addWidget(plotFrame,    2, 0);
   infoLayout->addWidget(contactFrame, 0, 0);
   infoLayout->addWidget(buttonFrame,  0, 1);
 
@@ -104,9 +108,47 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   buttonLayout->addWidget(entriesFrame);
   buttonLayout->addWidget(okButton);
 
-  // window setup
-  this->setWindowTitle(("VectorGUI [" + this->topicPath + "]").c_str());
-  this->move(20, 20);
+  // plot startup
+  forceMax = 10;
+  plot = new QCustomPlot();
+  plotLayout->addWidget(plot);
+  plot->addGraph();                     // original data
+  plot->addGraph();                     // filtered data
+  // axis setup
+  // assures that both graphics will keep the same axis ranges
+  connect(plot->xAxis, SIGNAL(rangeChanged(QCPRange)), plot->xAxis2, SLOT(setRange(QCPRange)));
+  connect(plot->yAxis, SIGNAL(rangeChanged(QCPRange)), plot->yAxis2, SLOT(setRange(QCPRange)));
+  plot->xAxis->setLabel("time (s)");
+  plot->yAxis->setLabel("force (N)");
+  plot->xAxis->setRange(0, TIME_MAX);
+  plot->yAxis->setRange(0, forceMax);
+  // plot area and lines setup
+  plot->graph(0)->setPen(QPen(Qt::gray));
+  plot->graph(1)->setPen(QPen(Qt::darkBlue));
+  plot->graph(0)->setName("original");
+  plot->graph(1)->setName("filtered");
+  plot->setBackground(QColor(242, 241, 240, 127));
+  plot->legend->setVisible(true);
+  //plot->legend->setFont(QFont("Helvetica",9));
+  // fix graphic size
+  plot->setMaximumWidth(420);
+  plot->setMinimumWidth(420);
+  plot->setMaximumHeight(300);
+  plot->setMinimumHeight(300);
+
+  // setup a timer that repeatedly calls UpdatePlot
+  dataTimer = new QTimer;
+  connect(dataTimer, SIGNAL(timeout()), this, SLOT(UpdatePlot()));
+  dataTimer->start(1000.0/RATE);
+
+  // filter setup
+  fc = 2;
+  Dsp::Params params;
+  params[0] = RATE;                 // sample rate
+  params[1] = 4;                   // order
+  params[2] = fc;                  // cutoff frequency
+  this->filter = new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 3>; // a 3 channel filter to a 3 dimention vector :)
+  this->filter->setParams(params);
 
   // gazebo setup
   transport::init();
@@ -119,6 +161,14 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   // info initialization
   topicLayout->addWidget(new QLabel(pub->GetTopic().c_str()),  0, 0);
   topicLayout->addWidget(new QLabel(subs->GetTopic().c_str()), 1, 0);
+
+  // window setup
+  this->setWindowTitle(("VectorGUI [" + this->topicPath + "]").c_str());
+  this->move(20, 20);
+  this->setMaximumWidth(480);
+  this->setMinimumWidth(480);
+  this->setMaximumHeight(660);
+  this->setMinimumHeight(660);
 }
 
 Interface::~Interface()
@@ -160,13 +210,14 @@ std::string Interface::d2s(double d)
 // update de contact labels based on the contact message
 void Interface::Update(ConstContactsPtr &message)
 {
+  math::Vector3 position;
+  math::Vector3 force = math::Vector3::Zero;
+  std::string robotName = "iCub";
+
 	if(message->contact_size() > 0)
 	{
-		math::Vector3 position = msgs::Convert(message->contact(0).position(0));
-		math::Vector3 force = math::Vector3::Zero;
-    std::string robotName = "iCub";
+    position = msgs::Convert(message->contact(0).position(0));
     int n, m;
-
     for(n = 0; n < message->contact_size(); ++n)
     {
       for (m = 0; m < message->contact(n).wrench_size(); ++m)
@@ -185,13 +236,26 @@ void Interface::Update(ConstContactsPtr &message)
     if (name.find(robotName) != std::string::npos)
       name = message->contact(0).wrench(0).body_1_name();
 
+    // update contact infos
 		if(force.GetLength() > NOISE_THRESHOLD)
 		{
 			this->setObjectContact(name);
 			this->setPosition(position);
 			this->setForce(force);
 		}
-	}
+  }
+
+  // update unfiltered plot data
+  this->timeAxis.push_back(message->time().sec() + 0.000000001*message->time().nsec());
+  this->forceAxis.push_back(force.GetLength());
+  // filtering
+  double* values[3];
+  values[0] = &(force.x);
+  values[1] = &(force.y);
+  values[2] = &(force.z);
+  filter->process(1, values);
+  // update filter data
+  this->filterAxis.push_back(force.GetLength());
 }
 
 // spawn the selected model
@@ -216,4 +280,23 @@ void Interface::Spawn(std::string _path, math::Pose _pose)
   std::cout << " >> " << _path << " spawned at "                                                << std::endl
             << "   pos: (" << _pose.pos.x << ", " << _pose.pos.y << ", " << _pose.pos.z << ");" << std::endl
             << "   rot: (" << _pose.rot.x << ", " << _pose.rot.y << ", " << _pose.rot.z << ");" << std::endl;
+}
+
+// update plot data and axis range
+// TODO: use plot->graph(n)->addData(time, value); and avoid the huge use of memory of timeAxis and so on
+void Interface::UpdatePlot()
+{
+  plot->graph(0)->setData(timeAxis, forceAxis);
+  plot->graph(1)->setData(timeAxis, filterAxis);
+  // axis range conditional update
+  if(timeAxis.back() > TIME_MAX)
+    plot->xAxis->setRange(timeAxis.back() - TIME_MAX, timeAxis.back());
+
+  if(forceAxis.back() > forceMax)
+  {
+    forceMax = forceAxis.back();
+    plot->yAxis->setRange(0, forceMax);
+  }
+  // repaint plot element
+  plot->replot();
 }

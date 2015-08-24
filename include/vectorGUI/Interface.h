@@ -2,6 +2,8 @@
 #define INTERFACE_H
 
 #define NOISE_THRESHOLD 1E-6
+#define RATE 100
+#define TIME_MAX 120
 
 // Qt includes
 #include <QtGui>
@@ -15,6 +17,10 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+// local includes
+#include "vectorGUI/qcustomplot.h"
+#include "DspFilters/Dsp.h"
+#include "DspFilters/Filter.h"
 
 using namespace gazebo;
 
@@ -24,6 +30,7 @@ class Interface : public QWidget
 
 protected slots:
   void SpawnModel();
+  void UpdatePlot();
 
 public:
   Interface(std::string _path);
@@ -50,6 +57,16 @@ private:
   QComboBox* dropMenu;
   std::vector<QLineEdit*> entries;
   QPushButton* okButton;
+  // graphics
+  QCustomPlot* plot;
+  QTimer* dataTimer;
+  QVector<double> timeAxis;
+  QVector<double> forceAxis, filterAxis;
+  double forceMax;
+  // filter
+  double fc;
+  Dsp::Filter* filter;
+
 };
 
 #endif
