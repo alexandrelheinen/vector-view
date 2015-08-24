@@ -18,7 +18,9 @@ Just a list of required packages (and each one has it own dependencies):
  * [icub-gazebo](https://github.com/robotology-playground/icub-gazebo)
  * It should be all, however [ocra-core](https://github.com/ocra-recipes/ocra-core) and [codyco-superbuild](https://github.com/alexandrelheinen/codyco-superbuild) with [`ISIR_MODULES`](https://github.com/alexandrelheinen/codyco-superbuild#a-note-on-ocra-wbi-plugins) are also used in this project. Those are versions from my own repository where some changes were made the contact forces analysis.
 
- VectorView uses [DSPFilters](https://github.com/vinniefalco/DSPFilters), a collection of C++ classes for digital signal filtering, but the source and headers files are already included in `src/DSPFilters` and `include/DSPFilters` respectively, so it has no direct dependency of this package.
+ VectorView uses [DSPFilters](https://github.com/vinniefalco/DSPFilters), a collection of C++ classes for digital signal filtering, and [QCustomPlot](http://www.qcustomplot.com/), a Qt C++ widget for plotting and data visualization, but source and headers files from both projects are already included in `src` and `include` folders respectively, so VectorView has no direct dependency of those packages.
+
+ To more information about QCustomPlot projet, look at `qcustomplot-info` folder that contains the version changelog and its general public license.
 
 ## Installation ##
 

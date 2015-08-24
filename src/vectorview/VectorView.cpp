@@ -13,6 +13,7 @@ VectorView::~VectorView()
 
 void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf)
 {
+  fc = 2;
   // get visual and names
   this->visual = _parent;
   this->visual->SetVisible(true);
@@ -34,8 +35,8 @@ void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf)
   Dsp::Params params;
   params[0] = 100;                 // sample rate
   params[1] = 5;                   // order
-  params[2] = 3;                   // cutoff frequency
-  this->filter = new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 3>; // 3 channel filter to 3 dimention vector :)
+  params[2] = fc;                  // cutoff frequency
+  this->filter = new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 3>; // a 3 channel filter to a 3 dimention vector :)
   this->filter->setParams(params);
 }
 
