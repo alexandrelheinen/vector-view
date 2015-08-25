@@ -38,6 +38,8 @@ option(BUILD_VECTORGUI "Enables VectorGUI interface installation" TRUE) # either
 ## PACKAGES INPUT
 if (PKG_CONFIG_FOUND)
 	pkg_check_modules(GAZEBO gazebo)
+	pkg_check_modules(OGRE OGRE)
+	pkg_check_modules(OGRE-Terrain OGRE-Terrain)
 endif()
 
 include(FindProtobuf)
@@ -45,9 +47,13 @@ find_package(Protobuf REQUIRED)
 
 ## DEFAULT GAZEBO, PROTOBUF AND LOCAL DIRS INCLUDES
 include_directories(${GAZEBO_INCLUDE_DIRS}
+                    ${OGRE_INCLUDE_DIRS}
+										${OGRE-Terrain_INCLUDE_DIRS}
                     ${PROTOBUF_INCLUDE_DIR}
                     ${INCLUDE_DIR})
-link_directories   (${GAZEBO_LIBRARY_DIRS})
+link_directories   (${GAZEBO_LIBRARY_DIRS}
+										${OGRE_LIBRARY_DIRS})
+list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
 
 ## IF VECTOR IS BUILD, QT IS NEEDED AS WELL
 if(BUILD_VECTORGUI)
@@ -69,6 +75,7 @@ add_library(${FILTERNAME}   SHARED ${filter_source} ${filter_header})
 add_library(${PROJECTNAME}  SHARED ${VECTORVIEW_SOURCE}/VectorView.cpp)
 target_link_libraries(      ${PROJECTNAME}
                             ${GAZEBO_LIBRARIES}
+														${OGRE_LIBRARIES}
 											      ${FILTERNAME}
 											      ${Boost_FILESYSTEM_LIBRARY}
 									          ${Boost_SYSTEM_LIBRARY}
@@ -79,6 +86,7 @@ if(BUILD_VECTORGUI)
   target_link_libraries(    ${GUINAME}
 														${FILTERNAME}
 		                        ${GAZEBO_LIBRARIES}
+														${OGRE_LIBRARIES}
 		                        ${QT_LIBRARIES}
 														${Boost_FILESYSTEM_LIBRARY}
 												    ${Boost_SYSTEM_LIBRARY}
