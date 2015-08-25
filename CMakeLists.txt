@@ -44,19 +44,25 @@ endif()
 
 include(FindProtobuf)
 find_package(Protobuf REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system filesystem)
 
-## DEFAULT GAZEBO, PROTOBUF AND LOCAL DIRS INCLUDES
+## DEFAULT GAZEBO, OGRE, PROTOBUF AND LOCAL DIRS INCLUDES
 include_directories(${GAZEBO_INCLUDE_DIRS}
+										${GAZEBO_INCLUDE_DIRS}/gazebo
                     ${OGRE_INCLUDE_DIRS}
 										${OGRE-Terrain_INCLUDE_DIRS}
                     ${PROTOBUF_INCLUDE_DIR}
+										${Boost_INCLUDE_DIRS}
                     ${INCLUDE_DIR})
 link_directories   (${GAZEBO_LIBRARY_DIRS}
-										${OGRE_LIBRARY_DIRS})
+										${OGRE_LIBRARY_DIRS}
+										${Boost_LIBRARY_DIRS})
 list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
+
 
 ## IF VECTOR IS BUILD, QT IS NEEDED AS WELL
 if(BUILD_VECTORGUI)
+	execute_process(COMMAND echo "-- VectorGUI will be built")
 	# FIND QT4 PACKAGES
 	find_package       (Qt4 REQUIRED
 																		QtGui
@@ -64,7 +70,6 @@ if(BUILD_VECTORGUI)
 																		QtCore)
 	include            (${QT_USE_FILE})
 	add_definitions    (${QT_DEFINITIONS})
-
 	include_directories(${QT_INCLUDE_DIRS})
 	link_directories   (${QT_LIBRARY_DIRS})
 endif()
@@ -77,8 +82,7 @@ target_link_libraries(      ${PROJECTNAME}
                             ${GAZEBO_LIBRARIES}
 														${OGRE_LIBRARIES}
 											      ${FILTERNAME}
-											      ${Boost_FILESYSTEM_LIBRARY}
-									          ${Boost_SYSTEM_LIBRARY}
+											      ${Boost_LIBRARIES}
 									          ${PROTOBUF_LIBRARY})
 
 if(BUILD_VECTORGUI)
@@ -88,7 +92,6 @@ if(BUILD_VECTORGUI)
 		                        ${GAZEBO_LIBRARIES}
 														${OGRE_LIBRARIES}
 		                        ${QT_LIBRARIES}
-														${Boost_FILESYSTEM_LIBRARY}
-												    ${Boost_SYSTEM_LIBRARY}
+														${Boost_LIBRARIES}
 												    ${PROTOBUF_LIBRARY})
 endif()
