@@ -46,18 +46,24 @@ include(FindProtobuf)
 find_package(Protobuf REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system filesystem)
 
+FOREACH(fileName ${GAZEBO_INCLUDE_DIRS})
+	list(APPEND GAZEBO_ROOT_DIRS ${fileName}/gazebo)
+ENDFOREACH(fileName)
+execute_process(COMMAND echo "-- Gazebo directories:" ${GAZEBO_ROOT_DIRS})
+
 ## DEFAULT GAZEBO, OGRE, PROTOBUF AND LOCAL DIRS INCLUDES
 include_directories(${GAZEBO_INCLUDE_DIRS}
-										${GAZEBO_INCLUDE_DIRS}/gazebo
+		    ${GAZEBO_ROOT_DIRS}
                     ${OGRE_INCLUDE_DIRS}
-										${OGRE-Terrain_INCLUDE_DIRS}
+		    ${OGRE-Terrain_INCLUDE_DIRS}
                     ${PROTOBUF_INCLUDE_DIR}
-										${Boost_INCLUDE_DIRS}
+		    ${Boost_INCLUDE_DIRS}
                     ${INCLUDE_DIR})
 link_directories   (${GAZEBO_LIBRARY_DIRS}
-										${OGRE_LIBRARY_DIRS}
-										${Boost_LIBRARY_DIRS})
+		    ${OGRE_LIBRARY_DIRS}
+	            ${Boost_LIBRARY_DIRS})
 list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
+
 
 
 ## IF VECTOR IS BUILD, QT IS NEEDED AS WELL
@@ -65,9 +71,9 @@ if(BUILD_VECTORGUI)
 	execute_process(COMMAND echo "-- VectorGUI will be built")
 	# FIND QT4 PACKAGES
 	find_package       (Qt4 REQUIRED
-																		QtGui
-																		QtXml
-																		QtCore)
+			                 QtGui
+					 QtXml
+					 QtCore)
 	include            (${QT_USE_FILE})
 	add_definitions    (${QT_DEFINITIONS})
 	include_directories(${QT_INCLUDE_DIRS})
@@ -80,18 +86,18 @@ add_library(${FILTERNAME}   SHARED ${filter_source} ${filter_header})
 add_library(${PROJECTNAME}  SHARED ${VECTORVIEW_SOURCE}/VectorView.cpp)
 target_link_libraries(      ${PROJECTNAME}
                             ${GAZEBO_LIBRARIES}
-														${OGRE_LIBRARIES}
-											      ${FILTERNAME}
-											      ${Boost_LIBRARIES}
-									          ${PROTOBUF_LIBRARY})
+			    ${OGRE_LIBRARIES}
+			    ${FILTERNAME}
+			    ${Boost_LIBRARIES}
+			    ${PROTOBUF_LIBRARY})
 
 if(BUILD_VECTORGUI)
   add_executable(${GUINAME} ${vectorgui_source} ${vectorgui_header})
   target_link_libraries(    ${GUINAME}
-														${FILTERNAME}
-		                        ${GAZEBO_LIBRARIES}
-														${OGRE_LIBRARIES}
-		                        ${QT_LIBRARIES}
-														${Boost_LIBRARIES}
-												    ${PROTOBUF_LIBRARY})
+			    ${FILTERNAME}
+		            ${GAZEBO_LIBRARIES}
+			    ${OGRE_LIBRARIES}
+		            ${QT_LIBRARIES}
+			    ${Boost_LIBRARIES}
+			    ${PROTOBUF_LIBRARY})
 endif()
