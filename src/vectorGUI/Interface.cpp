@@ -210,6 +210,7 @@ std::string Interface::d2s(double d)
 // update de contact labels based on the contact message
 void Interface::Update(ConstContactsPtr &message)
 {
+  boost::mutex::scoped_lock lock(mutex);
   math::Vector3 position;
   math::Vector3 force = math::Vector3::Zero;
   std::string robotName = "iCub";
@@ -286,8 +287,9 @@ void Interface::Spawn(std::string _path, math::Pose _pose)
 // TODO: use plot->graph(n)->addData(time, value); and avoid the huge use of memory of timeAxis and so on
 void Interface::UpdatePlot()
 {
-  plot->graph(0)->setData(timeAxis, forceAxis);
-  plot->graph(1)->setData(timeAxis, filterAxis);
+  boost::mutex::scoped_lock lock(mutex);
+  plot->graph(0)->addData(timeAxis, forceAxis);
+  plot->graph(1)->addData(timeAxis, filterAxis);
   // axis range conditional update
   if(timeAxis.back() > TIME_MAX)
     plot->xAxis->setRange(timeAxis.back() - TIME_MAX, timeAxis.back());
@@ -299,4 +301,7 @@ void Interface::UpdatePlot()
   }
   // repaint plot element
   plot->replot();
+  timeAxis.clear();
+  forceAxis.clear();
+  filterAxis.clear();
 }

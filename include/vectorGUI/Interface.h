@@ -17,6 +17,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <boost/thread/mutex.hpp>
 // local includes
 #include "vectorGUI/qcustomplot.h"
 #include "DspFilters/Dsp.h"
@@ -46,6 +47,7 @@ private:
   // auxiliar
   static std::string d2s(double d);
   int counter;
+  boost::mutex mutex;
   // gazebo
   std::string topicPath;
   std::string factoryPath;
