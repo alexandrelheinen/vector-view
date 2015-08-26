@@ -4,52 +4,57 @@ using namespace gazebo;
 // Register this plugin with the simulator
 GZ_REGISTER_VISUAL_PLUGIN(VectorView)
 
-VectorView::VectorView() {}
+VectorView::VectorView()
+{
+  std::cout << "VectorView created ..." << std::endl;
+}
 
 VectorView::~VectorView()
 {
   output_history->close();
 }
 
+
 void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf)
 {
-  fc = 2;
   // get visual and names
   this->visual = _parent;
   this->visual->SetVisible(true);
   // Filters setup
+  fc = 2;
   Dsp::Params params;
   params[0] = 100;                 // sample rate
   params[1] = 5;                   // order
   params[2] = fc;                  // cutoff frequency
   this->filter = new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 3>; // a 3 channel filter to a 3 dimention vector :)
   this->filter->setParams(params);
+  std::cout << "-- Plugin loaded" << std::endl;
 }
 
 void VectorView::Init()
 {
+  std::cout << "-- Init() begin" << std::endl;
   this->FindName();
   // define this plugin as a listener of the sensor topic defined in topic_path
+  this->subs.reset();
   node.reset(new gazebo::transport::Node());
   node->Init();
   this->subs = node->Subscribe(topicName, &VectorView::VectorViewUpdate, this);
   // output history
-  output_history = new std::ofstream(fileName.c_str());
-  
+  output_history.reset(new std::ofstream(fileName.c_str()));
+
   // visual components initialization
-  this->forceVector = this->visual->CreateDynamicLine(rendering::RENDERING_LINE_STRIP);
+  this->forceVector.reset(this->visual->CreateDynamicLine(rendering::RENDERING_LINE_STRIP));
   this->forceVector->setMaterial("Gazebo/Blue");
   this->forceVector->setVisibilityFlags(GZ_VISIBILITY_GUI);
   for(int k = 0; k < 5; ++k) // -> needs five points
     this->forceVector->AddPoint(math::Vector3::Zero);
 
-  // ***************** SOME CONFIRMATION PRINTS ****************
   std::cout << "-- VectorView plugin initialized" << std::endl
-            << "  topic path : " << topicName     << std::endl
-            << "  output file: " << fileName      << std::endl
-            << "  collsion   : " << collisionName << std::endl
+            << "   topic path : " << topicName     << std::endl
+            << "   output file: " << fileName      << std::endl
+            << "   collsion   : " << collisionName << std::endl
             << std::endl;
-  // ***********************************************************/
 }
 
 void VectorView::UpdateVector(math::Vector3 force)
@@ -70,7 +75,6 @@ void VectorView::UpdateVector(math::Vector3 force)
 // find out contact, output history file and collision names
 void VectorView::FindName()
 {
-  std::vector<std::string> out(3);
   std::vector<std::string> names;
   std::string name = this->visual->GetName();
 
@@ -99,7 +103,8 @@ void VectorView::FindName()
 // called when a new message is received
 void VectorView::VectorViewUpdate(ConstContactsPtr &_msg)
 {
-  this->contacts = _msg.get();
+  this->contacts.reset();
+  this->contacts = ContactsPtr(_msg);
   math::Vector3 force = math::Vector3::Zero;
 
   // sum of all forces
@@ -125,7 +130,7 @@ void VectorView::VectorViewUpdate(ConstContactsPtr &_msg)
   values[1] = &(force.y);
   values[2] = &(force.z);
   filter->process(1, values);
-
+  
   // write output_history */
   if (output_history->is_open())
     *output_history << contacts->time().sec() + 0.000000001*contacts->time().nsec() << " " // 1

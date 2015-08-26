@@ -9,19 +9,23 @@
 #include <gazebo.hh>
 #include <rendering/Visual.hh>
 #include <rendering/rendering.hh>
-#include <physics/ContactManager.hh>
 #include <msgs/msgs.hh>
 #include <common/common.hh>
 // general includes
 #include <iostream>
 #include <string>
 #include <vector>
+#include <boost/shared_ptr.hpp>
 // filter includes
 #include "DspFilters/Dsp.h"
 #include "DspFilters/Filter.h"
 
 namespace gazebo
 {
+  typedef boost::shared_ptr<const msgs::Contacts> ContactsPtr;
+  typedef boost::shared_ptr<std::ofstream> FilePtr;
+  typedef boost::shared_ptr<rendering::DynamicLines> LinePtr;
+
   class VectorView : public VisualPlugin
   {
   public:
@@ -38,10 +42,10 @@ namespace gazebo
     void FindName();     // find the topic, output history and collision names based on the visual
     void UpdateVector(math::Vector3 force);  // update visual from the vector
     // VARIABLES
-    const msgs::Contacts* contacts;  // current contacts
-    rendering::DynamicLines* forceVector; // the vector representation line, a vector is used because the same sensor can have many contacts
+    ContactsPtr contacts;  // current contacts
+    LinePtr forceVector; // the animated line representing the force
     rendering::VisualPtr visual;
-    std::ofstream *output_history;
+    FilePtr output_history;
     transport::SubscriberPtr subs;
     transport::NodePtr node;
 
