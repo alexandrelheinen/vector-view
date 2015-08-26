@@ -35,12 +35,21 @@ void VectorView::Init()
   this->subs = node->Subscribe(topicName, &VectorView::VectorViewUpdate, this);
   // output history
   output_history = new std::ofstream(fileName.c_str());
+  
   // visual components initialization
   this->forceVector = this->visual->CreateDynamicLine(rendering::RENDERING_LINE_STRIP);
   this->forceVector->setMaterial("Gazebo/Blue");
   this->forceVector->setVisibilityFlags(GZ_VISIBILITY_GUI);
   for(int k = 0; k < 5; ++k) // -> needs five points
     this->forceVector->AddPoint(math::Vector3::Zero);
+
+  // ***************** SOME CONFIRMATION PRINTS ****************
+  std::cout << "-- VectorView plugin initialized" << std::endl
+            << "  topic path : " << topicName     << std::endl
+            << "  output file: " << fileName      << std::endl
+            << "  collsion   : " << collisionName << std::endl
+            << std::endl;
+  // ***********************************************************/
 }
 
 void VectorView::UpdateVector(math::Vector3 force)
@@ -85,25 +94,12 @@ void VectorView::FindName()
   fileName      += ".txt";
   collisionName += "::" + names.at(i-1) + "_collision";
   collisionName.erase(0,2);
-
-  // ***************** SOME CONFIRMATION PRINTS ****************
-  std::cout << "______ VECTOR VIEW LOADED ______"  << std::endl;
-  std::cout << "Robot:\t"       << names.at(0)     << std::endl;
-  std::cout << "  Model    :\t" << names.at(1)     << std::endl;
-  std::cout << "  Member   :\t" << names.at(2)     << std::endl;
-  std::cout << "  Topic    :\t" << topicName       << std::endl;
-  std::cout << "  File     :\t" << fileName        << std::endl;
-  std::cout << "  Collision:\t" << collisionName   << std::endl;
-  std::cout << "________________________________"  << std::endl;
-  // ***********************************************************/
 }
 
 // called when a new message is received
 void VectorView::VectorViewUpdate(ConstContactsPtr &_msg)
 {
-  // update contacts
-  msgs::Contacts c = *_msg;
-  this->contacts = &c;
+  this->contacts = _msg.get();
   math::Vector3 force = math::Vector3::Zero;
 
   // sum of all forces

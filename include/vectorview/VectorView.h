@@ -9,6 +9,7 @@
 #include <gazebo.hh>
 #include <rendering/Visual.hh>
 #include <rendering/rendering.hh>
+#include <physics/ContactManager.hh>
 #include <msgs/msgs.hh>
 #include <common/common.hh>
 // general includes
@@ -21,8 +22,6 @@
 
 namespace gazebo
 {
-  typedef gazebo::msgs::Contacts* ContactsPtr;
-
   class VectorView : public VisualPlugin
   {
   public:
@@ -39,7 +38,7 @@ namespace gazebo
     void FindName();     // find the topic, output history and collision names based on the visual
     void UpdateVector(math::Vector3 force);  // update visual from the vector
     // VARIABLES
-    ContactsPtr contacts;  // current contacts
+    const msgs::Contacts* contacts;  // current contacts
     rendering::DynamicLines* forceVector; // the vector representation line, a vector is used because the same sensor can have many contacts
     rendering::VisualPtr visual;
     std::ofstream *output_history;
