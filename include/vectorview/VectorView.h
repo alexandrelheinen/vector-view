@@ -32,18 +32,23 @@ namespace gazebo
     // FUNCTIONS
     void Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf); // executed once the plugin is loaded
     void VectorViewUpdate(ConstContactsPtr &_msg);                 // executed everytime a message is published by the sensor: updates the vector visual
+    void Init();
 
   private:
     // FUNCTIONS
-    std::vector<std::string> FindName();     // find the topic, output history and collision names based on the visual
+    void FindName();     // find the topic, output history and collision names based on the visual
     void UpdateVector(math::Vector3 force);  // update visual from the vector
     // VARIABLES
     ContactsPtr contacts;  // current contacts
     rendering::DynamicLines* forceVector; // the vector representation line, a vector is used because the same sensor can have many contacts
     rendering::VisualPtr visual;
     std::ofstream *output_history;
-    std::string collisionName;
     transport::SubscriberPtr subs;
+    transport::NodePtr node;
+
+    std::string collisionName;
+    std::string fileName;
+    std::string topicName;
     // filters
     double fc;
     Dsp::Filter* filter;

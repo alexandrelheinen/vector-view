@@ -17,20 +17,6 @@ void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf)
   // get visual and names
   this->visual = _parent;
   this->visual->SetVisible(true);
-  std::vector<std::string> name = this->FindName();
-  // define this plugin as a listener of the sensor topic defined in topic_path
-  transport::NodePtr node(new gazebo::transport::Node());
-  node->Init();
-  this->subs = node->Subscribe(name.at(0), &VectorView::VectorViewUpdate, this);
-  // visual components initialization
-  this->forceVector = this->visual->CreateDynamicLine(rendering::RENDERING_LINE_STRIP);
-  this->forceVector->setMaterial("Gazebo/Blue");
-  this->forceVector->setVisibilityFlags(GZ_VISIBILITY_GUI);
-  for(int k = 0; k < 5; ++k) // -> needs five points
-    this->forceVector->AddPoint(math::Vector3::Zero);
-  // output history
-  output_history = new std::ofstream(name.at(1).c_str());
-  this->collisionName = name.at(2);
   // Filters setup
   Dsp::Params params;
   params[0] = 100;                 // sample rate
@@ -38,6 +24,23 @@ void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf)
   params[2] = fc;                  // cutoff frequency
   this->filter = new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 3>; // a 3 channel filter to a 3 dimention vector :)
   this->filter->setParams(params);
+}
+
+void VectorView::Init()
+{
+  this->FindName();
+  // define this plugin as a listener of the sensor topic defined in topic_path
+  node.reset(new gazebo::transport::Node());
+  node->Init();
+  this->subs = node->Subscribe(topicName, &VectorView::VectorViewUpdate, this);
+  // output history
+  output_history = new std::ofstream(fileName.c_str());
+  // visual components initialization
+  this->forceVector = this->visual->CreateDynamicLine(rendering::RENDERING_LINE_STRIP);
+  this->forceVector->setMaterial("Gazebo/Blue");
+  this->forceVector->setVisibilityFlags(GZ_VISIBILITY_GUI);
+  for(int k = 0; k < 5; ++k) // -> needs five points
+    this->forceVector->AddPoint(math::Vector3::Zero);
 }
 
 void VectorView::UpdateVector(math::Vector3 force)
@@ -56,7 +59,7 @@ void VectorView::UpdateVector(math::Vector3 force)
 }
 
 // find out contact, output history file and collision names
-std::vector<std::string> VectorView::FindName()
+void VectorView::FindName()
 {
   std::vector<std::string> out(3);
   std::vector<std::string> names;
@@ -67,31 +70,32 @@ std::vector<std::string> VectorView::FindName()
     names.push_back(std::string(name, 0, name.find("::")));
     name.erase(0, name.find("::") + 2);
   }
-  out.at(0) += "~";
-  out.at(1) += "history";
+  topicName     = "~";
+  fileName      = "history";
+  collisionName = "";
+
   int i;
   for(i = 0; i < names.size(); ++i )
   {
-    out.at(0) += "/" + names.at(i);
-    out.at(1) += "_" + names.at(i);
-    out.at(2) += "::" + names.at(i);
+    topicName     += "/" + names.at(i);
+    fileName      += "_" + names.at(i);
+    collisionName += "::" + names.at(i);
   }
-  out.at(0) += "/" + names.at(i-1) + "_contact";
-  out.at(1) += ".txt";
-  out.at(2) += "::" + names.at(i-1) + "_collision";
-  out.at(2).erase(0,2);
+  topicName     += "/" + names.at(i-1) + "_contact";
+  fileName      += ".txt";
+  collisionName += "::" + names.at(i-1) + "_collision";
+  collisionName.erase(0,2);
 
   // ***************** SOME CONFIRMATION PRINTS ****************
   std::cout << "______ VECTOR VIEW LOADED ______"  << std::endl;
   std::cout << "Robot:\t"       << names.at(0)     << std::endl;
   std::cout << "  Model    :\t" << names.at(1)     << std::endl;
-  std::cout << "  Member   :\t" << names.at(2)    << std::endl;
-  std::cout << "  Topic    :\t" << out.at(0)      << std::endl;
-  std::cout << "  File     :\t" << out.at(1)      << std::endl;
-  std::cout << "  Collision:\t" << out.at(2)      << std::endl;
+  std::cout << "  Member   :\t" << names.at(2)     << std::endl;
+  std::cout << "  Topic    :\t" << topicName       << std::endl;
+  std::cout << "  File     :\t" << fileName        << std::endl;
+  std::cout << "  Collision:\t" << collisionName   << std::endl;
   std::cout << "________________________________"  << std::endl;
   // ***********************************************************/
-  return out; // contact topic // output file // collision name
 }
 
 // called when a new message is received
@@ -136,7 +140,7 @@ void VectorView::VectorViewUpdate(ConstContactsPtr &_msg)
                     << length                                                       << " " // 6
                     << std::endl;
   else
-    std::cout << "Unable to update de the contact history file. ["<< this->FindName().at(1) <<"];" << std::endl;
+    std::cout << "Unable to update de the contact history file. ["<< this->fileName <<"];" << std::endl;
 
   // update visual DynamicLines
   if(force.GetLength() < NOISE_THRESHOLD)
