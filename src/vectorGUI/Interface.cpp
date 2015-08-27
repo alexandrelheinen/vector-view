@@ -142,13 +142,7 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   dataTimer->start(1000.0/RATE);
 
   // filter setup
-  fc = 2;
-  Dsp::Params params;
-  params[0] = RATE;                 // sample rate
-  params[1] = 4;                   // order
-  params[2] = fc;                  // cutoff frequency
-  this->filter = new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 3>; // a 3 channel filter to a 3 dimention vector :)
-  this->filter->setParams(params);
+  filter = new Dsp::ForceFilter();
 
   // gazebo setup
   transport::init();
@@ -248,14 +242,7 @@ void Interface::Update(ConstContactsPtr &message)
 
   // update unfiltered plot data
   this->timeAxis.push_back(message->time().sec() + 0.000000001*message->time().nsec());
-  this->forceAxis.push_back(force.GetLength());
-  // filtering
-  double* values[3];
-  values[0] = &(force.x);
-  values[1] = &(force.y);
-  values[2] = &(force.z);
-  filter->process(1, values);
-  // update filter data
+  this->forceAxis.push_back(filter->Filter(&force));
   this->filterAxis.push_back(force.GetLength());
 }
 

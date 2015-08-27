@@ -4,7 +4,6 @@
 #define FORCE_SCALE 3E-2 // scale between the forces intensities and the vectors length (unity N^-1)
 #define NOISE_THRESHOLD 1E-3
 #define ARROW_LENGTH .05
-#define RATE 25
 
 // Gazebo includes
 #include <gazebo.hh>
@@ -16,10 +15,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
-//#include <boost/shared_ptr.hpp>
+#include <boost/thread/mutex.hpp>
+// #include <boost/shared_ptr.hpp>
 // filter includes
 #include "DspFilters/Dsp.h"
 #include "DspFilters/Filter.h"
+#include "DspFilters/ForceFilter.h"
 
 namespace gazebo
 {
@@ -47,12 +48,11 @@ namespace gazebo
     transport::SubscriberPtr subs;
     transport::NodePtr node;
 
+    boost::mutex mutex;
     std::string collisionName;
     std::string topicName;
 
-    // filters
-    double fc;
-    Dsp::Filter* filter;
+    Dsp::ForceFilter* filter;
   };
 }
 

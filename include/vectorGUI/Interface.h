@@ -22,6 +22,7 @@
 #include "vectorGUI/qcustomplot.h"
 #include "DspFilters/Dsp.h"
 #include "DspFilters/Filter.h"
+#include "DspFilters/ForceFilter.h"
 
 using namespace gazebo;
 
@@ -65,9 +66,7 @@ private:
   QVector<double> timeAxis;
   QVector<double> forceAxis, filterAxis;
   double forceMax;
-  // filter
-  double fc;
-  Dsp::Filter* filter;
+  Dsp::ForceFilter* filter;
 
 };
 

@@ -80,6 +80,8 @@ endif()
 
 ## GENERATES SHARED LIBRARIES AND EXECUTABLES
 add_library(${FILTERNAME}   SHARED ${filter_source} ${filter_header})
+target_link_libraries(      ${FILTERNAME}
+                            ${GAZEBO_LIBRARIES})
 
 add_library(${PROJECTNAME}  SHARED ${VECTORVIEW_SOURCE}/VectorView.cpp)
 target_link_libraries(      ${PROJECTNAME}

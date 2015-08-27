@@ -10,7 +10,7 @@ gnome-terminal --tab -e "./build/vectorGUI /gazebo/default/iCub_fixed/iCub/r_han
 sleep 0.5
 echo "3.2. topic path: /gazebo/default/iCub_fixed/iCub/l_hand/l_hand_contact"
 gnome-terminal --tab -e "./build/vectorGUI l_hand" # or you can just give the link name, it will assume that's iCub_fixed model
-sleep 2
+sleep 1
 echo "4. Running [StageTestTasks] sequence of ISIR Controller."
 gnome-terminal --tab -e "$CODYCO_SUPERBUILD_ROOT/build/install/bin/ISIRWholeBodyController --sequence StageTestTasks"
 echo " -------------------------------------------------------"
