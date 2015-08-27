@@ -51,7 +51,6 @@ void VectorView::Init()
 
 void VectorView::UpdateVector(math::Vector3 force)
 {
-  boost::mutex::scoped_lock lock(mutex);
   math::Vector3 begin          = math::Vector3::Zero;
   math::Vector3 end            = begin + FORCE_SCALE*(visual->GetWorldPose().rot.RotateVectorReverse(
                                                                                                       visual->GetRotation().RotateVectorReverse(force)));

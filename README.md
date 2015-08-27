@@ -23,18 +23,18 @@ Just a list of required packages (and each one has it own dependencies):
 ## Installation ##
 
 To use VectorView Plugin you just need to compile it and set the [environmental variables](#useful-environment-variables) whom able Gazebo to find the libraries you just built
-```
+```bash
 git clone https://github.com/alexandrelheinen/vector-view.git && cd vector-view
 ```
 and compile it in `build` folder
-```
+```bash
 mkdir build && cd build
 cmake .. && make
 ```
 ## Useful environmental variables ##
 
 As VectorView is a Gazebo Plugin, some environment variables must be set up to assure that Gazebo client will find out all files it needs:
-```
+```bash
 export VECTOR_VIEW=where_you_cloned_it/vector-view
 export PATH=$VECTOR_VIEW/build:${PATH}
 export GAZEBO_PLUGIN_PATH=$VECTOR_VIEW/build:${GAZEBO_PLUGIN_PATH}
@@ -43,14 +43,14 @@ export GAZEBO_MODEL_PATH=$VECTOR_VIEW/models:${GAZEBO_MODEL_PATH}
 ## Test it! ##
 
 By running those three commands in respective order in different terminals to test the plugin (give your computer some time to process each command):
-```
+```bash
 yarpserver
 cd $VECTOR_VIEW && gazebo robot.world
 ISIRWholeBodyController --sequence StageTestTasks
 ```
 
 While the simulation is running, in another terminal can run
-```
+```bash
 vectorGUI
 ```
 to pop out the external interface. On this window the contact object name is displayed as well as the forces involved on this contact and where it has take place.
@@ -62,7 +62,7 @@ By clicking on **Spawn** button, the chosen model in the drop down menu is spawn
 ### SHELL SCRIPT ###
 
 To easily start the plugin, just run the shell script `run.sh` as follows. It will trigger out all application modules (maybe you should change its permission by typing `chmod +x run.sh` on your terminal), including test sequence tasks.
-```
+```bash
 cd $VECTOR_VIEW && ./run.sh
 ```
 The execution should be something like in the figure below

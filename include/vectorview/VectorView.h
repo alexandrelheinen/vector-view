@@ -15,7 +15,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <boost/thread/mutex.hpp>
 // #include <boost/shared_ptr.hpp>
 // filter includes
 #include "DspFilters/Dsp.h"
@@ -48,7 +47,6 @@ namespace gazebo
     transport::SubscriberPtr subs;
     transport::NodePtr node;
 
-    boost::mutex mutex;
     std::string collisionName;
     std::string topicName;
 
