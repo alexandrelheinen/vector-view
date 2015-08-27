@@ -61,7 +61,6 @@ void VectorView::UpdateVector(math::Vector3 force)
   this->forceVector->SetPoint(3, end - ARROW_LENGTH*math::Matrix3(1, 0, 0, 0, 0.9848, -0.1736, 0,  0.1736, 0.9848)*(end - begin).Normalize());
   this->forceVector->SetPoint(4, end);
   this->forceVector->SetPoint(5, end - ARROW_LENGTH*math::Matrix3(1, 0, 0, 0, 0.9848,  0.1736, 0, -0.1736, 0.9848)*(end - begin).Normalize());
-  this->forceVector->Update();
 }
 
 // find out contact, output history file and collision names
@@ -90,22 +89,23 @@ void VectorView::FindName()
 }
 
 // called when a new message is received
-void VectorView::VectorViewUpdate(ConstContactsPtr &_contactsMsg)
+void VectorView::VectorViewUpdate(ConstContactsPtr &message)
 {
   math::Vector3 force = math::Vector3::Zero;
 
   // sum of all forces
   unsigned int n, m;
-  for(n = 0; n < _contactsMsg->contact_size(); ++n)
+  for(n = 0; n < message->contact_size(); ++n)
   {
-    for (m = 0; m < _contactsMsg->contact(n).wrench_size(); ++m)
+    for (m = 0; m < message->contact(n).wrench_size(); ++m)
     {
-      if (_contactsMsg->contact(n).wrench(m).body_1_name().find(collisionName) != std::string::npos)
+      if (message->contact(n).wrench(m).body_1_name().find(collisionName) != std::string::npos)
       {
-        force = force + msgs::Convert(_contactsMsg->contact(n).wrench(m).body_1_wrench().force());
-      } else if (_contactsMsg->contact(n).wrench(m).body_2_name().find(collisionName) != std::string::npos);
+        force = force + msgs::Convert(message->contact(n).wrench(m).body_1_wrench().force());
+      }
+      else
       {
-        force = force - msgs::Convert(_contactsMsg->contact(n).wrench(m).body_1_wrench().force());
+        force = force + msgs::Convert(message->contact(n).wrench(m).body_2_wrench().force()); // generally it's number 2
       }
     }
   }
@@ -115,5 +115,6 @@ void VectorView::VectorViewUpdate(ConstContactsPtr &_contactsMsg)
   // update visual DynamicLines
   if(force.GetLength() < NOISE_THRESHOLD)
     force = math::Vector3::Zero;
+
   this->UpdateVector(force);
 }

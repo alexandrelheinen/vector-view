@@ -211,6 +211,7 @@ void Interface::Update(ConstContactsPtr &message)
 
 	if(message->contact_size() > 0)
 	{
+    std::string name;
     position = msgs::Convert(message->contact(0).position(0));
     int n, m;
     for(n = 0; n < message->contact_size(); ++n)
@@ -219,25 +220,25 @@ void Interface::Update(ConstContactsPtr &message)
       {
         if (message->contact(n).wrench(m).body_1_name().find(robotName) != std::string::npos)
         {
-          force += msgs::Convert(message->contact(n).wrench(m).body_1_wrench().force());
-        } else if (message->contact(n).wrench(m).body_2_name().find(robotName) != std::string::npos);
+          name = message->contact(n).wrench(m).body_2_name();
+          force = force + msgs::Convert(message->contact(n).wrench(m).body_1_wrench().force());
+        }
+        else
         {
-          force -= msgs::Convert(message->contact(n).wrench(m).body_1_wrench().force());
+          name = message->contact(n).wrench(m).body_1_name();
+          force = force + msgs::Convert(message->contact(n).wrench(m).body_2_wrench().force()); // generally it's number 2
         }
       }
     }
 
-    std::string name = message->contact(0).wrench(0).body_2_name();
-    if (name.find(robotName) != std::string::npos)
-      name = message->contact(0).wrench(0).body_1_name();
-
-    // update contact infos
+    /*// update contact infos
 		if(force.GetLength() > NOISE_THRESHOLD)
 		{
 			this->setObjectContact(name);
 			this->setPosition(position);
 			this->setForce(force);
 		}
+    */
   }
 
   // update unfiltered plot data
