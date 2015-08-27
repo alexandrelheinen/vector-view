@@ -9,8 +9,6 @@ This plugin is set up to use the icub-gazebo model that can be found on [its off
 #### Some name rules to the plugin ####
 The name of the contact sensor must be "LINK_NAME_contact". For instance if you set it at the "l_hand" link, your contact sensor should be "l_hand_contact". Anyway be free to change this rule to something more intelligent.
 
-Even if force magnitude is plotted in real-ime, all output data concerning the contact forces' history will be saved at the "history_ROBOT_NAME_iCub_LINK_NAME.txt" file and can be plotted and afterwards analyzed from **scilab scripts**.
-
 ## Dependencies ##
 
 Just a list of required packages (and each one has it own dependencies):
@@ -60,8 +58,6 @@ to pop out the external interface. On this window the contact object name is dis
 ![interface window example](/images/gui_example.png "Interface window example")
 
 By clicking on **Spawn** button, the chosen model in the drop down menu is spawn at set Cartesian location (x, y, z).
-
-
 
 ### SHELL SCRIPT ###
 

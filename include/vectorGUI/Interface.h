@@ -2,7 +2,7 @@
 #define INTERFACE_H
 
 #define NOISE_THRESHOLD 1E-6
-#define RATE 100
+#define RATE 25
 #define TIME_MAX 120
 
 // Qt includes

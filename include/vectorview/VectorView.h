@@ -4,6 +4,7 @@
 #define FORCE_SCALE 3E-2 // scale between the forces intensities and the vectors length (unity N^-1)
 #define NOISE_THRESHOLD 1E-3
 #define ARROW_LENGTH .05
+#define RATE 25
 
 // Gazebo includes
 #include <gazebo.hh>
@@ -15,16 +16,15 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <boost/shared_ptr.hpp>
+//#include <boost/shared_ptr.hpp>
 // filter includes
 #include "DspFilters/Dsp.h"
 #include "DspFilters/Filter.h"
 
 namespace gazebo
 {
-  typedef boost::shared_ptr<const msgs::Contacts> ContactsPtr;
-  typedef boost::shared_ptr<std::ofstream> FilePtr;
-  typedef boost::shared_ptr<rendering::DynamicLines> LinePtr;
+  //typedef boost::shared_ptr<rendering::DynamicLines> LinePtr;
+  typedef rendering::DynamicLines* LinePtr;
 
   class VectorView : public VisualPlugin
   {
@@ -42,16 +42,14 @@ namespace gazebo
     void FindName();     // find the topic, output history and collision names based on the visual
     void UpdateVector(math::Vector3 force);  // update visual from the vector
     // VARIABLES
-    ContactsPtr contacts;  // current contacts
     LinePtr forceVector; // the animated line representing the force
     rendering::VisualPtr visual;
-    FilePtr output_history;
     transport::SubscriberPtr subs;
     transport::NodePtr node;
 
     std::string collisionName;
-    std::string fileName;
     std::string topicName;
+
     // filters
     double fc;
     Dsp::Filter* filter;

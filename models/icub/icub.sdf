@@ -1388,6 +1388,7 @@
         </geometry>
       </visual>
       <sensor name='l_hand_contact' type='contact'>
+        <update_rate>25</update_rate>
         <contact>
           <collision>l_hand_collision</collision>
         </contact>
@@ -1939,6 +1940,7 @@
         </geometry>
       </visual>
       <sensor name='r_hand_contact' type='contact'>
+        <update_rate>25</update_rate>
         <contact>
           <collision>r_hand_collision</collision>
         </contact>
