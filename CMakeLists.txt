@@ -33,7 +33,8 @@ SOURCE_GROUP("Header Files" FILES ${filter_header})
 SOURCE_GROUP("Source Files" FILES ${vectorgui_source})
 SOURCE_GROUP("Header Files" FILES ${vectorgui_header})
 
-option(BUILD_VECTORGUI "Enables VectorGUI interface installation" TRUE) # either Interface GUI is built or not
+option(BUILD_VECTORGUI  "Enables VectorGUI interface installation" TRUE)
+option(BUILD_VECTORVIEW "Either VectorView Visual Plugin is built or not" TRUE)
 
 ## PACKAGES INPUT
 if (PKG_CONFIG_FOUND)
@@ -79,17 +80,23 @@ if(BUILD_VECTORGUI)
 endif()
 
 ## GENERATES SHARED LIBRARIES AND EXECUTABLES
-add_library(${FILTERNAME}   SHARED ${filter_source} ${filter_header})
-target_link_libraries(      ${FILTERNAME}
-                            ${GAZEBO_LIBRARIES})
+if(BUILD_VECTORVIEW OR BUILD_VECTORGUI)
+	add_library(${FILTERNAME}   SHARED ${filter_source} ${filter_header})
+	target_link_libraries(      ${FILTERNAME}
+	                            ${GAZEBO_LIBRARIES})
+else()
+	execute_process(COMMAND echo "-- Neither VectorView nor VectorGUI will be built")
+endif()
 
-add_library(${PROJECTNAME}  SHARED ${VECTORVIEW_SOURCE}/VectorView.cpp)
-target_link_libraries(      ${PROJECTNAME}
-                            ${GAZEBO_LIBRARIES}
-			                      ${OGRE_LIBRARIES}
-			                      ${FILTERNAME}
-			                      ${Boost_LIBRARIES}
-			                      ${PROTOBUF_LIBRARY})
+if(BUILD_VECTORVIEW)
+	add_library(${PROJECTNAME}  SHARED ${VECTORVIEW_SOURCE}/VectorView.cpp)
+	target_link_libraries(      ${PROJECTNAME}
+	                            ${GAZEBO_LIBRARIES}
+				                      ${OGRE_LIBRARIES}
+				                      ${FILTERNAME}
+				                      ${Boost_LIBRARIES}
+				                      ${PROTOBUF_LIBRARY})
+endif()
 
 if(BUILD_VECTORGUI)
   add_executable(${GUINAME} ${vectorgui_source} ${vectorgui_header})
