@@ -49,15 +49,15 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   infoLayout->addWidget(buttonFrame,  0, 1);
 
   // labels initialization
-  contactLabels.push_back(new QLabel("Object:",this));    contactData.push_back(new QLabel("ground::ground", this));
+  contactLabels.push_back(new QLabel("Object:",this));    contactData.push_back(new QLabel("----", this));
   contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(NULL);
                                                           contactData.push_back(NULL);
-  contactLabels.push_back(new QLabel("Position:",this));  contactData.push_back(new QLabel(" 1.5000", this));
-  contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(new QLabel("-2.0000", this));
-                                                          contactData.push_back(new QLabel(" 1.0000", this));
-  contactLabels.push_back(new QLabel("Force:",this));     contactData.push_back(new QLabel(" 0.0200", this));
-  contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(new QLabel("-0.0400", this));
-                                                          contactData.push_back(new QLabel(" 0.0000", this));
+  contactLabels.push_back(new QLabel("Position:",this));  contactData.push_back(new QLabel("0.0000", this));
+  contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(new QLabel("0.0000", this));
+                                                          contactData.push_back(new QLabel("0.0000", this));
+  contactLabels.push_back(new QLabel("Force:",this));     contactData.push_back(new QLabel("0.0000", this));
+  contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(new QLabel("0.0000", this));
+                                                          contactData.push_back(new QLabel("0.0000", this));
 
   // input those labels on the layout
   contactLayout->setSizeConstraint(QLayout::SetFixedSize);
@@ -129,6 +129,7 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   plot->graph(1)->setName("filtered");
   plot->setBackground(QColor(242, 241, 240, 127));
   plot->legend->setVisible(true);
+  plot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft|Qt::AlignTop);
   //plot->legend->setFont(QFont("Helvetica",9));
   // fix graphic size
   plot->setMaximumWidth(420);
@@ -142,13 +143,7 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   dataTimer->start(1000.0/RATE);
 
   // filter setup
-  fc = 2;
-  Dsp::Params params;
-  params[0] = RATE;                 // sample rate
-  params[1] = 4;                   // order
-  params[2] = fc;                  // cutoff frequency
-  this->filter = new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 3>; // a 3 channel filter to a 3 dimention vector :)
-  this->filter->setParams(params);
+  filter = new Dsp::ForceFilter();
 
   // gazebo setup
   transport::init();
@@ -210,12 +205,14 @@ std::string Interface::d2s(double d)
 // update de contact labels based on the contact message
 void Interface::Update(ConstContactsPtr &message)
 {
+  boost::mutex::scoped_lock lock(mutex);
   math::Vector3 position;
   math::Vector3 force = math::Vector3::Zero;
   std::string robotName = "iCub";
 
 	if(message->contact_size() > 0)
 	{
+    std::string name;
     position = msgs::Convert(message->contact(0).position(0));
     int n, m;
     for(n = 0; n < message->contact_size(); ++n)
@@ -224,37 +221,33 @@ void Interface::Update(ConstContactsPtr &message)
       {
         if (message->contact(n).wrench(m).body_1_name().find(robotName) != std::string::npos)
         {
-          force += msgs::Convert(message->contact(n).wrench(m).body_1_wrench().force());
-        } else if (message->contact(n).wrench(m).body_2_name().find(robotName) != std::string::npos);
+          name = message->contact(n).wrench(m).body_2_name();
+          force = force + msgs::Convert(message->contact(n).wrench(m).body_1_wrench().force());
+        }
+        else
         {
-          force -= msgs::Convert(message->contact(n).wrench(m).body_1_wrench().force());
+          name = message->contact(n).wrench(m).body_1_name();
+          force = force + msgs::Convert(message->contact(n).wrench(m).body_2_wrench().force()); // generally it's number 2
         }
       }
     }
 
-    std::string name = message->contact(0).wrench(0).body_2_name();
-    if (name.find(robotName) != std::string::npos)
-      name = message->contact(0).wrench(0).body_1_name();
-
     // update contact infos
-		if(force.GetLength() > NOISE_THRESHOLD)
-		{
-			this->setObjectContact(name);
-			this->setPosition(position);
-			this->setForce(force);
-		}
+    if(++counter > 10)
+    {
+  		if(force.GetLength() > NOISE_THRESHOLD)
+  		{
+  			this->setObjectContact(name);
+  			this->setPosition(position);
+  			this->setForce(force);
+        counter = 0;
+  		}
+    }
   }
 
   // update unfiltered plot data
   this->timeAxis.push_back(message->time().sec() + 0.000000001*message->time().nsec());
-  this->forceAxis.push_back(force.GetLength());
-  // filtering
-  double* values[3];
-  values[0] = &(force.x);
-  values[1] = &(force.y);
-  values[2] = &(force.z);
-  filter->process(1, values);
-  // update filter data
+  this->forceAxis.push_back(filter->Filter(&force));
   this->filterAxis.push_back(force.GetLength());
 }
 
@@ -286,8 +279,9 @@ void Interface::Spawn(std::string _path, math::Pose _pose)
 // TODO: use plot->graph(n)->addData(time, value); and avoid the huge use of memory of timeAxis and so on
 void Interface::UpdatePlot()
 {
-  plot->graph(0)->setData(timeAxis, forceAxis);
-  plot->graph(1)->setData(timeAxis, filterAxis);
+  boost::mutex::scoped_lock lock(mutex);
+  plot->graph(0)->addData(timeAxis, forceAxis);
+  plot->graph(1)->addData(timeAxis, filterAxis);
   // axis range conditional update
   if(timeAxis.back() > TIME_MAX)
     plot->xAxis->setRange(timeAxis.back() - TIME_MAX, timeAxis.back());
@@ -299,4 +293,7 @@ void Interface::UpdatePlot()
   }
   // repaint plot element
   plot->replot();
+  timeAxis.clear();
+  forceAxis.clear();
+  filterAxis.clear();
 }

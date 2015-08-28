@@ -1,7 +1,7 @@
 #ifndef VECTORVIEW_H
 #define VECTORVIEW_H
 
-#define FORCE_SCALE 3E-2 // scale between the forces intensities and the vectors length (unity N^-1)
+#define FORCE_SCALE 1E-2 // scale between the forces intensities and the vectors length (unity N^-1)
 #define NOISE_THRESHOLD 1E-3
 #define ARROW_LENGTH .05
 
@@ -15,13 +15,16 @@
 #include <iostream>
 #include <string>
 #include <vector>
+// #include <boost/shared_ptr.hpp>
 // filter includes
 #include "DspFilters/Dsp.h"
 #include "DspFilters/Filter.h"
+#include "DspFilters/ForceFilter.h"
 
 namespace gazebo
 {
-  typedef gazebo::msgs::Contacts* ContactsPtr;
+  //typedef boost::shared_ptr<rendering::DynamicLines> LinePtr;
+  typedef rendering::DynamicLines* LinePtr;
 
   class VectorView : public VisualPlugin
   {
@@ -32,21 +35,22 @@ namespace gazebo
     // FUNCTIONS
     void Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf); // executed once the plugin is loaded
     void VectorViewUpdate(ConstContactsPtr &_msg);                 // executed everytime a message is published by the sensor: updates the vector visual
+    void Init();
 
   private:
     // FUNCTIONS
-    std::vector<std::string> FindName();     // find the topic, output history and collision names based on the visual
+    void FindName();     // find the topic, output history and collision names based on the visual
     void UpdateVector(math::Vector3 force);  // update visual from the vector
     // VARIABLES
-    ContactsPtr contacts;  // current contacts
-    rendering::DynamicLines* forceVector; // the vector representation line, a vector is used because the same sensor can have many contacts
+    LinePtr forceVector; // the animated line representing the force
     rendering::VisualPtr visual;
-    std::ofstream *output_history;
-    std::string collisionName;
     transport::SubscriberPtr subs;
-    // filters
-    double fc;
-    Dsp::Filter* filter;
+    transport::NodePtr node;
+
+    std::string collisionName;
+    std::string topicName;
+
+    Dsp::ForceFilter* filter;
   };
 }
 

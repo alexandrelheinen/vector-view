@@ -2,7 +2,7 @@
 #define INTERFACE_H
 
 #define NOISE_THRESHOLD 1E-6
-#define RATE 100
+#define RATE 25
 #define TIME_MAX 120
 
 // Qt includes
@@ -17,10 +17,12 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <boost/thread/mutex.hpp>
 // local includes
 #include "vectorGUI/qcustomplot.h"
 #include "DspFilters/Dsp.h"
 #include "DspFilters/Filter.h"
+#include "DspFilters/ForceFilter.h"
 
 using namespace gazebo;
 
@@ -46,6 +48,7 @@ private:
   // auxiliar
   static std::string d2s(double d);
   int counter;
+  boost::mutex mutex;
   // gazebo
   std::string topicPath;
   std::string factoryPath;
@@ -63,9 +66,7 @@ private:
   QVector<double> timeAxis;
   QVector<double> forceAxis, filterAxis;
   double forceMax;
-  // filter
-  double fc;
-  Dsp::Filter* filter;
+  Dsp::ForceFilter* filter;
 
 };
 
