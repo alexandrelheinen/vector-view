@@ -49,15 +49,15 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   infoLayout->addWidget(buttonFrame,  0, 1);
 
   // labels initialization
-  contactLabels.push_back(new QLabel("Object:",this));    contactData.push_back(new QLabel("ground::ground", this));
+  contactLabels.push_back(new QLabel("Object:",this));    contactData.push_back(new QLabel("----", this));
   contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(NULL);
                                                           contactData.push_back(NULL);
-  contactLabels.push_back(new QLabel("Position:",this));  contactData.push_back(new QLabel(" 1.5000", this));
-  contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(new QLabel("-2.0000", this));
-                                                          contactData.push_back(new QLabel(" 1.0000", this));
-  contactLabels.push_back(new QLabel("Force:",this));     contactData.push_back(new QLabel(" 0.0200", this));
-  contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(new QLabel("-0.0400", this));
-                                                          contactData.push_back(new QLabel(" 0.0000", this));
+  contactLabels.push_back(new QLabel("Position:",this));  contactData.push_back(new QLabel("0.0000", this));
+  contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(new QLabel("0.0000", this));
+                                                          contactData.push_back(new QLabel("0.0000", this));
+  contactLabels.push_back(new QLabel("Force:",this));     contactData.push_back(new QLabel("0.0000", this));
+  contactLabels.back()->setAlignment(Qt::AlignRight);     contactData.push_back(new QLabel("0.0000", this));
+                                                          contactData.push_back(new QLabel("0.0000", this));
 
   // input those labels on the layout
   contactLayout->setSizeConstraint(QLayout::SetFixedSize);
@@ -129,6 +129,7 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   plot->graph(1)->setName("filtered");
   plot->setBackground(QColor(242, 241, 240, 127));
   plot->legend->setVisible(true);
+  plot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft|Qt::AlignTop);
   //plot->legend->setFont(QFont("Helvetica",9));
   // fix graphic size
   plot->setMaximumWidth(420);
@@ -231,14 +232,17 @@ void Interface::Update(ConstContactsPtr &message)
       }
     }
 
-    /*// update contact infos
-		if(force.GetLength() > NOISE_THRESHOLD)
-		{
-			this->setObjectContact(name);
-			this->setPosition(position);
-			this->setForce(force);
-		}
-    */
+    // update contact infos
+    if(++counter > 10)
+    {
+  		if(force.GetLength() > NOISE_THRESHOLD)
+  		{
+  			this->setObjectContact(name);
+  			this->setPosition(position);
+  			this->setForce(force);
+        counter = 0;
+  		}
+    }
   }
 
   // update unfiltered plot data

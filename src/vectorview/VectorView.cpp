@@ -52,8 +52,8 @@ void VectorView::Init()
 void VectorView::UpdateVector(math::Vector3 force)
 {
   math::Vector3 begin          = math::Vector3::Zero;
-  math::Vector3 end            = begin + FORCE_SCALE*(visual->GetWorldPose().rot.RotateVectorReverse(
-                                                                                                      visual->GetRotation().RotateVectorReverse(force)));
+  math::Vector3 end            = begin + FORCE_SCALE*(visual->GetWorldPose().rot.RotateVectorReverse( force ));
+                                                                                                      //visual->GetRotation().RotateVectorReverse(force)));
   // draw a cute arrow, just as a vector should be represented
   this->forceVector->SetPoint(0, begin);
   this->forceVector->SetPoint(1, end);
