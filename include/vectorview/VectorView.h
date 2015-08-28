@@ -1,7 +1,7 @@
 #ifndef VECTORVIEW_H
 #define VECTORVIEW_H
 
-#define FORCE_SCALE 1E-2 // scale between the forces intensities and the vectors length (unity N^-1)
+#define FORCE_SCALE 8E-2 // scale between the forces intensities and the vectors length (unity N^-1)
 #define NOISE_THRESHOLD 1E-3
 #define ARROW_LENGTH .05
 

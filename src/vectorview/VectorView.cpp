@@ -15,12 +15,10 @@ VectorView::~VectorView()
 
 void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf)
 {
-  std::cout << "-- Load() begin";
   // get visual and names
   this->visual = _parent;
   // Filters setup
   filter = new Dsp::ForceFilter();
-  std::cout << "  -- Plugin loaded" << std::endl;
 }
 
 void VectorView::Init()
@@ -108,6 +106,11 @@ void VectorView::VectorViewUpdate(ConstContactsPtr &message)
         force = force + msgs::Convert(message->contact(n).wrench(m).body_2_wrench().force()); // generally it's number 2
       }
     }
+  }
+
+  if(message->contact_size())
+  {
+    force = force/n; // we choose the mean of all contacts in the message
   }
 
   filter->Filter(&force);

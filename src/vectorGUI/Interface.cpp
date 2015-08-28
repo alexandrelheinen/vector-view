@@ -232,6 +232,8 @@ void Interface::Update(ConstContactsPtr &message)
       }
     }
 
+    force = force/n; // we choose the mean of all contacts in the message
+
     // update contact infos
     if(++counter > 10)
     {
