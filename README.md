@@ -1,10 +1,10 @@
-# VectorView and VectorGUI#
+# VectorView and VectorGUI #
 
-**VectorView** (or libvectorview.so) is a *Gazebo Visual Plugin* that, once added to a `<visual>` element of *iCub model*, will display a vector which represents all contact forces of this link's contact sensor.
+**VectorView** (libvectorview.so library) is a *Gazebo Visual Plugin* that, once added to the `<visual>` element of a iCub model's link, displays a vector representing all contact forces applied to the related link contact sensor.
 
-This plugin is set up to use the icub-gazebo model that can be found on [its official git repository] (https://github.com/robotology-playground/icub-gazebo), and copies of used models are saved on **models** folder. Those models were already set up with contact sensor as needed. Furthermore, any name logic or model reference are based on the given model standards.
+This plugin is thus supposed to be used with the icub-gazebo model, that can be found on its official repository: https://github.com/robotology-playground/icub-gazebo. Thus, copies of the used models are saved on **models** folder. These models were modified from their original format and were already set up with contact sensor as needed. Furthermore, any name logic or model reference are based on the given model standards.
 
-**VectorGUI** (or binary vectorGUI) is an extern application that allows to spawn objects during Gazebo simulation, displays contacts informations retrieved from VectorView and a real-time plot of (filtered) force magnitude.
+**VectorGUI** (vectorGUI application) is an extern application that displays contacts informations retrieved from VectorView and  allows the user to spawn objects during simulation,.
 
 #### Some name rules to the plugin ####
 The name of the contact sensor must be "LINK_NAME_contact". For instance if you set it at the "l_hand" link, your contact sensor should be "l_hand_contact". Anyway be free to change this rule to something more intelligent.
