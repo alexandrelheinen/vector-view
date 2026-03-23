@@ -2,16 +2,9 @@
 
 ## About this Project ##
 
-**Client / Institution:** [ISIR](http://www.isir.upmc.fr/) — Institut des Systèmes Intelligents et de Robotique (CNRS / Université Pierre et Marie Curie, Paris)
+This project was developed during an internship at [ISIR](http://www.isir.upmc.fr/) (Institut des Systèmes Intelligents et de Robotique), a joint research lab of CNRS and Université Pierre et Marie Curie (UPMC) in Paris, France.
 
-Real-time contact-force visualization system for the [iCub](https://icub.iit.it/) humanoid robot — one of the most advanced open-platform humanoid robots in the world, developed by the Italian Institute of Technology and used in cutting-edge research across Europe.
-
-Working directly on iCub's full-body simulation inside Gazebo, this project delivered two production-quality tools that bridge low-level physics data with human-readable visual feedback:
-
-* **VectorView** — a Gazebo visual plugin that renders live, 3-D force vectors on any iCub limb in real time, giving engineers an immediate spatial understanding of every contact event happening on the robot's body.
-* **VectorGUI** — a polished Qt desktop application that streams contact telemetry from the simulation, displays force magnitudes and contact locations, and lets operators spawn physical objects into the scene on the fly.
-
-The work required deep integration across several professional-grade robotics middleware stacks (Gazebo, YARP, iCub SDK) and involved custom signal-processing pipelines (DSP filtering) to clean noisy sensor data before rendering — delivering a tool that is both technically rigorous and immediately usable by researchers.
+The goal of the internship was to analyse and visualise contact forces on the iCub humanoid robot during whole-body control simulations with Gazebo. The resulting tools — **VectorView** and **VectorGUI** — were built to provide real-time 3-D visual feedback of contact forces directly inside the simulator as well as an external Qt-based interface for monitoring and interaction.
 
 ---
 
