@@ -1,13 +1,5 @@
 # VectorView and VectorGUI #
 
-## About this Project ##
-
-This project was developed during an internship at [ISIR](http://www.isir.upmc.fr/) (Institut des Systèmes Intelligents et de Robotique), a joint research lab of CNRS and Université Pierre et Marie Curie (UPMC) in Paris, France.
-
-The goal of the internship was to analyse and visualise contact forces on the iCub humanoid robot during whole-body control simulations with Gazebo. The resulting tools — **VectorView** and **VectorGUI** — were built to provide real-time 3-D visual feedback of contact forces directly inside the simulator as well as an external Qt-based interface for monitoring and interaction.
-
----
-
 **VectorView** (libvectorview.so library) is a *Gazebo Visual Plugin* that, once added to the `<visual>` element of a iCub model's link, displays a vector representing all contact forces applied to the related link contact sensor.
 
 This plugin is thus supposed to be used with the icub-gazebo model, that can be found on its official repository: https://github.com/robotology-playground/icub-gazebo. Thus, copies of the used models are saved on **models** folder. These models were modified from their original format and were already set up with contact sensor as needed. Furthermore, any name logic or model reference are based on the given model standards.
