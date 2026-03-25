@@ -20,6 +20,20 @@ Just a list of required packages (and each one has it own dependencies):
 
  VectorView uses [DSPFilters](https://github.com/vinniefalco/DSPFilters), a collection of C++ classes for digital signal filtering, and [QCustomPlot](http://www.qcustomplot.com/), a Qt C++ widget for plotting and data visualization, but source and headers files from both projects are already included in `src` and `include` folders respectively, so VectorView has no direct dependency of those packages.
 
+## Coding Standards ##
+
+All C++ code in this project must conform to the **[C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)**.
+
+Key rules applied throughout the codebase include:
+
+* **R.11** — Avoid calling `new` and `delete` explicitly; use `std::unique_ptr` or `std::shared_ptr` for heap-allocated objects.
+* **SF.7** — Don't write `using namespace` at global scope in a header file.
+* **ES.25** — Declare variables in the smallest scope possible; avoid declaring loop counters outside the `for` statement.
+* **ES.107** — Prefer `unsigned` or `size_t` over `int` for subscripts and sizes to avoid signed/unsigned comparison warnings.
+* **I.4** — Make interfaces precisely and strongly typed; avoid hard-coded magic strings (e.g., robot names) in implementation files.
+
+Contributors are expected to be familiar with the guidelines before submitting changes.
+
 ## Installation ##
 
 To use VectorView Plugin you just need to compile it and set the [environmental variables](#useful-environment-variables) whom able Gazebo to find the libraries you just built
