@@ -72,10 +72,10 @@ void VectorView::VectorViewUpdate(ConstContactsPtr& message)
 {
   ignition::math::Vector3d force = ignition::math::Vector3d::Zero;
 
-  unsigned int n, m;
-  for (n = 0; n < static_cast<unsigned int>(message->contact_size()); ++n)
+  int n, m;
+  for (n = 0; n < message->contact_size(); ++n)
   {
-    for (m = 0; m < static_cast<unsigned int>(message->contact(n).wrench_size()); ++m)
+    for (m = 0; m < message->contact(n).wrench_size(); ++m)
     {
       if (message->contact(n).wrench(m).body_1_name().find(collisionName) != std::string::npos)
         force += msgs::Convert(message->contact(n).wrench(m).body_1_wrench().force());

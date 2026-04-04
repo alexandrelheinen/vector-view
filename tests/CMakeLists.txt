@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 
 find_package(GTest REQUIRED)
+if(NOT TARGET GTest::gtest_main)
+  message(FATAL_ERROR "GTest::gtest_main target not found. Please install libgtest-dev.")
+endif()
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(IGNITION_MATH ignition-math6 REQUIRED)
 

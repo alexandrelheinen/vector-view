@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Build (Ubuntu 20.04 / Gazebo 11 / Qt5)
