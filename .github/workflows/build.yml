@@ -1,0 +1,43 @@
+name: Build and Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Build (Ubuntu 20.04 / Gazebo 11 / Qt5)
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgazebo11-dev \
+            libignition-math6-dev \
+            qtbase5-dev \
+            libboost-dev \
+            libprotobuf-dev \
+            protobuf-compiler \
+            libgtest-dev \
+            cmake \
+            build-essential
+
+      - name: Configure (VectorView + tests, no VectorGUI — no display available)
+        run: |
+          mkdir build
+          cd build
+          cmake \
+            -DBUILD_VECTORVIEW=ON \
+            -DBUILD_VECTORGUI=OFF \
+            -DBUILD_TESTING=ON \
+            ..
+
+      - name: Build
+        run: make -C build -j$(nproc)
+
+      - name: Test
+        run: cd build && ctest --output-on-failure

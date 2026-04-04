@@ -1,8 +1,9 @@
 #ifndef VECTORVIEW_H
 #define VECTORVIEW_H
 
-#define FORCE_SCALE 8E-2 // scale between the forces intensities and the vectors length (unity N^-1)
-#define NOISE_THRESHOLD 1E-3
+/** @brief Scale factor: scene units per Newton (m·N⁻¹). */
+#define FORCE_SCALE 8E-2
+/** @brief Half-arrowhead length in scene units. */
 #define ARROW_LENGTH .05
 
 // Gazebo includes
@@ -11,38 +12,71 @@
 #include <rendering/rendering.hh>
 #include <msgs/msgs.hh>
 #include <common/common.hh>
-// general includes
+// ignition math (Gazebo 9+)
+#include <ignition/math/Vector3.hh>
+#include <ignition/math/Matrix3.hh>
+// standard includes
 #include <iostream>
+#include <memory>
 #include <string>
 #include <vector>
-// #include <boost/shared_ptr.hpp>
-// filter includes
+// local includes
+#include "common/Constants.h"
 #include "DspFilters/Dsp.h"
 #include "DspFilters/Filter.h"
 #include "DspFilters/ForceFilter.h"
+#include "vectorview/NameUtils.h"
 
 namespace gazebo
 {
-  //typedef boost::shared_ptr<rendering::DynamicLines> LinePtr;
-  typedef rendering::DynamicLines* LinePtr;
-
   class VectorView : public VisualPlugin
   {
   public:
-    // CONSTRUCTOR AND DESTRUCTOR
+    /** @brief Default constructor. */
     VectorView();
+    /** @brief Destructor. Releases owned resources. */
     ~VectorView();
-    // FUNCTIONS
-    void Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf); // executed once the plugin is loaded
-    void VectorViewUpdate(ConstContactsPtr &_msg);                 // executed everytime a message is published by the sensor: updates the vector visual
+
+    /**
+     * @brief Called once when the plugin is loaded; stores the parent visual.
+     * @param _parent Parent visual pointer.
+     * @param _sdf    SDF element (unused).
+     */
+    void Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf);
+
+    /**
+     * @brief Initialises visual lines and subscribes to the contact sensor topic.
+     *
+     * Called after Load(); sets up the DynamicLines arrowhead, derives the
+     * topic name from the visual name and subscribes to it.
+     */
     void Init();
 
+    /**
+     * @brief Callback invoked for every contact sensor message.
+     * @param _msg Incoming contacts message.
+     */
+    void VectorViewUpdate(ConstContactsPtr& _msg);
+
   private:
-    // FUNCTIONS
-    void FindName();     // find the topic, output history and collision names based on the visual
-    void UpdateVector(math::Vector3 force);  // update visual from the vector
-    // VARIABLES
-    LinePtr forceVector; // the animated line representing the force
+    /**
+     * @brief Derives topicName and collisionName from the parent visual name.
+     *
+     * Delegates to VectorView::ParseVisualName().  Logs an error and returns
+     * early if the visual name cannot be parsed.
+     */
+    void FindName();
+
+    /**
+     * @brief Updates the DynamicLines arrowhead to represent @p force.
+     * @param force Force vector in world coordinates (N).
+     */
+    void UpdateVector(ignition::math::Vector3d force);
+
+    // DynamicLines pointer is a non-owning (borrowing) pointer — the
+    // DynamicLines object is owned by the parent Visual.
+    rendering::DynamicLines* forceVector;
+
     rendering::VisualPtr visual;
     transport::SubscriberPtr subs;
     transport::NodePtr node;
@@ -50,7 +84,7 @@ namespace gazebo
     std::string collisionName;
     std::string topicName;
 
-    Dsp::ForceFilter* filter;
+    std::unique_ptr<Dsp::ForceFilter> filter;
   };
 }
 

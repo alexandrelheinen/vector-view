@@ -1,0 +1,17 @@
+# Doxyfile — VectorView & VectorGUI API documentation
+PROJECT_NAME           = "VectorView & VectorGUI"
+PROJECT_NUMBER         = 1.0.0
+PROJECT_BRIEF          = "Gazebo contact-force visualisation plugin and companion desktop GUI"
+OUTPUT_DIRECTORY       = docs/api
+INPUT                  = include src
+FILE_PATTERNS          = *.h *.cpp
+RECURSIVE              = YES
+EXCLUDE_PATTERNS       = */qcustomplot.* */DspFilters/*
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+EXTRACT_ALL            = NO
+EXTRACT_PRIVATE        = NO
+QUIET                  = YES
+WARN_NO_PARAMDOC       = YES
+JAVADOC_AUTOBRIEF      = YES
+HTML_OUTPUT            = html

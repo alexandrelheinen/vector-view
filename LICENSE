@@ -1,0 +1,43 @@
+MIT License
+
+Copyright (c) 2015 Alexandre L. Heinen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## Third-party licences
+
+### DSPFilters
+DSPFilters (located in `src/DspFilters/` and `include/DspFilters/`) is
+copyright (c) 2009 by Vinnie Falco and is distributed under the **MIT
+License**.  The full licence text is reproduced in
+`include/DspFilters/LICENSE`.
+
+### QCustomPlot
+QCustomPlot (located in `src/vectorGUI/qcustomplot.cpp` and
+`include/vectorGUI/qcustomplot.h`) is copyright (c) 2011–2021 by Emanuel
+Eichhammer and is dual-licensed under the **GNU General Public License v3**
+and a commercial licence.
+
+**Important:** The GPL v3 licence of QCustomPlot is copyleft and applies to
+the `vectorGUI` binary.  If you intend to distribute `vectorGUI` under terms
+incompatible with the GPL v3, you must obtain a commercial QCustomPlot
+licence from https://www.qcustomplot.com/ or replace QCustomPlot with a
+permissively-licensed alternative.

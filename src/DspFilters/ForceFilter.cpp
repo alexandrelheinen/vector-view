@@ -1,24 +1,29 @@
 #include "DspFilters/ForceFilter.h"
 using namespace Dsp;
-using namespace gazebo;
 
 ForceFilter::ForceFilter()
 {
   Dsp::Params params;
-  params[0] = RATE;                 // sample rate
-  params[1] = 3;                   // order
-  params[2] = 1.5;             // cutoff frequency
-  this->filter = new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 3>; // a 3 channel filter to a 3 dimention vector :)
+  params[0] = RATE;   // sample rate
+  params[1] = 3;      // order
+  params[2] = 1.5;    // cutoff frequency
+  this->filter = new Dsp::FilterDesign<Dsp::Butterworth::Design::LowPass<10>, 3>;
   this->filter->setParams(params);
 }
 
-double ForceFilter::Filter(math::Vector3* force)
+ForceFilter::~ForceFilter()
 {
-  double length = force->GetLength();
-  double* values[3];
-  values[0] = &(force->x);
-  values[1] = &(force->y);
-  values[2] = &(force->z);
+  delete filter;
+}
+
+double ForceFilter::Filter(ignition::math::Vector3d* force)
+{
+  double length = force->Length();
+  // Extract components into temporaries so that we can pass mutable pointers
+  // to the DSP library, then write the filtered values back.
+  double x = force->X(), y = force->Y(), z = force->Z();
+  double* values[3] = { &x, &y, &z };
   filter->process(1, values);
+  force->Set(x, y, z);
   return length;
 }

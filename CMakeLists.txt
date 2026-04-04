@@ -1,110 +1,148 @@
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
 ## INITIAL DEFINITIONS
-SET(PROJECTNAME vectorview)
-SET(GUINAME vectorGUI)
-set(FILTERNAME DspFilters)
-project(${PROJECTNAME})
+set(PROJECTNAME vectorview)
+set(GUINAME     vectorGUI)
+set(FILTERNAME  DspFilters)
+project(${PROJECTNAME} VERSION 1.0.0 LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)	# Find includes in corresponding build directories
-set(CMAKE_AUTOMOC ON)							# Instruct CMake to run moc automatically when needed.
+set(CMAKE_CXX_STANDARD          14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include (FindPkgConfig)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)  # find includes in build directories
+set(CMAKE_AUTOMOC             ON)  # run moc automatically
+
+include(FindPkgConfig)
 find_package(PkgConfig REQUIRED)
 
-## DIRECTORIES SETTING AND OPTIONS
-SET(SRC_DIR                 ${PROJECT_SOURCE_DIR}/src)
-SET(INCLUDE_DIR             ${PROJECT_SOURCE_DIR}/include)
+## DIRECTORY LAYOUT
+set(SRC_DIR     ${PROJECT_SOURCE_DIR}/src)
+set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 
-SET(FILTER_SOURCE           ${SRC_DIR}/${FILTERNAME})
-SET(FILTER_INCLUDE          ${INCLUDE_DIR}/${FILTERNAME})
-SET(VECTORVIEW_SOURCE       ${SRC_DIR}/${PROJECTNAME})
-SET(VECTORVIEW_INCLUDE      ${INCLUDE_DIR}/${PROJECTNAME})
-SET(VECTORGUI_SOURCE        ${SRC_DIR}/${GUINAME})
-SET(VECTORGUI_INCLUDE       ${INCLUDE_DIR}/${GUINAME})
+set(FILTER_SOURCE      ${SRC_DIR}/${FILTERNAME})
+set(FILTER_INCLUDE     ${INCLUDE_DIR}/${FILTERNAME})
+set(VECTORVIEW_SOURCE  ${SRC_DIR}/${PROJECTNAME})
+set(VECTORVIEW_INCLUDE ${INCLUDE_DIR}/${PROJECTNAME})
+set(VECTORGUI_SOURCE   ${SRC_DIR}/${GUINAME})
+set(VECTORGUI_INCLUDE  ${INCLUDE_DIR}/${GUINAME})
 
-FILE(GLOB filter_source     ${FILTER_SOURCE}/*.cpp)
-FILE(GLOB filter_header     ${FILTER_INCLUDE}/*.h)
-FILE(GLOB vectorgui_source  ${VECTORGUI_SOURCE}/*.cpp)
-FILE(GLOB vectorgui_header  ${VECTORGUI_INCLUDE}/*.h)
+## EXPLICIT SOURCE LISTS
+set(filter_source
+  ${FILTER_SOURCE}/Bessel.cpp
+  ${FILTER_SOURCE}/Biquad.cpp
+  ${FILTER_SOURCE}/Butterworth.cpp
+  ${FILTER_SOURCE}/Cascade.cpp
+  ${FILTER_SOURCE}/ChebyshevI.cpp
+  ${FILTER_SOURCE}/ChebyshevII.cpp
+  ${FILTER_SOURCE}/Custom.cpp
+  ${FILTER_SOURCE}/Design.cpp
+  ${FILTER_SOURCE}/Documentation.cpp
+  ${FILTER_SOURCE}/Elliptic.cpp
+  ${FILTER_SOURCE}/Filter.cpp
+  ${FILTER_SOURCE}/ForceFilter.cpp
+  ${FILTER_SOURCE}/Legendre.cpp
+  ${FILTER_SOURCE}/Param.cpp
+  ${FILTER_SOURCE}/PoleFilter.cpp
+  ${FILTER_SOURCE}/RBJ.cpp
+  ${FILTER_SOURCE}/RootFinder.cpp
+  ${FILTER_SOURCE}/State.cpp
+)
 
-SOURCE_GROUP("Source Files" FILES ${filter_source})
-SOURCE_GROUP("Header Files" FILES ${filter_header})
-SOURCE_GROUP("Source Files" FILES ${vectorgui_source})
-SOURCE_GROUP("Header Files" FILES ${vectorgui_header})
+set(vectorgui_source
+  ${VECTORGUI_SOURCE}/Interface.cpp
+  ${VECTORGUI_SOURCE}/VectorGUI.cpp
+  ${VECTORGUI_SOURCE}/qcustomplot.cpp
+)
 
-option(BUILD_VECTORGUI  "Enables VectorGUI interface installation" TRUE)
-option(BUILD_VECTORVIEW "Either VectorView Visual Plugin is built or not" TRUE)
+## BUILD OPTIONS
+option(BUILD_VECTORGUI  "Build the VectorGUI desktop application"      ON)
+option(BUILD_VECTORVIEW "Build the VectorView Gazebo visual plugin"    ON)
 
-## PACKAGES INPUT
-if (PKG_CONFIG_FOUND)
-	pkg_check_modules(GAZEBO gazebo)
-	pkg_check_modules(OGRE OGRE)
-	pkg_check_modules(OGRE-Terrain OGRE-Terrain)
+## PACKAGE DISCOVERY
+if(PKG_CONFIG_FOUND)
+  pkg_check_modules(GAZEBO gazebo)
+  pkg_check_modules(OGRE OGRE)
+  pkg_check_modules(OGRE-Terrain OGRE-Terrain)
 endif()
 
 include(FindProtobuf)
 find_package(Protobuf REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system filesystem)
 
-FOREACH(fileName ${GAZEBO_INCLUDE_DIRS})
-	list(APPEND GAZEBO_ROOT_DIRS ${fileName}/gazebo)
-ENDFOREACH(fileName)
-execute_process(COMMAND echo "-- Gazebo directories:" ${GAZEBO_ROOT_DIRS})
+foreach(dir ${GAZEBO_INCLUDE_DIRS})
+  list(APPEND GAZEBO_ROOT_DIRS ${dir}/gazebo)
+endforeach()
+execute_process(COMMAND ${CMAKE_COMMAND} -E echo "-- Gazebo directories: ${GAZEBO_ROOT_DIRS}")
 
-## DEFAULT GAZEBO, OGRE, PROTOBUF AND LOCAL DIRS INCLUDES
-include_directories(${GAZEBO_INCLUDE_DIRS}
-		                ${GAZEBO_ROOT_DIRS}
-                    ${OGRE_INCLUDE_DIRS}
-		                ${OGRE-Terrain_INCLUDE_DIRS}
-                    ${PROTOBUF_INCLUDE_DIR}
-		                ${Boost_INCLUDE_DIRS}
-                    ${INCLUDE_DIR})
-link_directories   (${GAZEBO_LIBRARY_DIRS}
-		                ${OGRE_LIBRARY_DIRS}
-	                  ${Boost_LIBRARY_DIRS})
-list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
-
-## IF VECTOR IS BUILT, QT IS NEEDED AS WELL
+## QT5 (required for VectorGUI)
 if(BUILD_VECTORGUI)
-	execute_process(COMMAND echo "-- VectorGUI will be built")
-	# FIND QT4 PACKAGES
-	find_package       (Qt4 REQUIRED
-			                             QtGui
-				                        	 QtXml
-				                         	 QtCore)
-	include            (${QT_USE_FILE})
-	add_definitions    (${QT_DEFINITIONS})
-	include_directories(${QT_INCLUDE_DIRS})
-	link_directories   (${QT_LIBRARY_DIRS})
+  execute_process(COMMAND ${CMAKE_COMMAND} -E echo "-- VectorGUI will be built")
+  find_package(Qt5 COMPONENTS Widgets Xml Core REQUIRED)
 endif()
 
-## GENERATES SHARED LIBRARIES AND EXECUTABLES
+## DSPFILTERS SHARED LIBRARY
 if(BUILD_VECTORVIEW OR BUILD_VECTORGUI)
-	add_library(${FILTERNAME}   SHARED ${filter_source} ${filter_header})
-	target_link_libraries(      ${FILTERNAME}
-	                            ${GAZEBO_LIBRARIES})
+  add_library(${FILTERNAME} SHARED ${filter_source})
+  target_include_directories(${FILTERNAME}
+    PUBLIC  ${INCLUDE_DIR}
+    PRIVATE ${GAZEBO_INCLUDE_DIRS} ${GAZEBO_ROOT_DIRS})
+  target_link_libraries(${FILTERNAME}
+    PRIVATE ${GAZEBO_LIBRARIES})
+  target_compile_options(${FILTERNAME}
+    PRIVATE ${GAZEBO_CXX_FLAGS})
 else()
-	execute_process(COMMAND echo "-- Neither VectorView nor VectorGUI will be built")
+  execute_process(COMMAND ${CMAKE_COMMAND} -E echo "-- Neither VectorView nor VectorGUI will be built")
 endif()
 
+## VECTORVIEW VISUAL PLUGIN
 if(BUILD_VECTORVIEW)
-	add_library(${PROJECTNAME}  SHARED ${VECTORVIEW_SOURCE}/VectorView.cpp)
-	target_link_libraries(      ${PROJECTNAME}
-	                            ${GAZEBO_LIBRARIES}
-				                      ${OGRE_LIBRARIES}
-				                      ${FILTERNAME}
-				                      ${Boost_LIBRARIES}
-				                      ${PROTOBUF_LIBRARY})
+  add_library(${PROJECTNAME} SHARED
+    ${VECTORVIEW_SOURCE}/VectorView.cpp
+    ${VECTORVIEW_SOURCE}/NameUtils.cpp
+  )
+  target_include_directories(${PROJECTNAME}
+    PRIVATE ${INCLUDE_DIR}
+            ${GAZEBO_INCLUDE_DIRS}
+            ${GAZEBO_ROOT_DIRS}
+            ${OGRE_INCLUDE_DIRS}
+            ${OGRE-Terrain_INCLUDE_DIRS}
+            ${PROTOBUF_INCLUDE_DIR}
+            ${Boost_INCLUDE_DIRS})
+  target_link_libraries(${PROJECTNAME}
+    PRIVATE ${GAZEBO_LIBRARIES}
+            ${OGRE_LIBRARIES}
+            ${FILTERNAME}
+            ${Boost_LIBRARIES}
+            ${PROTOBUF_LIBRARY})
+  target_compile_options(${PROJECTNAME}
+    PRIVATE ${GAZEBO_CXX_FLAGS})
 endif()
 
+## VECTORGUI EXECUTABLE
 if(BUILD_VECTORGUI)
-  add_executable(${GUINAME} ${vectorgui_source} ${vectorgui_header})
-  target_link_libraries(    ${GUINAME}
-			                      ${FILTERNAME}
-		                        ${GAZEBO_LIBRARIES}
-			                      ${OGRE_LIBRARIES}
-		                        ${QT_LIBRARIES}
-			                      ${Boost_LIBRARIES}
-			                      ${PROTOBUF_LIBRARY})
+  add_executable(${GUINAME} ${vectorgui_source})
+  target_include_directories(${GUINAME}
+    PRIVATE ${INCLUDE_DIR}
+            ${GAZEBO_INCLUDE_DIRS}
+            ${GAZEBO_ROOT_DIRS}
+            ${OGRE_INCLUDE_DIRS}
+            ${PROTOBUF_INCLUDE_DIR}
+            ${Boost_INCLUDE_DIRS})
+  target_link_libraries(${GUINAME}
+    PRIVATE ${FILTERNAME}
+            ${GAZEBO_LIBRARIES}
+            ${OGRE_LIBRARIES}
+            Qt5::Widgets
+            Qt5::Xml
+            Qt5::Core
+            ${Boost_LIBRARIES}
+            ${PROTOBUF_LIBRARY})
+  target_compile_options(${GUINAME}
+    PRIVATE ${GAZEBO_CXX_FLAGS})
+endif()
+
+## TESTS
+include(CTest)
+if(BUILD_TESTING)
+  add_subdirectory(tests)
 endif()
