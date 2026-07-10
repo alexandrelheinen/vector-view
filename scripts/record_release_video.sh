@@ -71,7 +71,7 @@ if [ "$ready" -ne 1 ]; then
 fi
 
 # Let joint controllers settle into the standing pose before recording.
-sleep 3
+sleep 5
 
 echo "Recording to $OUTPUT"
 gz service -s "$RECORD_TOPIC" \
