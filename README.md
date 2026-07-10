@@ -16,20 +16,18 @@ Bundled assets:
 
 ## A little bit o history
 
-VectorView started life in the summer of **2015**, during a second-year engineering internship (**stage de fin de 2A**) at [ISIR](https://www.isir.upmc.fr/) — the Institut des Systèmes Intelligents et de Robotique (Sorbonne Université / CNRS) — within the **SYROCO** team (complex robotic systems). The work was done on the CentraleSupélec campus at **Gif-sur-Yvette**, as part of the broader [CoDyCo](https://www.codyco.eu/) humanoid contact-control research effort around the [iCub](https://icub.iit.it/) platform.
+VectorView began in the summer of **2015**, during a second-year engineering internship (*stage de fin de 2A*) at [ISIR](https://www.isir.upmc.fr/) — the Institut des Systèmes Intelligents et de Robotique (Sorbonne Université / CNRS). The work took place in the **SYROCO** team (complex robotic systems) on the CentraleSupélec campus at **Gif-sur-Yvette**, within the broader [CoDyCo](https://www.codyco.eu/) research effort on whole-body contact control for the [iCub](https://icub.iit.it/) humanoid.
 
-The goal was practical and very specific: make **contact forces visible in real time** inside **Gazebo**, so researchers could see what the robot's hands (and the control stack) were doing during simulated physical interaction — not just read numbers in a log file. That produced two deliverables that still define this repository:
+The goal was straightforward: make **contact forces visible in real time** in **Gazebo**, so researchers could see what the robot's hands—and the control stack—were doing during simulated interaction, instead of digging through log files. Two tools came out of that work:
 
-- **VectorView** — a Gazebo plugin drawing a live force arrow on the link
-- **VectorGUI** — a desktop app plotting magnitudes and spawning test objects into the running world
+- **VectorView** — a Gazebo plugin that draws a live force arrow on each instrumented link
+- **VectorGUI** — a desktop app that plots force magnitude and spawns test objects into the running world
 
-The original write-up is in the internship report (French, October 2015):
+The original write-up is in the internship report (French, October 2015): [`docs/reports/Rapport_de_Stage_2A_2015.pdf`](docs/reports/Rapport_de_Stage_2A_2015.pdf).
 
-📄 [`docs/reports/Rapport_de_Stage_2A_2015.pdf`](docs/reports/Rapport_de_Stage_2A_2015.pdf)
+The code from that summer shows it. Raw pointers, `using namespace` in headers, CMake 2.8, and architecture decisions best summarized as *"it compiled on my machine in 2015."* Eventually I could not open the tree without wincing—which is why [`docs/issues-report.md`](docs/issues-report.md) exists.
 
-Fair warning about the code from that era: it was written by a motivated intern who had just discovered that `gazebo::math::Vector3` and Qt4 were real things. Raw pointers, `using namespace` in headers, CMake 2.8 energy, and architectural choices best described as *"it compiled on my machine in 2015"* — I eventually could not look at it without wincing. The [`docs/issues-report.md`](docs/issues-report.md) audit exists for a reason.
-
-So in **2026**, this project gets a proper modernization pass: **Gazebo Harmonic** instead of dead Classic, **Qt 6** instead of Qt4, **C++17**, and a stack that actually installs on **Ubuntu 24.04 Noble**. Same research idea; fewer ghosts in the build tree.
+In **2026**, the project is being brought up to date for **Ubuntu 24.04 Noble**: **Gazebo Harmonic** instead of Classic, **Qt 6** instead of Qt4, and **C++17** throughout. Same research idea; a stack you can actually install today.
 
 ## Target stack (Ubuntu 24.04 Noble, 2026)
 
@@ -108,7 +106,7 @@ sudo apt install gz-harmonic
 
 ### Run the full iCub demo
 
-The internship workflow also depends on external robotics software:
+The original demo workflow also depends on external robotics software:
 
 - [YARP](https://www.yarp.it/) and the iCub software stack
 - [gz-sim-yarp-plugins](https://github.com/robotology/gz-sim-yarp-plugins) (replaces gazebo-yarp-plugins on Noble)
@@ -226,7 +224,7 @@ gz sim -r worlds/robot.world
 ISIRWholeBodyController --sequence StageTestTasks
 ```
 
-Requires the full iCub stack from [Requirements](#run-the-full-iCub-demo).
+Requires the full iCub stack from [Run the full iCub demo](#run-the-full-icub-demo).
 
 ```bash
 vectorGUI l_hand
