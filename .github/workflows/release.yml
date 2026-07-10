@@ -43,9 +43,7 @@ jobs:
         run: ctest --test-dir build --output-on-failure
 
       - name: Record grasp demo video
-        run: |
-          chmod +x scripts/animate_grasp.sh scripts/record_release_video.sh
-          ./scripts/record_release_video.sh grasp_demo.mp4
+        run: ./scripts/record_release_video.sh grasp_demo.mp4
 
       - name: Upload video to GitHub release
         if: github.event_name == 'release'
