@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<!--
+  Self-contained release demo: a hand probe presses and releases a box while
+  VectorView draws contact-force arrows. Used by scripts/record_release_video.sh.
+-->
+<sdf version="1.8">
+  <world name="release_demo">
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-contact-system" name="gz::sim::systems::Contact"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <gui fullscreen="0">
+      <plugin filename="MinimalScene" name="3D View">
+        <gz-gui>
+          <title>3D View</title>
+          <property type="bool" key="showTitleBar">false</property>
+          <property type="string" key="state">docked</property>
+        </gz-gui>
+        <engine>ogre2</engine>
+        <scene>scene</scene>
+        <ambient_light>0.45 0.45 0.45</ambient_light>
+        <background_color>0.82 0.82 0.82</background_color>
+        <!-- View toward the hand / box interaction (similar to the 2015 demo shot) -->
+        <camera_pose>1.05 -1.35 0.88 0 0.38 2.35</camera_pose>
+      </plugin>
+
+      <plugin filename="GzSceneManager" name="Scene Manager">
+        <gz-gui>
+          <property key="width" type="double">5</property>
+          <property key="height" type="double">5</property>
+          <property key="state" type="string">floating</property>
+          <property key="showTitleBar" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+
+      <plugin filename="MarkerManager" name="Marker manager">
+        <gz-gui>
+          <property key="width" type="double">5</property>
+          <property key="height" type="double">5</property>
+          <property key="state" type="string">floating</property>
+          <property key="showTitleBar" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+
+      <plugin filename="WorldControl" name="World control">
+        <gz-gui>
+          <property type="bool" key="showTitleBar">false</property>
+          <property type="string" key="state">floating</property>
+        </gz-gui>
+        <start_paused>false</start_paused>
+      </plugin>
+    </gui>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.3 0.3 0.3 1</specular>
+      <direction>-0.4 0.2 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>20 20</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>20 20</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.7 0.7 0.7 1</ambient>
+            <diffuse>0.7 0.7 0.7 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Table from the original robot.world layout -->
+    <model name="box_table">
+      <static>true</static>
+      <pose>0.40 0 0.25 0 0 0</pose>
+      <link name="box">
+        <collision name="collision">
+          <geometry>
+            <box><size>0.4 0.6 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box><size>0.4 0.6 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.55 0.55 0.55 1</ambient>
+            <diffuse>0.55 0.55 0.55 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Object pressed by the hand (robot.world "object" model) -->
+    <model name="object">
+      <static>true</static>
+      <pose>0.365 0 0.5 0 0 0</pose>
+      <link name="main">
+        <collision name="collision">
+          <geometry>
+            <box><size>0.25 0.25 0.3</size></box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box><size>0.25 0.25 0.3</size></box>
+          </geometry>
+          <material>
+            <ambient>0.75 0.55 0.35 1</ambient>
+            <diffuse>0.75 0.55 0.35 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Simplified hand / forearm stand-in for the iCub contact demo -->
+    <model name="hand_probe">
+      <pose>0.365 0 0.85 0 0 0</pose>
+      <link name="forearm">
+        <pose>-0.12 0 0.05 0 0.3 0</pose>
+        <visual name="visual">
+          <geometry>
+            <cylinder><radius>0.035</radius><length>0.18</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>0.2 0.2 0.25 1</ambient>
+            <diffuse>0.25 0.25 0.3 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <link name="pad">
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <mass>0.35</mass>
+          <inertia>
+            <ixx>0.001</ixx><iyy>0.001</iyy><izz>0.001</izz>
+          </inertia>
+        </inertial>
+        <collision name="pad_collision">
+          <geometry>
+            <box><size>0.10 0.12 0.05</size></box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box><size>0.10 0.12 0.05</size></box>
+          </geometry>
+          <material>
+            <ambient>0.1 0.1 0.9 1</ambient>
+            <diffuse>0.1 0.1 0.95 1</diffuse>
+          </material>
+        </visual>
+        <sensor name="pad_contact" type="contact">
+          <update_rate>50</update_rate>
+          <contact>
+            <collision>pad_collision</collision>
+            <topic>/vectorview/hand_probe/pad</topic>
+          </contact>
+        </sensor>
+      </link>
+      <joint name="forearm_joint" type="fixed">
+        <parent>pad</parent>
+        <child>forearm</child>
+      </joint>
+      <plugin filename="libvectorview.so" name="vectorview::VectorView">
+        <link_name>pad</link_name>
+        <contact_topic>/vectorview/hand_probe/pad</contact_topic>
+        <collision_scope>hand_probe::pad::pad_collision</collision_scope>
+      </plugin>
+    </model>
+  </world>
+</sdf>

@@ -13,6 +13,7 @@ Bundled assets:
 
 - `models/` contains the instrumented iCub model and simple spawn primitives
 - `worlds/robot.world` is the demo Gazebo Sim world
+- `worlds/release_demo.world` is a self-contained hand/box press scene used for release videos
 
 ## A little bit of history
 
@@ -191,6 +192,19 @@ export GZ_SIM_SYSTEM_PLUGIN_PATH="$VECTOR_VIEW/build:${GZ_SIM_SYSTEM_PLUGIN_PATH
 export GZ_SIM_RESOURCE_PATH="$VECTOR_VIEW/models:${GZ_SIM_RESOURCE_PATH:-}"
 export GZ_SIM_USER_PATH="$VECTOR_VIEW/worlds:${GZ_SIM_USER_PATH:-}"
 ```
+
+## Release demo video
+
+Publishing a GitHub release runs [`.github/workflows/release.yml`](.github/workflows/release.yml). The workflow builds VectorView, records a short clip of the hand probe pressing and releasing the demo box (with contact-force arrows, like the original 2015 visualization), and attaches `release_demo.mp4` to the release.
+
+Record the same clip locally:
+
+```bash
+cmake --build build
+./scripts/record_release_video.sh
+```
+
+Output: `build/release_demo.mp4` (requires `xvfb`, `ffmpeg`, and Gazebo Harmonic).
 
 ## Running the demo
 

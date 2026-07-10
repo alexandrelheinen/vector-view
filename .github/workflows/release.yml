@@ -1,0 +1,51 @@
+name: Release demo video
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  release-video:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install base dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ pkg-config qt6-base-dev libqt6opengl6-dev \
+            curl lsb-release gnupg xvfb ffmpeg mesa-utils
+
+      - name: Install Gazebo Harmonic
+        run: |
+          sudo curl -fsSL https://packages.osrfoundation.org/gazebo.gpg \
+            -o /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) \
+            signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] \
+            https://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" \
+            | sudo tee /etc/apt/sources.list.d/gazebo-stable.list
+          sudo apt-get update
+          sudo apt-get install -y gz-harmonic
+
+      - name: Build VectorView
+        run: |
+          cmake -S . -B build -DCMAKE_CXX_COMPILER=g++ \
+            -DBUILD_VECTORVIEW=ON -DBUILD_VECTORGUI=OFF -DBUILD_TESTS=OFF
+          cmake --build build -j"$(nproc)"
+
+      - name: Record release demo video
+        env:
+          LIBGL_ALWAYS_SOFTWARE: "1"
+          MESA_GL_VERSION_OVERRIDE: "3.3"
+        run: |
+          chmod +x scripts/record_release_video.sh scripts/animate_release_demo.sh
+          scripts/record_release_video.sh
+
+      - name: Upload demo video to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/release_demo.mp4
+          fail_on_unmatched_files: true
