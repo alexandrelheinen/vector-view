@@ -14,11 +14,15 @@ namespace vectorview {
 class ForceFilter {
  public:
   ForceFilter();
+  explicit ForceFilter(double sample_rate, int order, double cutoff_hz);
   ~ForceFilter();
 
   double Filter(Vec3* vector);
+  void Configure(double sample_rate, int order, double cutoff_hz);
 
  private:
+  void Init(double sample_rate, int order, double cutoff_hz);
+
   std::unique_ptr<Dsp::Filter> filter;
 };
 
