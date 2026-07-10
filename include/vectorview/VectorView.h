@@ -1,9 +1,7 @@
 #ifndef VECTORVIEW_H
 #define VECTORVIEW_H
 
-#define FORCE_SCALE 8E-2 // scale between the forces intensities and the vectors length (unity N^-1)
-#define NOISE_THRESHOLD 1E-3
-#define ARROW_LENGTH .05
+#include "vectorview/Constants.h"
 
 // Gazebo includes
 #include <gazebo.hh>
@@ -17,9 +15,7 @@
 #include <vector>
 // #include <boost/shared_ptr.hpp>
 // filter includes
-#include "DspFilters/Dsp.h"
-#include "DspFilters/Filter.h"
-#include "DspFilters/ForceFilter.h"
+#include "vectorview/ForceFilter.h"
 
 namespace gazebo
 {
