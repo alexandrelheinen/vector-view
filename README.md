@@ -25,7 +25,7 @@ The goal was straightforward: make **contact forces visible in real time** in **
 
 The work is described in a French internship report from October 2015. That document is not distributed with this repository.
 
-The code from that summer shows it. Raw pointers, `using namespace` in headers, CMake 2.8, and architecture decisions best summarized as *"it compiled on my machine in 2015."* Eventually I could not open the tree without wincing; which is why [`docs/issues-report.md`](docs/issues-report.md) exists.
+The code from that summer shows it. Raw pointers, `using namespace` in headers, CMake 2.8, and architecture decisions best summarized as *"it compiled on my machine in 2015."* Eventually I could not open the tree without wincing; which is why the v1.0 audit in [`docs/v1-audit.md`](docs/v1-audit.md) exists.
 
 In **2026**, the project is being brought up to date for **Ubuntu 24.04 Noble**: **Gazebo Harmonic** instead of Classic, **Qt 6** instead of Qt4, and **C++17** throughout. Same research idea; a stack you can actually install today.
 
@@ -72,6 +72,7 @@ scripts/                Demo launcher and format helper
 tests/                  Unit tests (no Gazebo required)
 .env.example            Environment variable template
 docs/estimate.md        Modernization effort estimate vs. actual time
+docs/v1-audit.md        v1.0.0 audit summary and v2.0 resolution status
 ```
 
 ## Requirements

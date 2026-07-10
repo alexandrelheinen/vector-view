@@ -4,7 +4,7 @@ All notable changes to Vector View and Vector GUI are documented in this file.
 
 ---
 
-## [2.0.0] - 2026
+## [2.0.0] - 2026-07-10
 
 Native **Ubuntu 24.04 Noble** port using **Gazebo Harmonic**, **Qt 6.4**, and **QCustomPlot 2.1.1**.
 
@@ -14,16 +14,27 @@ Native **Ubuntu 24.04 Noble** port using **Gazebo Harmonic**, **Qt 6.4**, and **
 - Contact topics use `/vectorview/MODEL_INSTANCE/LINK_NAME` instead of `/gazebo/...`.
 - Model spawn uses the `/world/{world}/create` service instead of `~/factory`.
 - Environment variables renamed from `GAZEBO_*` to `GZ_SIM_*`.
+- Plugin library renamed to `libvector-view.so`; GUI executable renamed to `vector-gui`.
 
 ### Added
 
 - `docs/estimate.md` with modernization effort estimate vs. actual elapsed time.
-- GitHub Actions workflow for Noble (`gz-harmonic` + Qt6).
+- `docs/v1-audit.md` consolidating the v1.0.0 audit (replaces separate issues/fix-plan/strengths reports).
+- GitHub Actions workflows: Noble build (`build.yml`) and release grasp-demo video (`release.yml`).
+- Catch2 unit tests for `ContactUtils` and `ForceFilter` (`BUILD_TESTS` option).
+- Shared `TopicPath` API and `ModelContext` for link-based contact topic resolution.
+- Vector GUI settings panel for runtime parameters (noise threshold, filter, plot window).
+- `.env.example` and portable terminal detection in `scripts/run.sh`.
+- GPL v3 `LICENSE` at repository root.
+- `worlds/release_demo.world` for the automated grasp-demo recording workflow.
 
 ### Changed
 
-- CMake requires 3.16+, C++17, target-based linking.
+- CMake requires 3.16+, C++17, target-based linking; explicit source lists (no `GLOB`).
+- `third_party/` renamed to `external/` with a README documenting vendored licences.
 - Demo script runs `gz sim` and documents `gz-sim-yarp-plugins`.
+- Memory management modernised (`std::unique_ptr` for filters; shared `Constants.h`).
+- iCub model stability tweaks for the release grasp-demo video.
 
 ---
 
@@ -95,7 +106,7 @@ The work was carried out as part of research on whole-body contact force control
 
 ### Known limitations at v1.0.0
 
-> The following issues were catalogued as part of the v1.0.0 release process. They are documented in detail in [`docs/issues-report.md`](docs/issues-report.md) and addressed by the roadmap in [`docs/fix-plan.md`](docs/fix-plan.md).
+> The following issues were catalogued as part of the v1.0.0 release process. They are documented in [`docs/v1-audit.md`](docs/v1-audit.md) and resolved in v2.0.
 
 - Uses the **deprecated Gazebo 2-6 C++ math API** (`gazebo::math::Vector3`, `math::Matrix3`, `math::Pose`). Gazebo 7+ replaced this with `ignition::math`.
 - Depends on **Qt4**, which reached end-of-life in December 2015.
@@ -130,4 +141,4 @@ The work was carried out as part of research on whole-body contact force control
 
 ---
 
-*For a detailed analysis of strengths, identified issues, and the improvement roadmap, see the [`docs/`](docs/) folder.*
+*For the v1.0 audit summary and modernization notes, see [`docs/v1-audit.md`](docs/v1-audit.md) and [`docs/estimate.md`](docs/estimate.md).*
