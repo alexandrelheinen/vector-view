@@ -4,18 +4,17 @@
 
 using namespace gazebo;
 
-Interface::Interface(std::string _path) : QWidget(NULL)
+Interface::Interface(std::string _path, const std::string& robot_name) : QWidget(NULL)
 {
   this->topicPath   = _path;
   this->factoryPath = "~/factory";
+  this->robotName   = robot_name;
   counter = 0;
 
   // this is the model list
   models.push_back("sphere");
   models.push_back("cylinder");
   models.push_back("box");
-  models.push_back("robot");
-  models.push_back("table");
 
   // layouts and frames initialization
   QGridLayout *mainLayout    = new QGridLayout(this);
@@ -210,7 +209,6 @@ void Interface::Update(ConstContactsPtr &message)
   boost::mutex::scoped_lock lock(mutex);
   math::Vector3 position;
   math::Vector3 force = math::Vector3::Zero;
-  std::string robotName = "iCub";
 
   if (message->contact_size() > 0) {
     position = msgs::Convert(message->contact(0).position(0));
@@ -237,16 +235,16 @@ void Interface::Update(ConstContactsPtr &message)
     }
 
     vectorview::GuiContactResult aggregated =
-        vectorview::AggregateGuiForces(contacts, robotName);
+        vectorview::AggregateGuiForces(contacts, this->robotName);
     force = math::Vector3(aggregated.force.x, aggregated.force.y, aggregated.force.z);
     const std::string name = aggregated.object_name;
 
     if (++counter > 10) {
+      counter = 0;
       if (force.GetLength() > NOISE_THRESHOLD) {
         this->setObjectContact(name);
         this->setPosition(position);
         this->setForce(force);
-        counter = 0;
       }
     }
   }
@@ -286,9 +284,12 @@ void Interface::Spawn(std::string _path, math::Pose _pose)
 void Interface::UpdatePlot()
 {
   boost::mutex::scoped_lock lock(mutex);
+  if (timeAxis.empty()) {
+    return;
+  }
+
   plot->graph(0)->addData(timeAxis, forceAxis);
   plot->graph(1)->addData(timeAxis, filterAxis);
-  // axis range conditional update
   if(timeAxis.back() > TIME_MAX)
     plot->xAxis->setRange(timeAxis.back() - TIME_MAX, timeAxis.back());
 
@@ -297,7 +298,6 @@ void Interface::UpdatePlot()
     forceMax = forceAxis.back();
     plot->yAxis->setRange(0, forceMax);
   }
-  // repaint plot element
   plot->replot();
   timeAxis.clear();
   forceAxis.clear();
