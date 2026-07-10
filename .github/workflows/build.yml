@@ -31,7 +31,7 @@ jobs:
       - name: Configure
         run: |
           cmake -S . -B build -DCMAKE_CXX_COMPILER=g++ \
-            -DBUILD_VECTORVIEW=ON -DBUILD_VECTORGUI=ON -DBUILD_TESTS=ON
+            -DBUILD_VECTOR_VIEW=ON -DBUILD_VECTOR_GUI=ON -DBUILD_TESTS=ON
 
       - name: Build
         run: cmake --build build -j"$(nproc)"

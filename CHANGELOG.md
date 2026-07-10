@@ -4,7 +4,7 @@ All notable changes to Vector View and Vector GUI are documented in this file.
 
 ---
 
-## [2.0.0] – 2026
+## [2.0.0] - 2026
 
 Native **Ubuntu 24.04 Noble** port using **Gazebo Harmonic**, **Qt 6.4**, and **QCustomPlot 2.1.1**.
 
@@ -27,7 +27,7 @@ Native **Ubuntu 24.04 Noble** port using **Gazebo Harmonic**, **Qt 6.4**, and **
 
 ---
 
-## [1.0.0] – 2015 (Released 2025)
+## [1.0.0] - 2015 (Released 2025)
 
 This is the inaugural stable release of the **Vector View** Gazebo visual plugin and the companion **Vector GUI** desktop application, originally developed in 2015 during an internship at [ISIR](http://www.isir.upmc.fr/) (Institut des Systèmes Intelligents et de Robotique, CNRS / Université Pierre et Marie Curie).
 
@@ -56,40 +56,40 @@ The work was carried out as part of research on whole-body contact force control
 
 - Connects to any Gazebo contact sensor topic at runtime (full path or short link name accepted).
 - Displays live contact information:
-  - **Object** – name of the external body in contact.
-  - **Position** – 3-D Cartesian coordinates (x, y, z) of the contact point.
-  - **Force** – filtered X/Y/Z force components.
+  - **Object** - name of the external body in contact.
+  - **Position** - 3-D Cartesian coordinates (x, y, z) of the contact point.
+  - **Force** - filtered X/Y/Z force components.
 - Streams force magnitude data to a real-time **QCustomPlot** graph showing both the raw magnitude and the filtered signal simultaneously.
 - Provides a **Spawn** panel where the user can select a model (sphere, cylinder, box, robot, table) from a drop-down menu, enter a target (x, y, z) position, and spawn the object into the running simulation via the Gazebo factory topic.
 - Uses a `boost::mutex` to protect shared data between the Gazebo transport callback thread and the Qt timer thread.
 
-#### DSPFilters — Bundled C++ DSP Library
+#### DSPFilters : Bundled C++ DSP Library
 
 - Local copy of [DSPFilters](https://github.com/vinniefalco/DSPFilters) by Vinnie Falco, providing cascaded digital filters.
 - A custom `ForceFilter` wrapper class (`Dsp::ForceFilter`) tailors the library for 3-axis force vector filtering.
 
-#### QCustomPlot — Bundled Qt Plotting Widget
+#### QCustomPlot : Bundled Qt Plotting Widget
 
 - Local copy of [QCustomPlot](http://www.qcustomplot.com/), included as a single `.cpp`/`.h` pair, enabling the real-time magnitude plot with zero additional Qt dependencies.
 
 #### Build System
 
 - CMake 2.8+ build system with two independent options:
-  - `BUILD_VECTORVIEW` (default: `ON`) – builds `libvectorview.so`.
-  - `BUILD_VECTORGUI` (default: `ON`) – builds `vectorGUI` executable and pulls in Qt4.
+  - `BUILD_VECTOR_VIEW` (default: `ON`): builds `libvector-view.so`.
+  - `BUILD_VECTOR_GUI` (default: `ON`): builds `vector-gui` executable and pulls in Qt6.
 - `DspFilters` is compiled as a shared library used by both targets.
 
 #### Models
 
 - Pre-configured iCub Gazebo model variants with contact sensors already set up:
-  - `icub` – base model.
-  - `icub_contact` – model with contact sensors.
+  - `icub` - base model.
+  - `icub_contact` - model with contact sensors.
   - Primitive shapes (`box`, `cylinder`, `sphere`) for spawning during tests.
 
 #### Auxiliary Files
 
-- `robot.world` – ready-to-use Gazebo world file loading the instrumented iCub model.
-- `run.sh` – shell script that starts YARP server, Gazebo, two VectorGUI instances (left and right hand), and the ISIR whole-body controller task sequence in separate terminal tabs.
+- `robot.world` - ready-to-use Gazebo world file loading the instrumented iCub model.
+- `run.sh` - shell script that starts YARP server, Gazebo, two Vector GUI instances (left and right hand), and the ISIR whole-body controller task sequence in separate terminal tabs.
 
 ---
 
@@ -97,7 +97,7 @@ The work was carried out as part of research on whole-body contact force control
 
 > The following issues were catalogued as part of the v1.0.0 release process. They are documented in detail in [`docs/issues-report.md`](docs/issues-report.md) and addressed by the roadmap in [`docs/fix-plan.md`](docs/fix-plan.md).
 
-- Uses the **deprecated Gazebo 2–6 C++ math API** (`gazebo::math::Vector3`, `math::Matrix3`, `math::Pose`). Gazebo 7+ replaced this with `ignition::math`.
+- Uses the **deprecated Gazebo 2-6 C++ math API** (`gazebo::math::Vector3`, `math::Matrix3`, `math::Pose`). Gazebo 7+ replaced this with `ignition::math`.
 - Depends on **Qt4**, which reached end-of-life in December 2015.
 - CMake minimum version set to 2.8 (released 2009); modern projects require at least 3.5.
 - `filter` raw pointer in `VectorView` is allocated in `Load()` but never freed (memory leak).
@@ -126,7 +126,7 @@ The work was carried out as part of research on whole-body contact force control
 
 ### Contributors
 
-- **Alexandre L. Heinen** — design, implementation, integration (internship at ISIR, 2015).
+- **Alexandre L. Heinen** : design, implementation, integration (internship at ISIR, 2015).
 
 ---
 

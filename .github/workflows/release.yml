@@ -34,7 +34,7 @@ jobs:
       - name: Configure
         run: |
           cmake -S . -B build -DCMAKE_CXX_COMPILER=g++ \
-            -DBUILD_VECTORVIEW=ON -DBUILD_VECTORGUI=OFF -DBUILD_TESTS=ON
+            -DBUILD_VECTOR_VIEW=ON -DBUILD_VECTOR_GUI=OFF -DBUILD_TESTS=ON
 
       - name: Build VectorView plugin
         run: cmake --build build -j"$(nproc)"
