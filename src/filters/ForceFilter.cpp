@@ -1,20 +1,20 @@
 #include "vectorview/ForceFilter.h"
-using namespace Dsp;
-using namespace gazebo;
 
-ForceFilter::ForceFilter()
-{
+using namespace vectorview;
+
+ForceFilter::ForceFilter() {
   Dsp::Params params;
-  params[0] = RATE;                 // sample rate
-  params[1] = 3;                   // order
-  params[2] = 1.5;             // cutoff frequency
-  this->filter = new Dsp::FilterDesign <Dsp::Butterworth::Design::LowPass <10>, 3>; // a 3 channel filter to a 3 dimention vector :)
-  this->filter->setParams(params);
+  params[0] = RATE;
+  params[1] = 3;
+  params[2] = 1.5;
+  filter.reset(new Dsp::FilterDesign<Dsp::Butterworth::Design::LowPass<10>, 3>);
+  filter->setParams(params);
 }
 
-double ForceFilter::Filter(math::Vector3* force)
-{
-  double length = force->GetLength();
+ForceFilter::~ForceFilter() {}
+
+double ForceFilter::Filter(Vec3* force) {
+  const double length = force->Length();
   double* values[3];
   values[0] = &(force->x);
   values[1] = &(force->y);
