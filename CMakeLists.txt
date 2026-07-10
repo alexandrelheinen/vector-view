@@ -12,27 +12,27 @@ option(BUILD_VECTORVIEW "Build the Gazebo Sim VectorView system plugin" ON)
 option(BUILD_TESTS "Build unit tests" ON)
 
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
-set(DSPFILTERS_INCLUDE ${PROJECT_SOURCE_DIR}/third_party/dspfilters/include)
-set(QCUSTOMPLOT_INCLUDE ${PROJECT_SOURCE_DIR}/third_party/qcustomplot)
+set(DSPFILTERS_INCLUDE ${PROJECT_SOURCE_DIR}/external/dspfilters/include)
+set(QCUSTOMPLOT_INCLUDE ${PROJECT_SOURCE_DIR}/external/qcustomplot)
 
 set(dspfilters_sources
-  third_party/dspfilters/src/Bessel.cpp
-  third_party/dspfilters/src/Biquad.cpp
-  third_party/dspfilters/src/Butterworth.cpp
-  third_party/dspfilters/src/Cascade.cpp
-  third_party/dspfilters/src/ChebyshevI.cpp
-  third_party/dspfilters/src/ChebyshevII.cpp
-  third_party/dspfilters/src/Custom.cpp
-  third_party/dspfilters/src/Design.cpp
-  third_party/dspfilters/src/Documentation.cpp
-  third_party/dspfilters/src/Elliptic.cpp
-  third_party/dspfilters/src/Filter.cpp
-  third_party/dspfilters/src/Legendre.cpp
-  third_party/dspfilters/src/Param.cpp
-  third_party/dspfilters/src/PoleFilter.cpp
-  third_party/dspfilters/src/RBJ.cpp
-  third_party/dspfilters/src/RootFinder.cpp
-  third_party/dspfilters/src/State.cpp
+  external/dspfilters/src/Bessel.cpp
+  external/dspfilters/src/Biquad.cpp
+  external/dspfilters/src/Butterworth.cpp
+  external/dspfilters/src/Cascade.cpp
+  external/dspfilters/src/ChebyshevI.cpp
+  external/dspfilters/src/ChebyshevII.cpp
+  external/dspfilters/src/Custom.cpp
+  external/dspfilters/src/Design.cpp
+  external/dspfilters/src/Documentation.cpp
+  external/dspfilters/src/Elliptic.cpp
+  external/dspfilters/src/Filter.cpp
+  external/dspfilters/src/Legendre.cpp
+  external/dspfilters/src/Param.cpp
+  external/dspfilters/src/PoleFilter.cpp
+  external/dspfilters/src/RBJ.cpp
+  external/dspfilters/src/RootFinder.cpp
+  external/dspfilters/src/State.cpp
 )
 
 set(forcefilter_sources src/filters/ForceFilter.cpp)
@@ -48,7 +48,7 @@ set(gui_sources
   src/gui/VectorGUI.cpp
   src/gui/Interface.cpp
   ${gz_common_sources}
-  third_party/qcustomplot/qcustomplot.cpp
+  external/qcustomplot/qcustomplot.cpp
 )
 
 if(BUILD_VECTORGUI)

@@ -65,7 +65,7 @@ src/plugin/             Gazebo Sim system plugin
 src/gui/                Qt6 application
 src/filters/            Butterworth force filter wrapper
 src/common/             Shared logic (ContactUtils, TopicPath, ContactMessage)
-third_party/            Vendored DSPFilters, QCustomPlot 2.1.1, Catch2
+external/            Vendored DSPFilters, QCustomPlot 2.1.1, Catch2
 models/                 Gazebo models
 worlds/                 Gazebo Sim world files
 scripts/                Demo launcher and format helper
@@ -117,7 +117,7 @@ There is no single `apt install` for this layer. Follow the installation guides 
 
 ### Bundled third-party code
 
-Sources for [DSPFilters](https://github.com/vinniefalco/DSPFilters) and [QCustomPlot 2.1.1](http://www.qcustomplot.com/) are vendored under `third_party/`. You do not need to install them separately.
+Sources for [DSPFilters](https://github.com/vinniefalco/DSPFilters) and [QCustomPlot 2.1.1](http://www.qcustomplot.com/) are vendored under `external/`. You do not need to install them separately.
 
 ## Quick start
 
