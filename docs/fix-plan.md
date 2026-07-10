@@ -6,7 +6,7 @@
 
 ---
 
-## Phase 1 — Critical Bug Fixes (1–2 days)
+## Phase 1 : Critical Bug Fixes (1-2 days)
 
 These are code-correctness issues that cause crashes, undefined behaviour, or memory leaks. They should be addressed before any other work.
 
@@ -15,13 +15,13 @@ These are code-correctness issues that cause crashes, undefined behaviour, or me
 **Files:** `src/vectorview/VectorView.cpp`, `src/DspFilters/ForceFilter.cpp`
 
 ```cpp
-// ForceFilter.cpp — add:
+// ForceFilter.cpp : add:
 ForceFilter::~ForceFilter()
 {
   delete filter;
 }
 
-// VectorView.cpp — destructor:
+// VectorView.cpp : destructor:
 VectorView::~VectorView()
 {
   delete filter;
@@ -135,7 +135,7 @@ Remove the individual `#define NOISE_THRESHOLD` lines from both existing headers
 
 ---
 
-## Phase 2 — Compatibility Upgrade (1–2 weeks)
+## Phase 2 : Compatibility Upgrade (1-2 weeks)
 
 These changes are required to make the project buildable and usable on a modern Linux system.
 
@@ -148,14 +148,14 @@ Replace the Qt4 CMake find-module with Qt5:
 ```cmake
 find_package(Qt5 COMPONENTS Widgets Xml Core REQUIRED)
 …
-target_link_libraries(${GUINAME}
+target_link_libraries(${VECTOR_GUI}
   Qt5::Widgets Qt5::Xml Qt5::Core
   …)
 ```
 
 In source files, replace deprecated Qt4 headers (`<QtGui>`) with Qt5 equivalents (`<QApplication>`, `<QWidget>`, etc.) and remove the `include(${QT_USE_FILE})` and `add_definitions(${QT_DEFINITIONS})` lines.
 
-**Acceptance criterion:** `BUILD_VECTORGUI` target compiles cleanly against a Qt5 installation; the GUI window launches and renders correctly.
+**Acceptance criterion:** `BUILD_VECTOR_GUI` target compiles cleanly against a Qt6 installation; the GUI window launches and renders correctly.
 
 ---
 
@@ -200,7 +200,7 @@ Key API changes:
 
 ---
 
-## Phase 3 — Code Quality (3–5 days)
+## Phase 3 : Code Quality (3-5 days)
 
 ### 3.1 Remove `using namespace gazebo` from header (§4.1)
 
@@ -250,9 +250,9 @@ Update `Interface` constructor signature accordingly.
 Replace the stage-and-batch approach with direct `addData()` calls inside `Update()`:
 
 ```cpp
-// Interface.h — remove: QVector<double> timeAxis, forceAxis, filterAxis;
+// Interface.h : remove: QVector<double> timeAxis, forceAxis, filterAxis;
 
-// Interface.cpp — in Update():
+// Interface.cpp : in Update():
 double t = message->time().sec() + 1e-9 * message->time().nsec();
 double raw   = force.Length();
 double filt  = filter->Filter(&force);
@@ -273,7 +273,7 @@ Research whether `CreateDynamicLine` returns an owning or borrowing pointer. If 
 
 ---
 
-## Phase 4 — Testing & Documentation (1 week)
+## Phase 4 : Testing & Documentation (1 week)
 
 ### 4.1 Add a `LICENSE` file (§5.1)
 
@@ -300,7 +300,7 @@ Add `enable_testing()` and `add_test()` calls in `CMakeLists.txt`.
 Create `.github/workflows/build.yml` that:
 
 1. Installs Gazebo 11, Ignition Math, Qt5, Boost, Protobuf.
-2. Runs `cmake -DBUILD_VECTORVIEW=ON -DBUILD_VECTORGUI=ON .. && make`.
+2. Runs `cmake -DBUILD_VECTOR_VIEW=ON -DBUILD_VECTOR_GUI=ON .. && make`.
 3. Runs `ctest`.
 
 ---
@@ -339,12 +339,12 @@ Replace hard-coded `gnome-terminal --tab -e "…"` calls with invocations using 
 
 | Phase | Issues addressed | Estimated effort | Risk if skipped |
 |---|---|---|---|
-| 1 — Critical bugs | 1.1, 1.2, 2.2, 4.4, 4.5, 2.3 | 1–2 days | Memory leaks, crash, stale UI |
-| 2 — Compatibility | 3.1, 3.2, 3.3, 3.4, 3.5 | 1–2 weeks | Does not build on any modern system |
-| 3 — Code quality | 4.1, 4.2, 4.3, 2.4, 1.3 | 3–5 days | Technical debt, latent bugs |
-| 4 — Testing & docs | 5.1, 5.2, 5.3, 5.4, 5.5 | 1 week | No regression safety net, legal ambiguity |
+| 1 : Critical bugs | 1.1, 1.2, 2.2, 4.4, 4.5, 2.3 | 1-2 days | Memory leaks, crash, stale UI |
+| 2 : Compatibility | 3.1, 3.2, 3.3, 3.4, 3.5 | 1-2 weeks | Does not build on any modern system |
+| 3 : Code quality | 4.1, 4.2, 4.3, 2.4, 1.3 | 3-5 days | Technical debt, latent bugs |
+| 4 : Testing & docs | 5.1, 5.2, 5.3, 5.4, 5.5 | 1 week | No regression safety net, legal ambiguity |
 
-**Total estimated effort:** 3–4 weeks for a single developer.
+**Total estimated effort:** 3-4 weeks for a single developer.
 
 ---
 

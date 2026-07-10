@@ -38,11 +38,11 @@ sleep 6
 
 echo "3. Opening the GUI interface for force analysis."
 echo "3.1. topic path: /vectorview/iCub_fixed/r_hand"
-$TERMINAL --tab -e "$VECTOR_VIEW/build/vectorGUI /vectorview/iCub_fixed/r_hand"
+$TERMINAL --tab -e "$VECTOR_VIEW/build/vector-gui /vectorview/iCub_fixed/r_hand"
 sleep 0.5
 
 echo "3.2. topic path: /vectorview/iCub_fixed/l_hand"
-$TERMINAL --tab -e "$VECTOR_VIEW/build/vectorGUI l_hand"
+$TERMINAL --tab -e "$VECTOR_VIEW/build/vector-gui l_hand"
 sleep 1
 
 if [ -z "${CODYCO_SUPERBUILD_ROOT:-}" ]; then

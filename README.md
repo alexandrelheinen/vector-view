@@ -135,8 +135,8 @@ CMake options (all enabled by default):
 
 | Option | Default | Purpose |
 |--------|---------|---------|
-| `BUILD_VECTORVIEW` | ON | Build the Vector View Gazebo Sim system plugin |
-| `BUILD_VECTORGUI` | ON | Build the Vector GUI Qt6 application |
+| `BUILD_VECTOR_VIEW` | ON | Build the Vector View Gazebo Sim system plugin |
+| `BUILD_VECTOR_GUI` | ON | Build the Vector GUI Qt6 application |
 | `BUILD_TESTS` | ON | Build unit tests |
 
 If Gazebo Harmonic or Qt6 is not found, CMake disables the plugin and GUI targets automatically and prints a warning. Tests still build.
@@ -161,7 +161,7 @@ ctest --output-on-failure
 Force a tests-only configure:
 
 ```bash
-cmake .. -DBUILD_VECTORVIEW=OFF -DBUILD_VECTORGUI=OFF -DBUILD_TESTS=ON
+cmake .. -DBUILD_VECTOR_VIEW=OFF -DBUILD_VECTOR_GUI=OFF -DBUILD_TESTS=ON
 ```
 
 ## Configuration
@@ -284,10 +284,10 @@ Code under `external/` is excluded.
 
 | Target | Output | Subproject |
 |--------|--------|------------|
-| `vectorview` | `libvector-view.so` | Vector View (Gazebo Sim system plugin) |
-| `vector-gui` | Qt6 executable | Vector GUI |
-| `vectorview_common` | Static library | Shared utilities |
-| `vectorview_filters` | Shared library | Force filter |
+| `vector_view` | `libvector-view.so` | Vector View (Gazebo Sim system plugin) |
+| `vector_gui` | `vector-gui` | Vector GUI |
+| `vector_view_common` | Static library | Shared utilities |
+| `vector_view_filters` | Shared library | Force filter |
 | `dspfilters` | Vendored DSP library | External dependency |
 | `test_contact_utils`, `test_force_filter` | Unit test executables | Tests |
 

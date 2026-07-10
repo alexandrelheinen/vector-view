@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.16)
-project(vectorview VERSION 2.0.0 LANGUAGES CXX)
+project(vector-view VERSION 2.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(PROJECTNAME vectorview)
-set(GUINAME vectorGUI)
+set(VECTOR_VIEW vector_view)
+set(VECTOR_GUI vector_gui)
 
-option(BUILD_VECTORGUI "Build the Qt VectorGUI application" ON)
-option(BUILD_VECTORVIEW "Build the Gazebo Sim VectorView system plugin" ON)
+option(BUILD_VECTOR_GUI "Build the Qt Vector GUI application" ON)
+option(BUILD_VECTOR_VIEW "Build the Gazebo Sim Vector View system plugin" ON)
 option(BUILD_TESTS "Build unit tests" ON)
 
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
@@ -51,17 +51,17 @@ set(gui_sources
   external/qcustomplot/qcustomplot.cpp
 )
 
-if(BUILD_VECTORGUI)
+if(BUILD_VECTOR_GUI)
   find_package(Qt6 QUIET COMPONENTS Widgets PrintSupport Xml Core)
   if(NOT Qt6_FOUND)
     message(WARNING
-      "Qt6 not found — disabling BUILD_VECTORGUI. "
-      "Install qt6-base-dev or pass -DBUILD_VECTORGUI=OFF for a tests-only build.")
-    set(BUILD_VECTORGUI OFF CACHE BOOL "Build the Qt VectorGUI application" FORCE)
+      "Qt6 not found; disabling BUILD_VECTOR_GUI. "
+      "Install qt6-base-dev or pass -DBUILD_VECTOR_GUI=OFF for a tests-only build.")
+    set(BUILD_VECTOR_GUI OFF CACHE BOOL "Build the Qt Vector GUI application" FORCE)
   endif()
 endif()
 
-if(BUILD_VECTORVIEW OR BUILD_VECTORGUI)
+if(BUILD_VECTOR_VIEW OR BUILD_VECTOR_GUI)
   find_package(gz-sim8 QUIET)
   find_package(gz-plugin2 QUIET COMPONENTS register)
   find_package(gz-transport13 QUIET)
@@ -70,17 +70,17 @@ if(BUILD_VECTORVIEW OR BUILD_VECTORGUI)
 
   if(NOT gz-sim8_FOUND OR NOT gz-transport13_FOUND OR NOT gz-msgs10_FOUND)
     message(WARNING
-      "Gazebo Harmonic (gz-sim8) not found — disabling BUILD_VECTORVIEW and BUILD_VECTORGUI. "
-      "Install gz-harmonic or pass -DBUILD_VECTORVIEW=OFF -DBUILD_VECTORGUI=OFF "
+      "Gazebo Harmonic (gz-sim8) not found; disabling BUILD_VECTOR_VIEW and BUILD_VECTOR_GUI. "
+      "Install gz-harmonic or pass -DBUILD_VECTOR_VIEW=OFF -DBUILD_VECTOR_GUI=OFF "
       "for a tests-only build.")
-    set(BUILD_VECTORVIEW OFF CACHE BOOL "Build the Gazebo Sim VectorView system plugin" FORCE)
-    set(BUILD_VECTORGUI OFF CACHE BOOL "Build the Qt VectorGUI application" FORCE)
+    set(BUILD_VECTOR_VIEW OFF CACHE BOOL "Build the Gazebo Sim Vector View system plugin" FORCE)
+    set(BUILD_VECTOR_GUI OFF CACHE BOOL "Build the Qt Vector GUI application" FORCE)
   endif()
 endif()
 
-if(BUILD_VECTORVIEW OR BUILD_VECTORGUI OR BUILD_TESTS)
-  add_library(vectorview_common STATIC ${common_sources})
-  target_include_directories(vectorview_common
+if(BUILD_VECTOR_VIEW OR BUILD_VECTOR_GUI OR BUILD_TESTS)
+  add_library(vector_view_common STATIC ${common_sources})
+  target_include_directories(vector_view_common
     PUBLIC
       ${INCLUDE_DIR}
       ${DSPFILTERS_INCLUDE})
@@ -88,25 +88,25 @@ if(BUILD_VECTORVIEW OR BUILD_VECTORGUI OR BUILD_TESTS)
   add_library(dspfilters SHARED ${dspfilters_sources})
   target_include_directories(dspfilters PUBLIC ${DSPFILTERS_INCLUDE})
 
-  add_library(vectorview_filters SHARED ${forcefilter_sources})
-  target_link_libraries(vectorview_filters PUBLIC dspfilters)
-  target_include_directories(vectorview_filters
+  add_library(vector_view_filters SHARED ${forcefilter_sources})
+  target_link_libraries(vector_view_filters PUBLIC dspfilters)
+  target_include_directories(vector_view_filters
     PUBLIC
       ${INCLUDE_DIR}
       ${DSPFILTERS_INCLUDE})
 endif()
 
-if(BUILD_VECTORVIEW)
-  add_library(${PROJECTNAME} SHARED ${plugin_sources})
-  set_target_properties(${PROJECTNAME} PROPERTIES OUTPUT_NAME "vector-view")
-  target_include_directories(${PROJECTNAME}
+if(BUILD_VECTOR_VIEW)
+  add_library(${VECTOR_VIEW} SHARED ${plugin_sources})
+  set_target_properties(${VECTOR_VIEW} PROPERTIES OUTPUT_NAME "vector-view")
+  target_include_directories(${VECTOR_VIEW}
     PRIVATE
       ${INCLUDE_DIR}
       ${DSPFILTERS_INCLUDE})
-  target_link_libraries(${PROJECTNAME}
+  target_link_libraries(${VECTOR_VIEW}
     PRIVATE
-      vectorview_common
-      vectorview_filters
+      vector_view_common
+      vector_view_filters
       dspfilters
       gz-sim8::gz-sim8
       gz-plugin2::register
@@ -115,19 +115,19 @@ if(BUILD_VECTORVIEW)
       gz-math7::gz-math7)
 endif()
 
-if(BUILD_VECTORGUI)
+if(BUILD_VECTOR_GUI)
   set(CMAKE_AUTOMOC ON)
-  add_executable(${GUINAME} ${gui_sources})
-  set_target_properties(${GUINAME} PROPERTIES OUTPUT_NAME "vector-gui")
-  target_include_directories(${GUINAME}
+  add_executable(${VECTOR_GUI} ${gui_sources})
+  set_target_properties(${VECTOR_GUI} PROPERTIES OUTPUT_NAME "vector-gui")
+  target_include_directories(${VECTOR_GUI}
     PRIVATE
       ${INCLUDE_DIR}
       ${QCUSTOMPLOT_INCLUDE}
       ${DSPFILTERS_INCLUDE})
-  target_link_libraries(${GUINAME}
+  target_link_libraries(${VECTOR_GUI}
     PRIVATE
-      vectorview_common
-      vectorview_filters
+      vector_view_common
+      vector_view_filters
       dspfilters
       Qt6::Widgets
       Qt6::PrintSupport
@@ -144,31 +144,31 @@ if(BUILD_TESTS)
   add_subdirectory(tests)
 endif()
 
-if(NOT BUILD_VECTORVIEW AND NOT BUILD_VECTORGUI AND NOT BUILD_TESTS)
+if(NOT BUILD_VECTOR_VIEW AND NOT BUILD_VECTOR_GUI AND NOT BUILD_TESTS)
   message(FATAL_ERROR
     "Nothing to build. Enable at least one of: "
-    "BUILD_VECTORVIEW, BUILD_VECTORGUI, BUILD_TESTS.")
+    "BUILD_VECTOR_VIEW, BUILD_VECTOR_GUI, BUILD_TESTS.")
 endif()
 
 set(INSTALL_LIBDIR lib)
 set(INSTALL_BINDIR bin)
-set(INSTALL_DATADIR share/vectorview)
+set(INSTALL_DATADIR share/vector-view)
 
-if(BUILD_VECTORVIEW OR BUILD_VECTORGUI OR BUILD_TESTS)
-  install(TARGETS dspfilters vectorview_filters vectorview_common
+if(BUILD_VECTOR_VIEW OR BUILD_VECTOR_GUI OR BUILD_TESTS)
+  install(TARGETS dspfilters vector_view_filters vector_view_common
     LIBRARY DESTINATION ${INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${INSTALL_LIBDIR}
     RUNTIME DESTINATION ${INSTALL_BINDIR})
 endif()
 
-if(BUILD_VECTORVIEW)
-  install(TARGETS ${PROJECTNAME}
+if(BUILD_VECTOR_VIEW)
+  install(TARGETS ${VECTOR_VIEW}
     LIBRARY DESTINATION ${INSTALL_LIBDIR}
     RUNTIME DESTINATION ${INSTALL_BINDIR})
 endif()
 
-if(BUILD_VECTORGUI)
-  install(TARGETS ${GUINAME}
+if(BUILD_VECTOR_GUI)
+  install(TARGETS ${VECTOR_GUI}
     RUNTIME DESTINATION ${INSTALL_BINDIR})
 endif()
 

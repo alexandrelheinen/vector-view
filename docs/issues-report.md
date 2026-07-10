@@ -5,9 +5,9 @@
 
 ---
 
-## Category 1 — Memory Management
+## Category 1 : Memory Management
 
-### 1.1 🔴 Memory leak — `ForceFilter` in `VectorView::Load()`
+### 1.1 🔴 Memory leak : `ForceFilter` in `VectorView::Load()`
 
 **File:** `src/vectorview/VectorView.cpp`, `VectorView::Load()`
 
@@ -61,9 +61,9 @@ The typedef comment acknowledges the original intent to use `boost::shared_ptr` 
 
 ---
 
-## Category 2 — Logic Errors
+## Category 2 : Logic Errors
 
-### 2.1 🔴 Division by `n` after loop — wrong value used
+### 2.1 🔴 Division by `n` after loop : wrong value used
 
 **File:** `src/vectorview/VectorView.cpp`, `VectorViewUpdate()`
 
@@ -95,7 +95,7 @@ Here `n` is a **signed `int`** and Gazebo's `contact_size()` returns a `uint32`.
 
 ---
 
-### 2.2 🟠 Undefined behaviour risk in `FindName()` — `i` used after loop
+### 2.2 🟠 Undefined behaviour risk in `FindName()` : `i` used after loop
 
 **File:** `src/vectorview/VectorView.cpp`, `FindName()`
 
@@ -110,7 +110,7 @@ topicName     += "/" + names.at(i-1) + "_contact";   // ← i-1 after loop
 collisionName += "::" + names.at(i-1) + "_collision";
 ```
 
-If `names` is **empty** (e.g., the visual name contains no `::` separator), `i == 0` after the loop, and `names.at(i-1)` is `names.at(-1)` — an out-of-range access on a signed-to-unsigned wrap, producing **undefined behaviour** (likely a crash or garbage string).
+If `names` is **empty** (e.g., the visual name contains no `::` separator), `i == 0` after the loop, and `names.at(i-1)` is `names.at(-1)` : an out-of-range access on a signed-to-unsigned wrap, producing **undefined behaviour** (likely a crash or garbage string).
 
 The variable `i` is also declared as signed `int` while `names.size()` is `size_t` (unsigned), causing a signed/unsigned comparison warning on every compliant compiler.
 
@@ -130,7 +130,7 @@ The variable `i` is also declared as signed `int` while `names.size()` is `size_
 #define NOISE_THRESHOLD 1E-6
 ```
 
-The two translation units use different thresholds. When both headers are included in the same TU the later definition silently overrides the first (no `#ifdef` guard). The visual plugin and the GUI therefore apply different noise gates, producing visually inconsistent behaviour — the GUI can show forces that the plugin does not render (or vice versa).
+The two translation units use different thresholds. When both headers are included in the same TU the later definition silently overrides the first (no `#ifdef` guard). The visual plugin and the GUI therefore apply different noise gates, producing visually inconsistent behaviour : the GUI can show forces that the plugin does not render (or vice versa).
 
 **Fix:** Centralise `NOISE_THRESHOLD` in a single shared header or make it a runtime parameter.
 
@@ -141,24 +141,24 @@ The two translation units use different thresholds. When both headers are includ
 **File:** `src/vectorGUI/Interface.cpp`, `Update()` / `UpdatePlot()`
 
 ```cpp
-// Update() — runs at every contact message (~25 Hz):
+// Update() : runs at every contact message (~25 Hz):
 this->timeAxis.push_back(…);
 this->forceAxis.push_back(…);
 this->filterAxis.push_back(…);
 
-// UpdatePlot() — runs at RATE Hz:
+// UpdatePlot() : runs at RATE Hz:
 plot->graph(0)->addData(timeAxis, forceAxis);
 …
 timeAxis.clear();  forceAxis.clear();  filterAxis.clear();
 ```
 
-There is a `TODO` comment in the source acknowledging this. If `UpdatePlot()` falls behind `Update()` (or if the Qt timer fires less frequently than data arrives), the `QVector`s grow without bound. In a two-hour experiment at 25 Hz the vectors would hold 180,000 elements before each clear — a 1.4 MB allocation spike per refresh cycle.
+There is a `TODO` comment in the source acknowledging this. If `UpdatePlot()` falls behind `Update()` (or if the Qt timer fires less frequently than data arrives), the `QVector`s grow without bound. In a two-hour experiment at 25 Hz the vectors would hold 180,000 elements before each clear : a 1.4 MB allocation spike per refresh cycle.
 
 **Fix:** Use `plot->graph(n)->addData(time, value)` as the TODO suggests, accumulating directly into QCustomPlot's internal structure instead of staging in unbounded vectors.
 
 ---
 
-## Category 3 — API and Compatibility
+## Category 3 : API and Compatibility
 
 ### 3.1 🔴 Gazebo deprecated math API (`gazebo::math::*`)
 
@@ -169,7 +169,7 @@ The entire codebase uses the `gazebo::math::` namespace (`Vector3`, `Matrix3`, `
 The project will **not compile against any Gazebo version from 2018 onward** without modification.
 
 ```cpp
-// deprecated — Gazebo ≥ 9 will not compile this:
+// deprecated : Gazebo ≥ 9 will not compile this:
 math::Vector3 force = math::Vector3::Zero;
 math::Vector3 begin = math::Vector3::Zero;
 visual->GetWorldPose().rot.RotateVectorReverse(force);
@@ -233,7 +233,7 @@ CMake documentation explicitly recommends against `FILE(GLOB …)` because CMake
 
 ---
 
-## Category 4 — Code Quality
+## Category 4 : Code Quality
 
 ### 4.1 🟡 `using namespace gazebo` in a header file
 
@@ -314,11 +314,11 @@ if(++counter > 10)
 
 ---
 
-## Category 5 — Project / Repository Hygiene
+## Category 5 : Project / Repository Hygiene
 
 ### 5.1 🟠 No `LICENSE` file
 
-The repository has no `LICENSE` or `COPYING` file. Bundled third-party code (DSPFilters — MIT; QCustomPlot — GPL/Commercial dual-licence) has specific redistribution requirements. Without an explicit project licence, the legal status of the code is ambiguous for any third party wishing to use or contribute.
+The repository has no `LICENSE` or `COPYING` file. Bundled third-party code (DSPFilters : MIT; QCustomPlot : GPL/Commercial dual-licence) has specific redistribution requirements. Without an explicit project licence, the legal status of the code is ambiguous for any third party wishing to use or contribute.
 
 **Fix:** Add an `MIT` (or `BSD-2`) licence for the project's own code, and ensure bundled libraries' licences are reproduced.
 
@@ -326,7 +326,7 @@ The repository has no `LICENSE` or `COPYING` file. Bundled third-party code (DSP
 
 ### 5.2 🟠 No automated tests
 
-The project has no unit tests, integration tests, or test targets in CMake. The only way to verify correctness is to run the full Gazebo simulation stack — a heavyweight procedure that requires hardware or a configured VM.
+The project has no unit tests, integration tests, or test targets in CMake. The only way to verify correctness is to run the full Gazebo simulation stack : a heavyweight procedure that requires hardware or a configured VM.
 
 At minimum, the `ForceFilter` wrapper and the `FindName()` logic could be tested with a standalone Google Test or Catch2 harness without any Gazebo dependency.
 
@@ -350,7 +350,7 @@ Neither the plugin nor the GUI classes have Doxygen-style doc comments on public
 
 ---
 
-### 5.5 🔵 `run.sh` uses `gnome-terminal` — not portable
+### 5.5 🔵 `run.sh` uses `gnome-terminal` : not portable
 
 **File:** `run.sh`
 
@@ -366,14 +366,14 @@ Neither the plugin nor the GUI classes have Doxygen-style doc comments on public
 |---|---|---|---|
 | 1.1 | 🔴 Critical | Memory | `ForceFilter*` never freed in `VectorView` destructor |
 | 1.2 | 🔴 Critical | Memory | `ForceFilter::~ForceFilter()` not implemented; inner `Dsp::Filter*` leaked |
-| 1.3 | 🟠 High | Memory | Raw `DynamicLines*` pointer — no ownership semantics |
+| 1.3 | 🟠 High | Memory | Raw `DynamicLines*` pointer : no ownership semantics |
 | 2.1 | 🔴 Critical | Logic | Signed/unsigned `n` inconsistency in force averaging |
 | 2.2 | 🟠 High | Logic | `names.at(i-1)` UB when `names` is empty in `FindName()` |
 | 2.3 | 🟡 Medium | Logic | `NOISE_THRESHOLD` defined twice with different values |
 | 2.4 | 🟡 Medium | Logic | Unbounded plot data vectors can cause memory spikes |
-| 3.1 | 🔴 Critical | Compat | Deprecated `gazebo::math::*` API — won't compile on Gazebo ≥ 9 |
-| 3.2 | 🔴 Critical | Compat | Qt4 dependency — EOL; no modern distro ships it |
-| 3.3 | 🟠 High | Compat | CMake minimum 2.8 — too old; blocks modern CMake features |
+| 3.1 | 🔴 Critical | Compat | Deprecated `gazebo::math::*` API : won't compile on Gazebo ≥ 9 |
+| 3.2 | 🔴 Critical | Compat | Qt4 dependency : EOL; no modern distro ships it |
+| 3.3 | 🟠 High | Compat | CMake minimum 2.8 : too old; blocks modern CMake features |
 | 3.4 | 🟡 Medium | Compat | No C++ standard specified in CMakeLists.txt |
 | 3.5 | 🔵 Low | Build | `FILE(GLOB …)` for source discovery |
 | 4.1 | 🟡 Medium | Quality | `using namespace gazebo` in header |

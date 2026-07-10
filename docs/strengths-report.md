@@ -7,13 +7,13 @@
 
 ## 1. Architecture & Separation of Concerns
 
-**VectorView** (the Gazebo visual plugin) and **VectorGUI** (the Qt desktop application) are cleanly decoupled into independent compilation targets. They share no headers apart from the bundled third-party libraries. This means either component can be built, deployed, and studied independently — a discipline that is easy to skip in a time-boxed internship but was respected here.
+**VectorView** (the Gazebo visual plugin) and **VectorGUI** (the Qt desktop application) are cleanly decoupled into independent compilation targets. They share no headers apart from the bundled third-party libraries. This means either component can be built, deployed, and studied independently : a discipline that is easy to skip in a time-boxed internship but was respected here.
 
-The three-layer model — *sensor → transport → rendering/GUI* — maps directly onto Gazebo's own design philosophy. The plugin does not reach into simulation internals beyond what the transport layer exposes; the GUI does not know about the render engine. The boundary is clean.
+The three-layer model : *sensor → transport → rendering/GUI* : maps directly onto Gazebo's own design philosophy. The plugin does not reach into simulation internals beyond what the transport layer exposes; the GUI does not know about the render engine. The boundary is clean.
 
 ---
 
-## 2. Signal Processing — Noise Filtering Before Rendering
+## 2. Signal Processing : Noise Filtering Before Rendering
 
 One of the most impactful decisions in the project is the application of a **3-channel Butterworth low-pass filter** to the raw contact force before either rendering the vector or updating the GUI.
 
@@ -23,7 +23,7 @@ Raw Gazebo contact sensor data is notoriously noisy (impulse spikes from the phy
 - Order 3 (good roll-off, low phase lag for a real-time system)
 - 1.5 Hz cut-off at 25 Hz sample rate
 
-…is well-matched to the time scales of whole-body contact events on iCub (~0.1–2 Hz for planned interactions). The signal processing concern is encapsulated in a dedicated `ForceFilter` wrapper, keeping it out of the plugin and GUI logic.
+…is well-matched to the time scales of whole-body contact events on iCub (~0.1-2 Hz for planned interactions). The signal processing concern is encapsulated in a dedicated `ForceFilter` wrapper, keeping it out of the plugin and GUI logic.
 
 ---
 
@@ -32,14 +32,14 @@ Raw Gazebo contact sensor data is notoriously noisy (impulse spikes from the phy
 Both **DSPFilters** and **QCustomPlot** are bundled directly in `src/` and `include/`. This was a deliberate choice with real engineering merit:
 
 - **Zero extra dependencies** for the consumer; `cmake .. && make` is all that is needed beyond the declared system packages.
-- No version drift — the exact revision tested by the author is always used.
+- No version drift : the exact revision tested by the author is always used.
 - The bundles are self-contained and do not pollute the system library path.
 
 This pattern is common in embedded and robotics projects where the target environment is controlled and reproducibility matters more than keeping up with upstream.
 
 ---
 
-## 4. Force Vector Rendering — Arrowhead Geometry
+## 4. Force Vector Rendering : Arrowhead Geometry
 
 The `UpdateVector()` method does not simply draw a line segment. It draws a proper **arrow** with a two-wing arrowhead:
 
@@ -51,7 +51,7 @@ this->forceVector->SetPoint(5, end - ARROW_LENGTH * M_neg10deg * (end - begin).N
 The rotation matrices encode a ±10° deflection from the shaft direction. The arrow is:
 
 - Normalised along the force direction (so arrowhead size does not scale with magnitude).
-- Rendered as a `RENDERING_LINE_LIST` — three separate line segments in one call — which is the most GPU-efficient primitive for this use case.
+- Rendered as a `RENDERING_LINE_LIST` : three separate line segments in one call : which is the most GPU-efficient primitive for this use case.
 
 This attention to visual correctness goes beyond what is strictly necessary and improves the usability of the tool for researchers.
 
@@ -65,7 +65,7 @@ The rotation transform in `UpdateVector()`:
 math::Vector3 end = begin + FORCE_SCALE * (visual->GetWorldPose().rot.RotateVectorReverse(force));
 ```
 
-correctly converts the force from **world frame** (the frame in which Gazebo reports wrench values) into the **local link frame** (the frame of the visual's coordinate system). Omitting this transform — a common mistake — would cause the vector to drift as the robot moves. The explicit comment referencing the alternative `GetRotation()` call shows the author reasoned carefully about the choice.
+correctly converts the force from **world frame** (the frame in which Gazebo reports wrench values) into the **local link frame** (the frame of the visual's coordinate system). Omitting this transform : a common mistake : would cause the vector to drift as the robot moves. The explicit comment referencing the alternative `GetRotation()` call shows the author reasoned carefully about the choice.
 
 ---
 
@@ -94,11 +94,11 @@ RAII-style locking is the correct pattern. A missed lock or a raw `mutex.lock()`
 The `CMakeLists.txt` exposes two user-facing options:
 
 ```cmake
-option(BUILD_VECTORGUI  "Enables VectorGUI interface installation" TRUE)
-option(BUILD_VECTORVIEW "Either VectorView Visual Plugin is built or not" TRUE)
+option(BUILD_VECTOR_GUI  "Enables Vector GUI interface installation" TRUE)
+option(BUILD_VECTOR_VIEW "Either Vector View visual plugin is built or not" TRUE)
 ```
 
-This lets users on headless systems skip the Qt4 dependency entirely by passing `-DBUILD_VECTORGUI=OFF`. It is a small touch, but it shows awareness that not every user has (or wants) a display stack.
+This lets users on headless systems skip the Qt dependency entirely by passing `-DBUILD_VECTOR_GUI=OFF`. It is a small touch, but it shows awareness that not every user has (or wants) a display stack.
 
 The `DspFilters` shared library is conditionally compiled only when at least one of the two main targets is built, avoiding unnecessary work.
 
@@ -106,7 +106,7 @@ The `DspFilters` shared library is conditionally compiled only when at least one
 
 ## 8. Real-Time Plot with Dual Traces
 
-The QCustomPlot graph displays both the **raw** force magnitude and the **filtered** signal simultaneously. This dual-trace design lets the operator evaluate signal quality at a glance — they can see exactly how much noise the filter is removing. Most quick-and-dirty GUI tools would show only one trace; showing both is a conscious observability decision.
+The QCustomPlot graph displays both the **raw** force magnitude and the **filtered** signal simultaneously. This dual-trace design lets the operator evaluate signal quality at a glance : they can see exactly how much noise the filter is removing. Most quick-and-dirty GUI tools would show only one trace; showing both is a conscious observability decision.
 
 ---
 
