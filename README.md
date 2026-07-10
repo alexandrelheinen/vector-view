@@ -9,6 +9,21 @@ This plugin is thus supposed to be used with the icub-gazebo model, that can be 
 #### Some name rules to the plugin ####
 The name of the contact sensor must be "LINK_NAME_contact". For instance if you set it at the "l_hand" link, your contact sensor should be "l_hand_contact". Anyway be free to change this rule to something more intelligent.
 
+## Project layout ##
+
+```
+include/vectorview/     First-party public headers
+src/plugin/             Gazebo visual plugin
+src/gui/                Qt desktop application
+src/filters/            ForceFilter wrapper
+src/common/             Shared pure C++ utilities
+third_party/            Vendored DSPFilters, QCustomPlot, and Catch2
+models/                 Gazebo models (iCub, spawn primitives)
+worlds/                 Gazebo world files
+scripts/                Demo launcher and formatting helper
+tests/                  Unit tests (no Gazebo required)
+```
+
 ## Dependencies ##
 
 Just a list of required packages (and each one has it own dependencies):
@@ -18,11 +33,13 @@ Just a list of required packages (and each one has it own dependencies):
  * [icub-gazebo](https://github.com/robotology-playground/icub-gazebo)
  * It should be all, however [ocra-core](https://github.com/ocra-recipes/ocra-core) and [codyco-superbuild](https://github.com/alexandrelheinen/codyco-superbuild) with [`ISIR_MODULES`](https://github.com/alexandrelheinen/codyco-superbuild#a-note-on-ocra-wbi-plugins) are also used in this project. Those are versions from my own repository where some changes were made the contact forces analysis.
 
- VectorView uses [DSPFilters](https://github.com/vinniefalco/DSPFilters), a collection of C++ classes for digital signal filtering, and [QCustomPlot](http://www.qcustomplot.com/), a Qt C++ widget for plotting and data visualization, but source and headers files from both projects are already included in `src` and `include` folders respectively, so VectorView has no direct dependency of those packages.
+ VectorView uses [DSPFilters](https://github.com/vinniefalco/DSPFilters), a collection of C++ classes for digital signal filtering, and [QCustomPlot](http://www.qcustomplot.com/), a Qt C++ widget for plotting and data visualization. Sources for both projects are vendored under `third_party/`, so VectorView has no direct dependency on those packages at install time.
 
 ## Coding Standards ##
 
-All C++ code in this project must conform to the **[C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)**.
+All first-party C++ code in this project must conform to the **[C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)**.
+
+Layout and formatting are enforced with the root **`.clang-format`** file. Run `./scripts/format.sh` before submitting changes (requires `clang-format` on your PATH). Vendored code under `third_party/` is excluded from formatting.
 
 Key rules applied throughout the codebase include:
 
@@ -45,6 +62,24 @@ and compile it in `build` folder
 mkdir build && cd build
 cmake .. && make
 ```
+
+Optional install target:
+
+```bash
+sudo make install
+```
+
+## Unit tests ##
+
+Pure logic tests run without Gazebo or Qt:
+
+```bash
+cd build
+cmake .. -DBUILD_TESTS=ON
+make
+ctest --output-on-failure
+```
+
 ## Useful environmental variables ##
 
 As VectorView is a Gazebo Plugin, some environment variables must be set up to assure that Gazebo client will find out all files it needs:
@@ -65,9 +100,11 @@ ISIRWholeBodyController --sequence StageTestTasks
 
 While the simulation is running, in another terminal can run
 ```bash
-vectorGUI
+vectorGUI l_hand_contact
 ```
-to pop out the external interface. On this window the contact object name is displayed as well as the forces involved on this contact and where it has take place.
+to pop out the external interface. Pass the full topic path or a short link name (defaults to the iCub_fixed model). An optional second argument sets the robot name used to identify contact bodies (default: `iCub`).
+
+On this window the contact object name is displayed as well as the forces involved on this contact and where it has take place.
 
 ![interface window example](/images/gui_example.png "Interface window example")
 
