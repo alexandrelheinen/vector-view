@@ -13,7 +13,7 @@ VectorView::~VectorView() {}
 void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf) {
   (void)_sdf;
   this->visual = _parent;
-  filter = new Dsp::ForceFilter();
+  filter = new vectorview::ForceFilter();
 }
 
 void VectorView::Init() {
@@ -88,13 +88,13 @@ void VectorView::VectorViewUpdate(ConstContactsPtr &message) {
 
   vectorview::Vec3 aggregated =
       vectorview::AggregatePluginForces(contacts, this->collisionName);
-  math::Vector3 force(aggregated.x, aggregated.y, aggregated.z);
 
-  filter->Filter(&force);
+  filter->Filter(&aggregated);
 
-  if (force.GetLength() < NOISE_THRESHOLD) {
-    force = math::Vector3::Zero;
+  if (aggregated.Length() < NOISE_THRESHOLD) {
+    aggregated = vectorview::Vec3();
   }
 
+  math::Vector3 force(aggregated.x, aggregated.y, aggregated.z);
   this->UpdateVector(force);
 }

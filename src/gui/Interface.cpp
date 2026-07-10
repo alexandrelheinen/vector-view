@@ -145,7 +145,7 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   dataTimer->start(1000.0/RATE);
 
   // filter setup
-  filter = new Dsp::ForceFilter();
+  filter = new vectorview::ForceFilter();
 
   // gazebo setup
   transport::init();
@@ -251,8 +251,9 @@ void Interface::Update(ConstContactsPtr &message)
     }
   }
 
+  vectorview::Vec3 plotForce(force.x, force.y, force.z);
   this->timeAxis.push_back(message->time().sec() + 0.000000001 * message->time().nsec());
-  this->forceAxis.push_back(filter->Filter(&force));
+  this->forceAxis.push_back(filter->Filter(&plotForce));
   this->filterAxis.push_back(force.GetLength());
 }
 

@@ -46,7 +46,7 @@ namespace gazebo
     std::string collisionName;
     std::string topicName;
 
-    Dsp::ForceFilter* filter;
+    vectorview::ForceFilter* filter;
   };
 }
 

@@ -62,7 +62,7 @@ private:
   QVector<double> timeAxis;
   QVector<double> forceAxis, filterAxis;
   double forceMax;
-  Dsp::ForceFilter* filter;
+  vectorview::ForceFilter* filter;
 
 };
 
