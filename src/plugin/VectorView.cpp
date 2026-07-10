@@ -13,7 +13,7 @@ VectorView::~VectorView() {}
 void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf) {
   (void)_sdf;
   this->visual = _parent;
-  filter = new vectorview::ForceFilter();
+  filter.reset(new vectorview::ForceFilter());
 }
 
 void VectorView::Init() {
