@@ -297,4 +297,13 @@ v2.0 replaces the Gazebo Classic visual plugin and Qt4 GUI with a Harmonic syste
 
 ## License
 
-Third-party components carry their own licenses (DSPFilters: MIT; QCustomPlot: GPL v3 or commercial). A project-level license file has not been added yet.
+First-party code is licensed under **GPL v3**; see [`LICENSE`](LICENSE).
+
+Third-party components in `external/` retain their original licenses:
+
+- DSPFilters: MIT
+- Catch2: Boost Software License 1.0
+- QCustomPlot: GPL v3 or commercial
+
+The Vector GUI binary links QCustomPlot and is subject to GPL v3 unless a
+commercial QCustomPlot license is used.
