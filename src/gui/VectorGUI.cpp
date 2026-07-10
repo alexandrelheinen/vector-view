@@ -14,7 +14,8 @@ int main(int _argc, char** _argv)
       path = "/gazebo/default/iCub_fixed/iCub/" + path + "/" + path + "_contact";
 
     QApplication app(_argc, _argv);
-    Interface interface(path);
+    const std::string robotName = (_argc > 2) ? std::string(_argv[2]) : "iCub";
+    Interface interface(path, robotName);
     interface.show();
     std::cout << " >> VectorGUI started at [" << path << "] topic." << std::endl;
     return app.exec();
@@ -24,5 +25,6 @@ int main(int _argc, char** _argv)
               << "Please pass contact sensor 'topic path' or the link name as input of VectorGUI."                            << std::endl
               << "Hint: Type 'gz topic -l' while Gazebo server (or gzserver) is running to display topic paths list."         << std::endl
               << "      Your insterest topic should be something like /gazebo/default/iCub_fixed/iCub/r_hand/r_hand_contact." << std::endl;
+    return 1;
   }
 }

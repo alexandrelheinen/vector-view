@@ -32,7 +32,7 @@ protected slots:
   void UpdatePlot();
 
 public:
-  Interface(std::string _path);
+  Interface(std::string _path, const std::string& robot_name = "iCub");
   ~Interface();
   void setPosition(math::Vector3 position);
   void setObjectContact(std::string name);
@@ -49,6 +49,7 @@ private:
   // gazebo
   std::string topicPath;
   std::string factoryPath;
+  std::string robotName;
   transport::PublisherPtr pub;
   transport::SubscriberPtr subs;
   // labels, buttons and menus
