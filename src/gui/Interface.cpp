@@ -1,4 +1,4 @@
-#include "vectorGUI/Interface.h"
+#include "vectorview/Interface.h"
 
 using namespace gazebo;
 

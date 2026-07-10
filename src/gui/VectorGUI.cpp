@@ -2,7 +2,7 @@
 #include <string>
 #include <gazebo.hh>
 #include <iostream>
-#include "vectorGUI/Interface.h"
+#include "vectorview/Interface.h"
 
 using namespace gazebo;
 int main(int _argc, char** _argv)

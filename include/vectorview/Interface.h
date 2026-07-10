@@ -19,7 +19,7 @@
 #include <sstream>
 #include <boost/thread/mutex.hpp>
 // local includes
-#include "vectorGUI/qcustomplot.h"
+#include "qcustomplot.h"
 #include "DspFilters/Dsp.h"
 #include "DspFilters/Filter.h"
 #include "DspFilters/ForceFilter.h"
