@@ -23,8 +23,8 @@ detect_terminal() {
 
 TERMINAL="$(detect_terminal)"
 
-if [ ! -x "$VECTOR_VIEW/build/vectorGUI" ]; then
-  echo "warning: $VECTOR_VIEW/build/vectorGUI not found." >&2
+if [ ! -x "$VECTOR_VIEW/build/vector-gui" ]; then
+  echo "warning: $VECTOR_VIEW/build/vector-gui not found." >&2
   echo "         Build the project first or run with tests-only if Gazebo/Qt6 are unavailable." >&2
 fi
 

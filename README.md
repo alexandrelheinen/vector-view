@@ -4,8 +4,8 @@ Visualize iCub contact forces in **Gazebo Sim (Harmonic)** on Ubuntu 24.04 Noble
 
 | Component | Binary | Role |
 |-----------|--------|------|
-| **VectorView** | `libvectorview.so` | Gazebo Sim system plugin that draws a force arrow via marker messages |
-| **VectorGUI** | `vectorGUI` | Qt6 desktop app that displays contact data, plots force magnitude, and spawns models |
+| **VectorView** | `libvector-view.so` | Gazebo Sim system plugin that draws a force arrow via marker messages |
+| **Vector GUI** | `vector-gui` | Qt6 desktop app that displays contact data, plots force magnitude, and spawns models |
 
 Both read from Gazebo transport contact topics. The plugin renders in the 3D view; the GUI provides a separate analysis window.
 
@@ -177,7 +177,7 @@ Edit `.env` if your paths differ from the defaults. The file is loaded by `scrip
 | Variable | Purpose |
 |----------|---------|
 | `VECTOR_VIEW` | Repository root (defaults to the directory above `scripts/`) |
-| `GZ_SIM_SYSTEM_PLUGIN_PATH` | Directory containing `libvectorview.so` |
+| `GZ_SIM_SYSTEM_PLUGIN_PATH` | Directory containing `libvector-view.so` |
 | `GZ_SIM_RESOURCE_PATH` | Directory containing bundled `models/` |
 | `GZ_SIM_USER_PATH` | Directory containing bundled `worlds/` |
 | `CODYCO_SUPERBUILD_ROOT` | Optional. Enables the ISIR controller step in `run.sh` |
@@ -227,23 +227,23 @@ ISIRWholeBodyController --sequence StageTestTasks
 Requires the full iCub stack from [Run the full iCub demo](#run-the-full-icub-demo).
 
 ```bash
-vectorGUI l_hand
+vector-gui l_hand
 ```
 
 ### VectorGUI usage
 
 ```bash
 # Short link name (builds the topic from default model context)
-vectorGUI l_hand
+vector-gui l_hand
 
 # Full transport path
-vectorGUI /vectorview/iCub_fixed/r_hand
+vector-gui /vectorview/iCub_fixed/r_hand
 
 # Optional robot name override (default: iCub)
-vectorGUI l_hand iCub
+vector-gui l_hand iCub
 
 # Optional world name for spawn service (default: default)
-vectorGUI l_hand iCub default
+vector-gui l_hand iCub default
 ```
 
 Pass a link name (`l_hand`), not the sensor name (`l_hand_contact`). Short names map to `/vectorview/iCub_fixed/l_hand`.
@@ -285,7 +285,7 @@ Code under `external/` is excluded.
 | Target | Output |
 |--------|--------|
 | `vectorview` | `libvector-view.so` (Gazebo Sim system plugin) |
-| `vectorGUI` | Qt6 executable |
+| `vector-gui` | Qt6 executable |
 | `vectorview_common` | Static library (shared utilities) |
 | `vectorview_filters` | Shared library (force filter) |
 | `dspfilters` | Vendored DSP library |
