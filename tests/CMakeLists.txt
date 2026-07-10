@@ -1,4 +1,4 @@
-set(CATCH_INCLUDE ${PROJECT_SOURCE_DIR}/third_party/catch2)
+set(CATCH_INCLUDE ${PROJECT_SOURCE_DIR}/external/catch2)
 
 include_directories(
   ${INCLUDE_DIR}
