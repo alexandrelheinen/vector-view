@@ -21,14 +21,31 @@ fi
 rm -f "$OUTPUT"
 
 echo "Starting Gazebo Sim (headless) with $WORLD"
-DISPLAY= gz sim -s -r --headless-rendering "$WORLD" >"$SIM_LOG" 2>&1 &
+DISPLAY= setsid gz sim -s -r --headless-rendering "$WORLD" >"$SIM_LOG" 2>&1 &
 SIM_PID=$!
 
-cleanup() {
-  if kill -0 "$SIM_PID" 2>/dev/null; then
-    kill "$SIM_PID" 2>/dev/null || true
-    wait "$SIM_PID" 2>/dev/null || true
+stop_sim() {
+  if ! kill -0 "$SIM_PID" 2>/dev/null; then
+    return 0
   fi
+
+  # Do not call WorldControl shutdown here: it can crash the video recorder
+  # before the MP4 is finalized. Send signals to the whole session instead.
+  kill -TERM -- -"$SIM_PID" 2>/dev/null || kill -TERM "$SIM_PID" 2>/dev/null || true
+  for _ in $(seq 1 15); do
+    kill -0 "$SIM_PID" 2>/dev/null || return 0
+    sleep 1
+  done
+
+  kill -KILL -- -"$SIM_PID" 2>/dev/null || kill -KILL "$SIM_PID" 2>/dev/null || true
+  for _ in $(seq 1 5); do
+    kill -0 "$SIM_PID" 2>/dev/null || return 0
+    sleep 1
+  done
+}
+
+cleanup() {
+  stop_sim
 }
 trap cleanup EXIT
 
@@ -54,7 +71,7 @@ if [ "$ready" -ne 1 ]; then
 fi
 
 # Let joint controllers settle into the standing pose before recording.
-sleep 5
+sleep 3
 
 echo "Recording to $OUTPUT"
 gz service -s "$RECORD_TOPIC" \
@@ -75,9 +92,12 @@ gz service -s "$RECORD_TOPIC" \
   --timeout 30000 \
   --req "stop: true"
 
-for _ in $(seq 1 60); do
+# Keep gz sim alive while the recorder finalizes the MP4 on disk.
+for _ in $(seq 1 90); do
   if [ -f "$OUTPUT" ] && [ -s "$OUTPUT" ]; then
     echo "Video saved: $OUTPUT ($(du -h "$OUTPUT" | awk '{print $1}'))"
+    trap - EXIT
+    stop_sim
     exit 0
   fi
   sleep 1
