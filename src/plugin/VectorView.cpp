@@ -64,7 +64,7 @@ void VectorView::Configure(const gz::sim::Entity& entity,
                        &VectorView::OnContacts, this);
 
   std::cout << std::endl
-            << "-- VectorView system initialized" << std::endl
+            << "-- Vector View system initialized" << std::endl
             << "   contact topic : " << this->contactTopic << std::endl
             << "   collision     : " << this->collisionScope << std::endl
             << std::endl;

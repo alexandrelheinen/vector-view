@@ -1,4 +1,4 @@
-# What Was Done Well — VectorView & VectorGUI
+# What Was Done Well: Vector View and Vector GUI
 
 > **Scope:** This report evaluates the v1.0.0 codebase of VectorView and VectorGUI against software-engineering and robotics-middleware best practices.  
 > **Verdict first:** For a 2015 internship project targeting a highly specialised robotics simulation stack, the codebase demonstrates a solid grasp of the problem domain, clean architectural thinking, and several engineering choices that hold up well even a decade later.

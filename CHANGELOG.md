@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to VectorView & VectorGUI are documented in this file.
+All notable changes to Vector View and Vector GUI are documented in this file.
 
 ---
 
@@ -10,7 +10,7 @@ Native **Ubuntu 24.04 Noble** port using **Gazebo Harmonic**, **Qt 6.4**, and **
 
 ### Breaking changes
 
-- VectorView is now a **Gazebo Sim system plugin** (not a Gazebo Classic visual plugin).
+- Vector View is now a **Gazebo Sim system plugin** (not a Gazebo Classic visual plugin).
 - Contact topics use `/vectorview/MODEL_INSTANCE/LINK_NAME` instead of `/gazebo/...`.
 - Model spawn uses the `/world/{world}/create` service instead of `~/factory`.
 - Environment variables renamed from `GAZEBO_*` to `GZ_SIM_*`.
@@ -29,7 +29,7 @@ Native **Ubuntu 24.04 Noble** port using **Gazebo Harmonic**, **Qt 6.4**, and **
 
 ## [1.0.0] – 2015 (Released 2025)
 
-This is the inaugural stable release of the **VectorView** Gazebo visual plugin and the companion **VectorGUI** desktop application, originally developed in 2015 during an internship at [ISIR](http://www.isir.upmc.fr/) (Institut des Systèmes Intelligents et de Robotique, CNRS / Université Pierre et Marie Curie).
+This is the inaugural stable release of the **Vector View** Gazebo visual plugin and the companion **Vector GUI** desktop application, originally developed in 2015 during an internship at [ISIR](http://www.isir.upmc.fr/) (Institut des Systèmes Intelligents et de Robotique, CNRS / Université Pierre et Marie Curie).
 
 ### Context
 
@@ -39,7 +39,7 @@ The work was carried out as part of research on whole-body contact force control
 
 ### What's included in v1.0.0
 
-#### VectorView — Gazebo Visual Plugin (`libvectorview.so`)
+#### Vector View: Gazebo Visual Plugin (`libvector-view.so`)
 
 - Attaches to any `<visual>` element of an iCub model link in a Gazebo world.
 - Subscribes automatically to the Gazebo contact sensor topic derived from the link name (convention: `LINK_NAME_contact`).
@@ -52,7 +52,7 @@ The work was carried out as part of research on whole-body contact force control
 - Scales the force magnitude to scene units via `FORCE_SCALE = 8E-2 m·N⁻¹`.
 - Prints plugin initialisation information (subscribed topic, collision name) to stdout.
 
-#### VectorGUI — Qt4 Desktop Application (`vectorGUI`)
+#### Vector GUI: Qt4 Desktop Application (`vector-gui`)
 
 - Connects to any Gazebo contact sensor topic at runtime (full path or short link name accepted).
 - Displays live contact information:

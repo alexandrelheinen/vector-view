@@ -10,7 +10,7 @@
 int main(int argc, char** argv) {
   if (argc <= 1) {
     std::cout << "[TOPIC PATH] ERROR" << std::endl
-              << "Please pass a contact sensor topic path or a link name to VectorGUI." << std::endl
+              << "Please pass a contact sensor topic path or a link name to Vector GUI." << std::endl
               << "Hint: run 'gz topic -l' while gz sim is running to list topic paths." << std::endl
               << "Example full path: /vectorview/iCub_fixed/r_hand" << std::endl
               << "Example short name: l_hand" << std::endl;
@@ -31,6 +31,6 @@ int main(int argc, char** argv) {
   QApplication app(argc, argv);
   Interface interface(path.transport, robotName, worldName);
   interface.show();
-  std::cout << " >> VectorGUI started at [" << path.transport << "] topic." << std::endl;
+  std::cout << " >> Vector GUI started at [" << path.transport << "] topic." << std::endl;
   return app.exec();
 }
