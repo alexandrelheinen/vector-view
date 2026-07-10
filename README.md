@@ -278,13 +278,13 @@ First-party C++ follows the [C++ Core Guidelines](https://isocpp.github.io/CppCo
 ./scripts/format.sh
 ```
 
-Code under `third_party/` is excluded.
+Code under `external/` is excluded.
 
 ### CMake targets
 
 | Target | Output |
 |--------|--------|
-| `vectorview` | `libvectorview.so` (Gazebo Sim system plugin) |
+| `vectorview` | `libvector-view.so` (Gazebo Sim system plugin) |
 | `vectorGUI` | Qt6 executable |
 | `vectorview_common` | Static library (shared utilities) |
 | `vectorview_filters` | Shared library (force filter) |

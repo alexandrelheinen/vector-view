@@ -13,8 +13,8 @@ export GZ_SIM_SYSTEM_PLUGIN_PATH="$ROOT/build:${GZ_SIM_SYSTEM_PLUGIN_PATH:-}"
 export GZ_SIM_RESOURCE_PATH="$ROOT/models:${GZ_SIM_RESOURCE_PATH:-}"
 export GZ_SIM_USER_PATH="$ROOT/worlds:${GZ_SIM_USER_PATH:-}"
 
-if [ ! -f "$ROOT/build/libvectorview.so" ]; then
-  echo "error: build/libvectorview.so not found. Build the project first." >&2
+if [ ! -f "$ROOT/build/libvector-view.so" ]; then
+  echo "error: build/libvector-view.so not found. Build the project first." >&2
   exit 1
 fi
 

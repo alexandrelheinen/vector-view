@@ -1882,12 +1882,12 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
-    <plugin filename="libvectorview.so" name="vectorview::VectorView">
+    <plugin filename="libvector-view.so" name="vectorview::VectorView">
       <link_name>l_hand</link_name>
       <contact_topic>/vectorview/iCub_fixed/l_hand</contact_topic>
       <collision_scope>iCub::l_hand::l_hand_collision</collision_scope>
     </plugin>
-    <plugin filename="libvectorview.so" name="vectorview::VectorView">
+    <plugin filename="libvector-view.so" name="vectorview::VectorView">
       <link_name>r_hand</link_name>
       <contact_topic>/vectorview/iCub_fixed/r_hand</contact_topic>
       <collision_scope>iCub::r_hand::r_hand_collision</collision_scope>

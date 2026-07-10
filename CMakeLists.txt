@@ -98,6 +98,7 @@ endif()
 
 if(BUILD_VECTORVIEW)
   add_library(${PROJECTNAME} SHARED ${plugin_sources})
+  set_target_properties(${PROJECTNAME} PROPERTIES OUTPUT_NAME "vector-view")
   target_include_directories(${PROJECTNAME}
     PRIVATE
       ${INCLUDE_DIR}
