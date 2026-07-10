@@ -53,8 +53,8 @@ if [ "$ready" -ne 1 ]; then
   exit 1
 fi
 
-# Let physics and sensors settle before recording.
-sleep 2
+# Let joint controllers settle into the standing pose before recording.
+sleep 5
 
 echo "Recording to $OUTPUT"
 gz service -s "$RECORD_TOPIC" \

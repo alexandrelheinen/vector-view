@@ -155,23 +155,9 @@
         </inertia>
       </inertial>
     </link>
-    <joint name='l_leg_ft_sensor' type='revolute'>
+    <joint name='l_leg_ft_sensor' type='fixed'>
       <child>l_hip_3</child>
       <parent>l_hip_2</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
-        </limit>
-        <dynamics>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-        </dynamics>
-        <use_parent_model_frame>1</use_parent_model_frame>
-      </axis>
       <sensor name='left_leg_ft' type='force_torque'>
         <always_on>1</always_on>
         <update_rate>100</update_rate>
@@ -436,23 +422,9 @@
         </geometry>
       </visual>
     </link>
-    <joint name='l_foot_ft_sensor' type='revolute'>
+    <joint name='l_foot_ft_sensor' type='fixed'>
       <child>l_foot</child>
       <parent>l_ankle_2</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
-        </limit>
-        <dynamics>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-        </dynamics>
-        <use_parent_model_frame>1</use_parent_model_frame>
-      </axis>
       <sensor name='left_foot_ft' type='force_torque'>
         <always_on>1</always_on>
         <update_rate>100</update_rate>
@@ -583,23 +555,9 @@
         </inertia>
       </inertial>
     </link>
-    <joint name='r_leg_ft_sensor' type='revolute'>
+    <joint name='r_leg_ft_sensor' type='fixed'>
       <child>r_hip_3</child>
       <parent>r_hip_2</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
-        </limit>
-        <dynamics>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-        </dynamics>
-        <use_parent_model_frame>1</use_parent_model_frame>
-      </axis>
       <sensor name='right_leg_ft' type='force_torque'>
         <always_on>1</always_on>
         <update_rate>100</update_rate>
@@ -864,23 +822,9 @@
         </geometry>
       </visual>
     </link>
-    <joint name='r_foot_ft_sensor' type='revolute'>
+    <joint name='r_foot_ft_sensor' type='fixed'>
       <child>r_foot</child>
       <parent>r_ankle_2</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
-        </limit>
-        <dynamics>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-        </dynamics>
-        <use_parent_model_frame>1</use_parent_model_frame>
-      </axis>
       <sensor name='right_foot_ft' type='force_torque'>
         <always_on>1</always_on>
         <update_rate>100</update_rate>
@@ -1205,23 +1149,9 @@
         </geometry>
       </visual>
     </link>
-    <joint name='l_arm_ft_sensor' type='revolute'>
+    <joint name='l_arm_ft_sensor' type='fixed'>
       <child>l_upper_arm</child>
       <parent>l_shoulder_3</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
-        </limit>
-        <dynamics>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-        </dynamics>
-        <use_parent_model_frame>1</use_parent_model_frame>
-      </axis>
       <sensor name='left_arm_ft' type='force_torque'>
         <always_on>1</always_on>
         <update_rate>100</update_rate>
@@ -1757,23 +1687,9 @@
         </geometry>
       </visual>
     </link>
-    <joint name='r_arm_ft_sensor' type='revolute'>
+    <joint name='r_arm_ft_sensor' type='fixed'>
       <child>r_upper_arm</child>
       <parent>r_shoulder_3</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
-        </limit>
-        <dynamics>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-        </dynamics>
-        <use_parent_model_frame>1</use_parent_model_frame>
-      </axis>
       <sensor name='right_arm_ft' type='force_torque'>
         <always_on>1</always_on>
         <update_rate>100</update_rate>

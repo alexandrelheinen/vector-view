@@ -1,7 +1,8 @@
 <?xml version='1.0'?>
 <!--
-  Release-demo variant of icub_contact: adds JointPositionController plugins so
-  scripts/animate_grasp.sh can drive the arms without YARP or ISIRWholeBodyController.
+  Release-demo variant of icub_contact: JointPositionController plugins mirror the
+  original gazebo_yarp_controlboard PIDs so the robot holds a stable standing pose
+  before the scripted arm grasp sequence runs.
 -->
 <sdf version='1.4'>
   <model name="iCub_fixed">
@@ -9,69 +10,302 @@
       <uri>model://icub</uri>
       <pose>0.0 0 1.0 0 0 3.14</pose>
 
-      <!-- Left arm -->
+
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_hip_pitch</joint_name>
+        <topic_name>/grasp_demo/l_hip_pitch</topic_name>
+        <p_gain>1000</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_hip_roll</joint_name>
+        <topic_name>/grasp_demo/l_hip_roll</topic_name>
+        <p_gain>1000</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_hip_yaw</joint_name>
+        <topic_name>/grasp_demo/l_hip_yaw</topic_name>
+        <p_gain>1000</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_knee</joint_name>
+        <topic_name>/grasp_demo/l_knee</topic_name>
+        <p_gain>1000</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_ankle_pitch</joint_name>
+        <topic_name>/grasp_demo/l_ankle_pitch</topic_name>
+        <p_gain>1000</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_ankle_roll</joint_name>
+        <topic_name>/grasp_demo/l_ankle_roll</topic_name>
+        <p_gain>1000</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_hip_pitch</joint_name>
+        <topic_name>/grasp_demo/r_hip_pitch</topic_name>
+        <p_gain>1000</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_hip_roll</joint_name>
+        <topic_name>/grasp_demo/r_hip_roll</topic_name>
+        <p_gain>1000</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_hip_yaw</joint_name>
+        <topic_name>/grasp_demo/r_hip_yaw</topic_name>
+        <p_gain>1000</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_knee</joint_name>
+        <topic_name>/grasp_demo/r_knee</topic_name>
+        <p_gain>1000</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_ankle_pitch</joint_name>
+        <topic_name>/grasp_demo/r_ankle_pitch</topic_name>
+        <p_gain>1000</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_ankle_roll</joint_name>
+        <topic_name>/grasp_demo/r_ankle_roll</topic_name>
+        <p_gain>1000</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>torso_yaw</joint_name>
+        <topic_name>/grasp_demo/torso_yaw</topic_name>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>torso_roll</joint_name>
+        <topic_name>/grasp_demo/torso_roll</topic_name>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>torso_pitch</joint_name>
+        <topic_name>/grasp_demo/torso_pitch</topic_name>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>neck_pitch</joint_name>
+        <topic_name>/grasp_demo/neck_pitch</topic_name>
+        <p_gain>50</p_gain>
+        <i_gain>7</i_gain>
+        <d_gain>0.1</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>neck_roll</joint_name>
+        <topic_name>/grasp_demo/neck_roll</topic_name>
+        <p_gain>50</p_gain>
+        <i_gain>7</i_gain>
+        <d_gain>0.1</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>neck_yaw</joint_name>
+        <topic_name>/grasp_demo/neck_yaw</topic_name>
+        <p_gain>50</p_gain>
+        <i_gain>7</i_gain>
+        <d_gain>0.1</d_gain>
+        <initial_position>0</initial_position>
+      </plugin>
       <plugin filename="gz-sim-joint-position-controller-system"
               name="gz::sim::systems::JointPositionController">
         <joint_name>l_shoulder_pitch</joint_name>
         <topic_name>/grasp_demo/l_shoulder_pitch</topic_name>
-        <p_gain>80</p_gain><i_gain>0</i_gain><d_gain>8</d_gain>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>-0.52</initial_position>
       </plugin>
       <plugin filename="gz-sim-joint-position-controller-system"
               name="gz::sim::systems::JointPositionController">
         <joint_name>l_shoulder_roll</joint_name>
         <topic_name>/grasp_demo/l_shoulder_roll</topic_name>
-        <p_gain>80</p_gain><i_gain>0</i_gain><d_gain>8</d_gain>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0.52</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_shoulder_yaw</joint_name>
+        <topic_name>/grasp_demo/l_shoulder_yaw</topic_name>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
       </plugin>
       <plugin filename="gz-sim-joint-position-controller-system"
               name="gz::sim::systems::JointPositionController">
         <joint_name>l_elbow</joint_name>
         <topic_name>/grasp_demo/l_elbow</topic_name>
-        <p_gain>80</p_gain><i_gain>0</i_gain><d_gain>8</d_gain>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0.785</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_wrist_prosup</joint_name>
+        <topic_name>/grasp_demo/l_wrist_prosup</topic_name>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
       </plugin>
       <plugin filename="gz-sim-joint-position-controller-system"
               name="gz::sim::systems::JointPositionController">
         <joint_name>l_wrist_pitch</joint_name>
         <topic_name>/grasp_demo/l_wrist_pitch</topic_name>
-        <p_gain>60</p_gain><i_gain>0</i_gain><d_gain>6</d_gain>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
       </plugin>
-
-      <!-- Right arm -->
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_wrist_yaw</joint_name>
+        <topic_name>/grasp_demo/l_wrist_yaw</topic_name>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0.698</initial_position>
+      </plugin>
       <plugin filename="gz-sim-joint-position-controller-system"
               name="gz::sim::systems::JointPositionController">
         <joint_name>r_shoulder_pitch</joint_name>
         <topic_name>/grasp_demo/r_shoulder_pitch</topic_name>
-        <p_gain>80</p_gain><i_gain>0</i_gain><d_gain>8</d_gain>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>-0.52</initial_position>
       </plugin>
       <plugin filename="gz-sim-joint-position-controller-system"
               name="gz::sim::systems::JointPositionController">
         <joint_name>r_shoulder_roll</joint_name>
         <topic_name>/grasp_demo/r_shoulder_roll</topic_name>
-        <p_gain>80</p_gain><i_gain>0</i_gain><d_gain>8</d_gain>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0.52</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_shoulder_yaw</joint_name>
+        <topic_name>/grasp_demo/r_shoulder_yaw</topic_name>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
       </plugin>
       <plugin filename="gz-sim-joint-position-controller-system"
               name="gz::sim::systems::JointPositionController">
         <joint_name>r_elbow</joint_name>
         <topic_name>/grasp_demo/r_elbow</topic_name>
-        <p_gain>80</p_gain><i_gain>0</i_gain><d_gain>8</d_gain>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0.785</initial_position>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_wrist_prosup</joint_name>
+        <topic_name>/grasp_demo/r_wrist_prosup</topic_name>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
       </plugin>
       <plugin filename="gz-sim-joint-position-controller-system"
               name="gz::sim::systems::JointPositionController">
         <joint_name>r_wrist_pitch</joint_name>
         <topic_name>/grasp_demo/r_wrist_pitch</topic_name>
-        <p_gain>60</p_gain><i_gain>0</i_gain><d_gain>6</d_gain>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0</initial_position>
       </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_wrist_yaw</joint_name>
+        <topic_name>/grasp_demo/r_wrist_yaw</topic_name>
+        <p_gain>100</p_gain>
+        <i_gain>10</i_gain>
+        <d_gain>10</d_gain>
+        <initial_position>0.698</initial_position>
+      </plugin>
+
     </include>
 
-    <joint name="fixed to ground" type="revolute">
+    <joint name="fixed to ground" type="fixed">
       <parent>world</parent>
       <child>iCub::root_link</child>
-      <axis>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-        </limit>
-        <xyz>0 0 1</xyz>
-      </axis>
     </joint>
   </model>
 </sdf>
+

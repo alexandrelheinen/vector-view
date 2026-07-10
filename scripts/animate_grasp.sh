@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Animate the iCub arms to press and release the box, reproducing the 2015
 # internship grasp demo without the external CoDyCo controller stack.
+#
+# Legs, torso, and head are held by JointPositionController plugins in
+# icub_contact_release (same PIDs as the original gazebo_yarp_controlboard).
 set -euo pipefail
 
 publish_joint() {
@@ -48,52 +51,65 @@ animate_pose() {
   wait
 }
 
-echo "Grasp demo: idle pose"
-animate_pose 1.5 \
-  "/grasp_demo/l_shoulder_pitch,0.0,0.0" \
-  "/grasp_demo/l_shoulder_roll,0.3,0.3" \
-  "/grasp_demo/l_elbow,0.4,0.4" \
-  "/grasp_demo/l_wrist_pitch,0.0,0.0" \
-  "/grasp_demo/r_shoulder_pitch,0.0,0.0" \
-  "/grasp_demo/r_shoulder_roll,0.3,0.3" \
-  "/grasp_demo/r_elbow,0.4,0.4" \
-  "/grasp_demo/r_wrist_pitch,0.0,0.0"
+# 2015 default arm configuration from icub.sdf initialConfiguration
+SP=-0.52
+SR=0.52
+SY=0
+EL=0.785
+WP=0
+WY=0
+WYAW=0.698
+
+echo "Grasp demo: hold standing pose"
+sleep 2.0
 
 echo "Grasp demo: reach toward the box"
 animate_pose 3.0 \
-  "/grasp_demo/l_shoulder_pitch,0.0,-0.95" \
-  "/grasp_demo/l_shoulder_roll,0.3,1.35" \
-  "/grasp_demo/l_elbow,0.4,1.35" \
-  "/grasp_demo/l_wrist_pitch,0.0,-0.55" \
-  "/grasp_demo/r_shoulder_pitch,0.0,-0.95" \
-  "/grasp_demo/r_shoulder_roll,0.3,1.35" \
-  "/grasp_demo/r_elbow,0.4,1.35" \
-  "/grasp_demo/r_wrist_pitch,0.0,-0.55"
+  "/grasp_demo/l_shoulder_pitch,${SP},-1.05" \
+  "/grasp_demo/l_shoulder_roll,${SR},1.25" \
+  "/grasp_demo/l_shoulder_yaw,${SY},0" \
+  "/grasp_demo/l_elbow,${EL},1.20" \
+  "/grasp_demo/l_wrist_prosup,${WP},0" \
+  "/grasp_demo/l_wrist_pitch,${WY},-0.45" \
+  "/grasp_demo/l_wrist_yaw,${WYAW},0.55" \
+  "/grasp_demo/r_shoulder_pitch,${SP},-1.05" \
+  "/grasp_demo/r_shoulder_roll,${SR},1.25" \
+  "/grasp_demo/r_shoulder_yaw,${SY},0" \
+  "/grasp_demo/r_elbow,${EL},1.20" \
+  "/grasp_demo/r_wrist_prosup,${WP},0" \
+  "/grasp_demo/r_wrist_pitch,${WY},-0.45" \
+  "/grasp_demo/r_wrist_yaw,${WYAW},0.55"
 
 echo "Grasp demo: press the box (contact arrows appear)"
 animate_pose 2.5 \
-  "/grasp_demo/l_shoulder_pitch,-0.95,-1.25" \
-  "/grasp_demo/l_shoulder_roll,1.35,1.45" \
-  "/grasp_demo/l_elbow,1.35,0.55" \
-  "/grasp_demo/l_wrist_pitch,-0.55,-0.35" \
-  "/grasp_demo/r_shoulder_pitch,-0.95,-1.25" \
-  "/grasp_demo/r_shoulder_roll,1.35,1.45" \
-  "/grasp_demo/r_elbow,1.35,0.55" \
-  "/grasp_demo/r_wrist_pitch,-0.55,-0.35"
+  "/grasp_demo/l_shoulder_pitch,-1.05,-1.30" \
+  "/grasp_demo/l_shoulder_roll,1.25,1.35" \
+  "/grasp_demo/l_elbow,1.20,0.60" \
+  "/grasp_demo/l_wrist_pitch,-0.45,-0.25" \
+  "/grasp_demo/r_shoulder_pitch,-1.05,-1.30" \
+  "/grasp_demo/r_shoulder_roll,1.25,1.35" \
+  "/grasp_demo/r_elbow,1.20,0.60" \
+  "/grasp_demo/r_wrist_pitch,-0.45,-0.25"
 
 echo "Grasp demo: hold contact"
 sleep 2.0
 
-echo "Grasp demo: release and retract"
+echo "Grasp demo: release and return to standing"
 animate_pose 3.0 \
-  "/grasp_demo/l_shoulder_pitch,-1.25,0.0" \
-  "/grasp_demo/l_shoulder_roll,1.45,0.3" \
-  "/grasp_demo/l_elbow,0.55,0.4" \
-  "/grasp_demo/l_wrist_pitch,-0.35,0.0" \
-  "/grasp_demo/r_shoulder_pitch,-1.25,0.0" \
-  "/grasp_demo/r_shoulder_roll,1.45,0.3" \
-  "/grasp_demo/r_elbow,0.55,0.4" \
-  "/grasp_demo/r_wrist_pitch,-0.35,0.0"
+  "/grasp_demo/l_shoulder_pitch,-1.30,${SP}" \
+  "/grasp_demo/l_shoulder_roll,1.35,${SR}" \
+  "/grasp_demo/l_shoulder_yaw,0,${SY}" \
+  "/grasp_demo/l_elbow,0.60,${EL}" \
+  "/grasp_demo/l_wrist_prosup,0,${WP}" \
+  "/grasp_demo/l_wrist_pitch,-0.25,${WY}" \
+  "/grasp_demo/l_wrist_yaw,0.55,${WYAW}" \
+  "/grasp_demo/r_shoulder_pitch,-1.30,${SP}" \
+  "/grasp_demo/r_shoulder_roll,1.35,${SR}" \
+  "/grasp_demo/r_shoulder_yaw,0,${SY}" \
+  "/grasp_demo/r_elbow,0.60,${EL}" \
+  "/grasp_demo/r_wrist_prosup,0,${WP}" \
+  "/grasp_demo/r_wrist_pitch,-0.25,${WY}" \
+  "/grasp_demo/r_wrist_yaw,0.55,${WYAW}"
 
-sleep 1.0
+sleep 1.5
 echo "Grasp demo animation complete"
