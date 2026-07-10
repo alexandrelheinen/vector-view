@@ -119,7 +119,7 @@
       </link>
     </model>
 
-    <!-- Camera framing matched to images/execution_example.png -->
+    <!-- Camera framing matched to docs/images/execution_example.png -->
     <model name="release_camera">
       <static>true</static>
       <pose>0.6 -1.8 1.05 0 0.18 1.35</pose>
