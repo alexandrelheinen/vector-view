@@ -2,40 +2,6 @@
 
 namespace vectorview {
 
-TopicNames DeriveTopicNames(const std::string& visual_name) {
-  TopicNames result;
-  if (visual_name.empty()) {
-    return result;
-  }
-
-  std::vector<std::string> names;
-  std::string name = visual_name;
-
-  while (name.find("::") != std::string::npos) {
-    names.push_back(name.substr(0, name.find("::")));
-    name.erase(0, name.find("::") + 2);
-  }
-  names.push_back(name);
-
-  if (names.empty() || names.back().empty()) {
-    return result;
-  }
-
-  result.topic = "~";
-  result.collision = "";
-  for (size_t i = 0; i < names.size(); ++i) {
-    result.topic += "/" + names[i];
-    result.collision += "::" + names[i];
-  }
-  result.topic += "/" + names.back() + "_contact";
-  result.collision += "::" + names.back() + "_collision";
-  if (result.collision.size() >= 2) {
-    result.collision.erase(0, 2);
-  }
-  result.valid = true;
-  return result;
-}
-
 Vec3 AggregatePluginForces(const std::vector<ContactForce>& contacts,
                            const std::string& collision_name) {
   Vec3 force;
