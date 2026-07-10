@@ -99,7 +99,7 @@ if(BUILD_VECTORVIEW OR BUILD_VECTORGUI)
   add_library(vectorview_common STATIC ${common_sources})
   add_library(dspfilters SHARED ${dspfilters_sources})
   add_library(vectorview_filters SHARED ${forcefilter_sources})
-  target_link_libraries(vectorview_filters dspfilters ${GAZEBO_LIBRARIES})
+  target_link_libraries(vectorview_filters dspfilters)
 endif()
 
 if(BUILD_VECTORVIEW)
