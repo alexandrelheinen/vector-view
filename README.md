@@ -1,126 +1,183 @@
-# VectorView and VectorGUI #
+# VectorView and VectorGUI
 
-**VectorView** (libvectorview.so library) is a *Gazebo Visual Plugin* that, once added to the `<visual>` element of a iCub model's link, displays a vector representing all contact forces applied to the related link contact sensor.
+**VectorView** (`libvectorview.so`) is a Gazebo visual plugin that draws a force arrow on an iCub link visual, using data from the link's contact sensor.
 
-This plugin is thus supposed to be used with the icub-gazebo model, that can be found on its official repository: https://github.com/robotology-playground/icub-gazebo. Thus, copies of the used models are saved on **models** folder. These models were modified from their original format and were already set up with contact sensor as needed. Furthermore, any name logic or model reference are based on the given model standards.
+**VectorGUI** (`vectorGUI`) is a Qt desktop application that subscribes to the same contact topics, shows contact information, plots force magnitude, and can spawn simple models in simulation.
 
-**VectorGUI** (vectorGUI application) is an extern application that displays contacts informations retrieved from VectorView and  allows the user to spawn objects during simulation,.
+Bundled Gazebo models live under `models/`. The demo world is `worlds/robot.world`.
 
-#### Some name rules to the plugin ####
-The name of the contact sensor must be "LINK_NAME_contact". For instance if you set it at the "l_hand" link, your contact sensor should be "l_hand_contact". Anyway be free to change this rule to something more intelligent.
+#### Contact sensor naming
 
-## Project layout ##
+Contact sensors must follow `LINK_NAME_contact` (for example `l_hand_contact` on link `l_hand`).
+
+## Project layout
 
 ```
 include/vectorview/     First-party public headers
 src/plugin/             Gazebo visual plugin
 src/gui/                Qt desktop application
 src/filters/            ForceFilter wrapper
-src/common/             Shared pure C++ utilities
+src/common/             Shared pure C++ utilities (ContactUtils, TopicPath)
 third_party/            Vendored DSPFilters, QCustomPlot, and Catch2
 models/                 Gazebo models (iCub, spawn primitives)
 worlds/                 Gazebo world files
-scripts/                Demo launcher and formatting helper
+scripts/                Demo launcher, formatting helper, env bootstrap
 tests/                  Unit tests (no Gazebo required)
+.env.example            Template for local environment variables
 ```
 
-## Dependencies ##
+## Dependencies
 
-Just a list of required packages (and each one has it own dependencies):
- * Gazebo: http://gazebosim.org/tutorials?tut=install_from_source&cat=install with **SDFormat**
- * iCub: http://wiki.icub.org/wiki/Linux:Installation_from_sources with **YARP**
- * [gazebo-yarp-plugins](https://github.com/robotology/gazebo-yarp-plugins)
- * [icub-gazebo](https://github.com/robotology-playground/icub-gazebo)
- * It should be all, however [ocra-core](https://github.com/ocra-recipes/ocra-core) and [codyco-superbuild](https://github.com/alexandrelheinen/codyco-superbuild) with [`ISIR_MODULES`](https://github.com/alexandrelheinen/codyco-superbuild#a-note-on-ocra-wbi-plugins) are also used in this project. Those are versions from my own repository where some changes were made the contact forces analysis.
+This project has two dependency tiers.
 
- VectorView uses [DSPFilters](https://github.com/vinniefalco/DSPFilters), a collection of C++ classes for digital signal filtering, and [QCustomPlot](http://www.qcustomplot.com/), a Qt C++ widget for plotting and data visualization. Sources for both projects are vendored under `third_party/`, so VectorView has no direct dependency on those packages at install time.
+### Tier A — build VectorView / VectorGUI
 
-## Coding Standards ##
+Required to compile the plugin and GUI on a **legacy Gazebo Classic + Qt4** stack:
 
-All first-party C++ code in this project must conform to the **[C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)**.
+- CMake >= 3.10
+- C++ compiler with C++11 support
+- pkg-config, Protobuf, Boost (system, filesystem)
+- Gazebo Classic (pkg-config module `gazebo`)
+- OGRE 1.9
+- Qt4 (QtGui, QtXml, QtCore)
 
-Layout and formatting are enforced with the root **`.clang-format`** file. Run `./scripts/format.sh` before submitting changes (requires `clang-format` on your PATH). Vendored code under `third_party/` is excluded from formatting.
+Example on **Ubuntu 20.04** (adjust names for your distro/Gazebo version):
 
-Key rules applied throughout the codebase include:
-
-* **R.11** — Avoid calling `new` and `delete` explicitly; use `std::unique_ptr` or `std::shared_ptr` for heap-allocated objects.
-* **SF.7** — Don't write `using namespace` at global scope in a header file.
-* **ES.25** — Declare variables in the smallest scope possible; avoid declaring loop counters outside the `for` statement.
-* **ES.107** — Prefer `unsigned` or `size_t` over `int` for subscripts and sizes to avoid signed/unsigned comparison warnings.
-* **I.4** — Make interfaces precisely and strongly typed; avoid hard-coded magic strings (e.g., robot names) in implementation files.
-
-Contributors are expected to be familiar with the guidelines before submitting changes.
-
-## Installation ##
-
-To use VectorView Plugin you just need to compile it and set the [environmental variables](#useful-environment-variables) whom able Gazebo to find the libraries you just built
 ```bash
-git clone https://github.com/alexandrelheinen/vector-view.git && cd vector-view
+sudo apt update
+sudo apt install cmake g++ pkg-config \
+  libgazebo-dev libogre-1.9-dev libprotobuf-dev \
+  libboost-system-dev libboost-filesystem-dev \
+  libqt4-dev libqt4-opengl-dev
 ```
-and compile it in `build` folder
+
+On modern distros such as Ubuntu 22.04/24.04, **Qt4 and Gazebo Classic are usually unavailable from apt**. In that case you can still build and run the unit tests (see below).
+
+Vendored libraries:
+
+- [DSPFilters](https://github.com/vinniefalco/DSPFilters)
+- [QCustomPlot](http://www.qcustomplot.com/)
+
+Their sources are included under `third_party/`.
+
+### Tier B — run the full iCub demo
+
+The original internship demo additionally requires:
+
+- [YARP](https://www.yarp.it/) and iCub tooling
+- [gazebo-yarp-plugins](https://github.com/robotology/gazebo-yarp-plugins)
+- [ocra-core](https://github.com/ocra-recipes/ocra-core) and [codyco-superbuild](https://github.com/alexandrelheinen/codyco-superbuild) for `ISIRWholeBodyController`
+
+These cannot be installed with a single `apt` line. Follow the upstream installation guides for those projects.
+
+## Coding standards
+
+First-party C++ code follows the [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines).
+
+Formatting is defined by `.clang-format`. Run:
+
 ```bash
+./scripts/format.sh
+```
+
+Vendored code under `third_party/` is excluded from formatting.
+
+## Build
+
+```bash
+git clone https://github.com/alexandrelheinen/vector-view.git
+cd vector-view
 mkdir build && cd build
-cmake .. && make
+cmake ..
+make
 ```
 
-Optional install target:
+If Gazebo or Qt4 are missing, CMake disables `BUILD_VECTORVIEW` and `BUILD_VECTORGUI` and keeps `BUILD_TESTS` enabled.
+
+Optional install:
 
 ```bash
 sudo make install
 ```
 
-## Unit tests ##
+## Unit tests
 
 Pure logic tests run without Gazebo or Qt:
 
 ```bash
 mkdir build && cd build
-cmake .. -DBUILD_TESTS=ON
+cmake ..
 make
 ctest --output-on-failure
 ```
 
-When Gazebo or Qt4 are not installed, CMake automatically disables `BUILD_VECTORVIEW` and `BUILD_VECTORGUI` and builds the test targets only. To skip the plugin/GUI explicitly:
+Explicit tests-only configure:
 
 ```bash
-cmake .. -DBUILD_TESTS=ON -DBUILD_VECTORVIEW=OFF -DBUILD_VECTORGUI=OFF
+cmake .. -DBUILD_VECTORVIEW=OFF -DBUILD_VECTORGUI=OFF -DBUILD_TESTS=ON
 ```
 
-## Useful environmental variables ##
+## Environment setup
 
-As VectorView is a Gazebo Plugin, some environment variables must be set up to assure that Gazebo client will find out all files it needs:
+Gazebo needs to find the built plugin and bundled models. Instead of exporting variables manually in every shell, copy the template and let the run script load it:
+
 ```bash
-export VECTOR_VIEW=where_you_cloned_it/vector-view
-export PATH=$VECTOR_VIEW/build:${PATH}
-export GAZEBO_PLUGIN_PATH=$VECTOR_VIEW/build:${GAZEBO_PLUGIN_PATH}
-export GAZEBO_MODEL_PATH=$VECTOR_VIEW/models:${GAZEBO_MODEL_PATH}
+cp .env.example .env
+# edit .env if your paths differ
 ```
-## Test it! ##
 
-By running those three commands in respective order in different terminals to test the plugin (give your computer some time to process each command):
+`.env` is **not automatic by itself** — shells do not load it unless you `source` it or use `scripts/run.sh`, which sources `.env` when present.
+
+Variables used by the project:
+
+```bash
+export VECTOR_VIEW=/path/to/vector-view
+export PATH=$VECTOR_VIEW/build:$PATH
+export GAZEBO_PLUGIN_PATH=$VECTOR_VIEW/build:${GAZEBO_PLUGIN_PATH:-}
+export GAZEBO_MODEL_PATH=$VECTOR_VIEW/models:${GAZEBO_MODEL_PATH:-}
+```
+
+Optional for the full demo:
+
+```bash
+export CODYCO_SUPERBUILD_ROOT=/path/to/codyco-superbuild
+```
+
+## Run the demo
+
+### Manual startup
+
+In separate terminals:
+
 ```bash
 yarpserver
-cd $VECTOR_VIEW && gazebo worlds/robot.world
-ISIRWholeBodyController --sequence StageTestTasks
+cd "$VECTOR_VIEW" && gazebo worlds/robot.world
+ISIRWholeBodyController --sequence StageTestTasks   # requires Tier B setup
+vectorGUI l_hand                                    # or pass the full topic path
 ```
 
-While the simulation is running, in another terminal can run
+Short-name CLI examples:
+
 ```bash
-vectorGUI l_hand_contact
+vectorGUI l_hand
+vectorGUI /gazebo/default/iCub_fixed/iCub/r_hand/r_hand_contact
+vectorGUI l_hand iCub                               # optional robot-name override
 ```
-to pop out the external interface. Pass the full topic path or a short link name (defaults to the iCub_fixed model). An optional second argument sets the robot name used to identify contact bodies (default: `iCub`).
 
-On this window the contact object name is displayed as well as the forces involved on this contact and where it has take place.
+### Shell script
 
-![interface window example](/images/gui_example.png "Interface window example")
-
-By clicking on **Spawn** button, the chosen model in the drop down menu is spawn at set Cartesian location (x, y, z).
-
-### SHELL SCRIPT ###
-
-To easily start the plugin, just run the shell script `scripts/run.sh` as follows. It will trigger out all application modules (maybe you should change its permission by typing `chmod +x scripts/run.sh` on your terminal), including test sequence tasks.
 ```bash
-cd $VECTOR_VIEW && ./scripts/run.sh
+chmod +x scripts/run.sh
+./scripts/run.sh
 ```
-The execution should be something like in the figure below
-![shell script execution example](/images/execution_example.png "shell script execution example")
+
+The script sources `.env`, exports Gazebo paths, and launches the demo processes in `gnome-terminal` tabs. It skips the ISIR controller step if `CODYCO_SUPERBUILD_ROOT` is unset.
+
+## Topic path logic
+
+Topic names are built by `vectorview::TopicPath`:
+
+- the plugin derives link-based topics from a visual name such as `iCub::l_hand::l_hand_visual`
+- the GUI accepts either a full transport path or a short link name such as `l_hand`
+
+This avoids ad hoc string concatenation spread across the plugin and GUI entry point.
