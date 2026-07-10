@@ -1,47 +1,64 @@
-# VectorView and VectorGUI
+# VectorView
 
-**VectorView** (`libvectorview.so`) is a Gazebo visual plugin that draws a force arrow on an iCub link visual, using data from the link's contact sensor.
+Visualize iCub contact forces in Gazebo. This repository contains two programs that work together:
 
-**VectorGUI** (`vectorGUI`) is a Qt desktop application that subscribes to the same contact topics, shows contact information, plots force magnitude, and can spawn simple models in simulation.
+| Component | Binary | Role |
+|-----------|--------|------|
+| **VectorView** | `libvectorview.so` | Gazebo visual plugin that draws a force arrow on a link |
+| **VectorGUI** | `vectorGUI` | Qt desktop app that displays contact data, plots force magnitude, and spawns models |
 
-Bundled Gazebo models live under `models/`. The demo world is `worlds/robot.world`.
+Both read from Gazebo transport contact topics. The plugin renders in the 3D view; the GUI provides a separate analysis window.
 
-#### Contact sensor naming
+Bundled assets:
 
-Contact sensors must follow `LINK_NAME_contact` (for example `l_hand_contact` on link `l_hand`).
+- `models/` contains the instrumented iCub model and simple spawn primitives
+- `worlds/robot.world` is the demo Gazebo world
 
-## Project layout
+## Contact sensor naming
 
+Each contact sensor must be named after its link:
+
+```text
+LINK_NAME_contact
 ```
-include/vectorview/     First-party public headers
+
+Example: link `l_hand` uses sensor `l_hand_contact`.
+
+The plugin is attached to the link visual (for example `l_hand_visual`). Topic names are resolved from the link name, not the visual name. See [Topic paths](#topic-paths) below.
+
+## Repository layout
+
+```text
+include/vectorview/     Public headers
 src/plugin/             Gazebo visual plugin
-src/gui/                Qt desktop application
-src/filters/            ForceFilter wrapper
-src/common/             Shared pure C++ utilities (ContactUtils, TopicPath)
-third_party/            Vendored DSPFilters, QCustomPlot, and Catch2
-models/                 Gazebo models (iCub, spawn primitives)
+src/gui/                Qt application
+src/filters/            Butterworth force filter wrapper
+src/common/             Shared logic (ContactUtils, TopicPath)
+third_party/            Vendored DSPFilters, QCustomPlot, Catch2
+models/                 Gazebo models
 worlds/                 Gazebo world files
-scripts/                Demo launcher, formatting helper, env bootstrap
+scripts/                Demo launcher and format helper
 tests/                  Unit tests (no Gazebo required)
-.env.example            Template for local environment variables
+.env.example            Environment variable template
 ```
 
-## Dependencies
+## Requirements
 
-This project has two dependency tiers.
+### Build the plugin and GUI
 
-### Tier A — build VectorView / VectorGUI
+These targets target a **legacy Gazebo Classic + Qt4** stack:
 
-Required to compile the plugin and GUI on a **legacy Gazebo Classic + Qt4** stack:
+| Dependency | Notes |
+|------------|-------|
+| CMake 3.10+ | Build system |
+| C++11 compiler | GCC or Clang |
+| pkg-config | Dependency discovery |
+| Gazebo Classic | `pkg-config --modversion gazebo` |
+| OGRE 1.9 | Rendering |
+| Protobuf, Boost | Pulled in by Gazebo |
+| Qt4 | QtGui, QtXml, QtCore |
 
-- CMake >= 3.10
-- C++ compiler with C++11 support
-- pkg-config, Protobuf, Boost (system, filesystem)
-- Gazebo Classic (pkg-config module `gazebo`)
-- OGRE 1.9
-- Qt4 (QtGui, QtXml, QtCore)
-
-Example on **Ubuntu 20.04** (adjust names for your distro/Gazebo version):
+On **Ubuntu 20.04**, a typical install looks like:
 
 ```bash
 sudo apt update
@@ -51,38 +68,28 @@ sudo apt install cmake g++ pkg-config \
   libqt4-dev libqt4-opengl-dev
 ```
 
-On modern distros such as Ubuntu 22.04/24.04, **Qt4 and Gazebo Classic are usually unavailable from apt**. In that case you can still build and run the unit tests (see below).
+Package names vary by distribution and Gazebo version. Adjust as needed.
 
-Vendored libraries:
+On **Ubuntu 22.04 and later**, Qt4 and Gazebo Classic are generally not available from the default repositories. You can still [build and run the unit tests](#unit-tests) without them.
 
-- [DSPFilters](https://github.com/vinniefalco/DSPFilters)
-- [QCustomPlot](http://www.qcustomplot.com/)
+### Run the full iCub demo
 
-Their sources are included under `third_party/`.
+The original internship workflow also depends on external robotics software:
 
-### Tier B — run the full iCub demo
-
-The original internship demo additionally requires:
-
-- [YARP](https://www.yarp.it/) and iCub tooling
+- [YARP](https://www.yarp.it/) and the iCub software stack
 - [gazebo-yarp-plugins](https://github.com/robotology/gazebo-yarp-plugins)
-- [ocra-core](https://github.com/ocra-recipes/ocra-core) and [codyco-superbuild](https://github.com/alexandrelheinen/codyco-superbuild) for `ISIRWholeBodyController`
+- [ocra-core](https://github.com/ocra-recipes/ocra-core)
+- [codyco-superbuild](https://github.com/alexandrelheinen/codyco-superbuild) (provides `ISIRWholeBodyController`)
 
-These cannot be installed with a single `apt` line. Follow the upstream installation guides for those projects.
+There is no single `apt install` for this layer. Follow the installation guides linked above.
 
-## Coding standards
+### Bundled third-party code
 
-First-party C++ code follows the [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines).
+Sources for [DSPFilters](https://github.com/vinniefalco/DSPFilters) and [QCustomPlot](http://www.qcustomplot.com/) are vendored under `third_party/`. You do not need to install them separately.
 
-Formatting is defined by `.clang-format`. Run:
+## Quick start
 
-```bash
-./scripts/format.sh
-```
-
-Vendored code under `third_party/` is excluded from formatting.
-
-## Build
+### Clone and build
 
 ```bash
 git clone https://github.com/alexandrelheinen/vector-view.git
@@ -92,92 +99,167 @@ cmake ..
 make
 ```
 
-If Gazebo or Qt4 are missing, CMake disables `BUILD_VECTORVIEW` and `BUILD_VECTORGUI` and keeps `BUILD_TESTS` enabled.
+CMake options (all enabled by default):
 
-Optional install:
+| Option | Default | Purpose |
+|--------|---------|---------|
+| `BUILD_VECTORVIEW` | ON | Build the Gazebo plugin |
+| `BUILD_VECTORGUI` | ON | Build the Qt application |
+| `BUILD_TESTS` | ON | Build unit tests |
+
+If Gazebo or Qt4 is not found, CMake disables the plugin and GUI targets automatically and prints a warning. Tests still build.
+
+Install to system paths (optional):
 
 ```bash
 sudo make install
 ```
 
-## Unit tests
+### Unit tests
 
-Pure logic tests run without Gazebo or Qt:
+Tests cover pure C++ logic and do not require Gazebo or Qt:
 
 ```bash
-mkdir build && cd build
+mkdir -p build && cd build
 cmake ..
 make
 ctest --output-on-failure
 ```
 
-Explicit tests-only configure:
+Force a tests-only configure:
 
 ```bash
 cmake .. -DBUILD_VECTORVIEW=OFF -DBUILD_VECTORGUI=OFF -DBUILD_TESTS=ON
 ```
 
-## Environment setup
+## Configuration
 
-Gazebo needs to find the built plugin and bundled models. Instead of exporting variables manually in every shell, copy the template and let the run script load it:
+Gazebo must locate the built plugin (`.so`) and bundled models. Set this up once with a local environment file:
 
 ```bash
 cp .env.example .env
-# edit .env if your paths differ
 ```
 
-`.env` is **not automatic by itself** — shells do not load it unless you `source` it or use `scripts/run.sh`, which sources `.env` when present.
+Edit `.env` if your paths differ from the defaults. The file is loaded by `scripts/run.sh`. Shells do not read `.env` on their own; either source it manually or use the run script.
 
-Variables used by the project:
+| Variable | Purpose |
+|----------|---------|
+| `VECTOR_VIEW` | Repository root (defaults to the directory above `scripts/`) |
+| `GAZEBO_PLUGIN_PATH` | Directory containing `libvectorview.so` |
+| `GAZEBO_MODEL_PATH` | Directory containing bundled `models/` |
+| `CODYCO_SUPERBUILD_ROOT` | Optional. Enables the ISIR controller step in `run.sh` |
+
+Equivalent manual exports:
 
 ```bash
 export VECTOR_VIEW=/path/to/vector-view
-export PATH=$VECTOR_VIEW/build:$PATH
-export GAZEBO_PLUGIN_PATH=$VECTOR_VIEW/build:${GAZEBO_PLUGIN_PATH:-}
-export GAZEBO_MODEL_PATH=$VECTOR_VIEW/models:${GAZEBO_MODEL_PATH:-}
+export PATH="$VECTOR_VIEW/build:$PATH"
+export GAZEBO_PLUGIN_PATH="$VECTOR_VIEW/build:${GAZEBO_PLUGIN_PATH:-}"
+export GAZEBO_MODEL_PATH="$VECTOR_VIEW/models:${GAZEBO_MODEL_PATH:-}"
 ```
 
-Optional for the full demo:
+## Running the demo
 
-```bash
-export CODYCO_SUPERBUILD_ROOT=/path/to/codyco-superbuild
-```
-
-## Run the demo
-
-### Manual startup
-
-In separate terminals:
-
-```bash
-yarpserver
-cd "$VECTOR_VIEW" && gazebo worlds/robot.world
-ISIRWholeBodyController --sequence StageTestTasks   # requires Tier B setup
-vectorGUI l_hand                                    # or pass the full topic path
-```
-
-Short-name CLI examples:
-
-```bash
-vectorGUI l_hand
-vectorGUI /gazebo/default/iCub_fixed/iCub/r_hand/r_hand_contact
-vectorGUI l_hand iCub                               # optional robot-name override
-```
-
-### Shell script
+### Option 1: run script
 
 ```bash
 chmod +x scripts/run.sh
 ./scripts/run.sh
 ```
 
-The script sources `.env`, exports Gazebo paths, and launches the demo processes in `gnome-terminal` tabs. It skips the ISIR controller step if `CODYCO_SUPERBUILD_ROOT` is unset.
+The script:
 
-## Topic path logic
+1. Sources `.env` when present
+2. Exports Gazebo paths
+3. Opens YARP, Gazebo, two VectorGUI instances, and (if configured) the ISIR controller in separate `gnome-terminal` tabs
 
-Topic names are built by `vectorview::TopicPath`:
+If `CODYCO_SUPERBUILD_ROOT` is unset, the controller step is skipped.
 
-- the plugin derives link-based topics from a visual name such as `iCub::l_hand::l_hand_visual`
-- the GUI accepts either a full transport path or a short link name such as `l_hand`
+### Option 2: manual startup
 
-This avoids ad hoc string concatenation spread across the plugin and GUI entry point.
+Open separate terminals and run:
+
+```bash
+yarpserver
+```
+
+```bash
+cd "$VECTOR_VIEW"
+gazebo worlds/robot.world
+```
+
+```bash
+ISIRWholeBodyController --sequence StageTestTasks
+```
+
+Requires the full iCub stack from [Requirements](#run-the-full-icub-demo).
+
+```bash
+vectorGUI l_hand
+```
+
+### VectorGUI usage
+
+```bash
+# Short link name (builds the topic from default model context)
+vectorGUI l_hand
+
+# Full Gazebo transport path
+vectorGUI /gazebo/default/iCub_fixed/iCub/r_hand/r_hand_contact
+
+# Optional robot name override (default: iCub)
+vectorGUI l_hand iCub
+```
+
+Pass a link name (`l_hand`), not the sensor name (`l_hand_contact`). The program appends `_contact` automatically.
+
+## Topic paths
+
+Topic and collision names are built by `vectorview::TopicPath` in `src/common/TopicPath.cpp`.
+
+**Plugin (from visual name):**
+
+Given visual `iCub::l_hand::l_hand_visual`:
+
+| Field | Value |
+|-------|-------|
+| Transport topic | `~/iCub/l_hand/l_hand_contact` |
+| Collision scope | `iCub::l_hand::l_hand_collision` |
+
+The `_visual` suffix is stripped to obtain the link name.
+
+**GUI (from CLI argument):**
+
+| Input | Result |
+|-------|--------|
+| `l_hand` | `/gazebo/default/iCub_fixed/iCub/l_hand/l_hand_contact` |
+| Full path starting with `/` | Used as-is |
+
+Defaults for short names live in `vectorview::ModelContext` (`include/vectorview/ModelContext.h`).
+
+## Development
+
+### Coding standards
+
+First-party C++ follows the [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines). Formatting is enforced with `.clang-format`:
+
+```bash
+./scripts/format.sh
+```
+
+Code under `third_party/` is excluded.
+
+### CMake targets
+
+| Target | Output |
+|--------|--------|
+| `vectorview` | `libvectorview.so` (Gazebo plugin) |
+| `vectorGUI` | Qt executable |
+| `vectorview_common` | Static library (shared utilities) |
+| `vectorview_filters` | Shared library (force filter) |
+| `dspfilters` | Vendored DSP library |
+| `test_contact_utils`, `test_force_filter` | Unit test executables |
+
+## License
+
+Third-party components carry their own licenses (DSPFilters: MIT; QCustomPlot: GPL v3 or commercial). A project-level license file has not been added yet.
