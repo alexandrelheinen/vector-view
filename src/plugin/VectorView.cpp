@@ -39,7 +39,7 @@ void VectorView::Init() {
             << std::endl;
 }
 
-void VectorView::UpdateVector(math::Vector3 force) {
+void VectorView::UpdateVector(const math::Vector3& force) {
   math::Vector3 begin = math::Vector3::Zero;
   math::Vector3 end =
       begin + FORCE_SCALE * (visual->GetWorldPose().rot.RotateVectorReverse(force));

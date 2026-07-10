@@ -14,13 +14,10 @@
 #include <memory>
 #include <string>
 #include <vector>
-// #include <boost/shared_ptr.hpp>
-// filter includes
+
 #include "vectorview/ForceFilter.h"
 
-namespace gazebo
-{
-  //typedef boost::shared_ptr<rendering::DynamicLines> LinePtr;
+namespace gazebo {
   typedef rendering::DynamicLines* LinePtr;
 
   class VectorView : public VisualPlugin
@@ -37,7 +34,7 @@ namespace gazebo
   private:
     // FUNCTIONS
     void FindName();     // find the topic, output history and collision names based on the visual
-    void UpdateVector(math::Vector3 force);  // update visual from the vector
+    void UpdateVector(const math::Vector3& force);
     // VARIABLES
     LinePtr forceVector; // the animated line representing the force
     rendering::VisualPtr visual;
