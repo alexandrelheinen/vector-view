@@ -36,7 +36,9 @@ set(dspfilters_sources
 )
 
 set(forcefilter_sources src/filters/ForceFilter.cpp)
-set(common_sources src/common/ContactUtils.cpp)
+set(common_sources
+  src/common/ContactUtils.cpp
+  src/common/TopicPath.cpp)
 set(plugin_sources src/plugin/VectorView.cpp)
 set(gui_sources
   src/gui/VectorGUI.cpp

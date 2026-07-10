@@ -7,14 +7,6 @@
 
 namespace vectorview {
 
-struct TopicNames {
-  std::string topic;
-  std::string collision;
-  bool valid;
-
-  TopicNames() : valid(false) {}
-};
-
 struct Vec3 {
   double x;
   double y;
@@ -57,8 +49,6 @@ struct GuiContactResult {
   std::string object_name;
   bool has_wrenches;
 };
-
-TopicNames DeriveTopicNames(const std::string& visual_name);
 
 Vec3 AggregatePluginForces(const std::vector<ContactForce>& contacts,
                            const std::string& collision_name);
