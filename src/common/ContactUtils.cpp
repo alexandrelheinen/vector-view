@@ -4,6 +4,10 @@ namespace vectorview {
 
 TopicNames DeriveTopicNames(const std::string& visual_name) {
   TopicNames result;
+  if (visual_name.empty()) {
+    return result;
+  }
+
   std::vector<std::string> names;
   std::string name = visual_name;
 
@@ -13,7 +17,7 @@ TopicNames DeriveTopicNames(const std::string& visual_name) {
   }
   names.push_back(name);
 
-  if (names.empty()) {
+  if (names.empty() || names.back().empty()) {
     return result;
   }
 
