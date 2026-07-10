@@ -2,7 +2,7 @@ echo "1. Starting YARP Server to iCub control."
 gnome-terminal --tab -e "yarpserver --write"
 sleep 1
 echo "2. Running [robot.world] at Gazebo simulator."
-gnome-terminal --tab -e "gazebo robot.world"
+gnome-terminal --tab -e "gazebo ${VECTOR_VIEW:-.}/worlds/robot.world"
 sleep 6
 echo "3. Openning the GUI Interface to force analysis."
 echo "3.1. topic path: /gazebo/default/iCub_fixed/iCub/r_hand/r_hand_contact"
