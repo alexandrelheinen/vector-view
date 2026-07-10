@@ -1,83 +1,100 @@
 # VectorView
 
-Visualize iCub contact forces in Gazebo. This repository contains two programs that work together:
+Visualize iCub contact forces in **Gazebo Sim (Harmonic)** on Ubuntu 24.04 Noble. This repository contains two programs that work together:
 
 | Component | Binary | Role |
 |-----------|--------|------|
-| **VectorView** | `libvectorview.so` | Gazebo visual plugin that draws a force arrow on a link |
-| **VectorGUI** | `vectorGUI` | Qt desktop app that displays contact data, plots force magnitude, and spawns models |
+| **VectorView** | `libvectorview.so` | Gazebo Sim system plugin that draws a force arrow via marker messages |
+| **VectorGUI** | `vectorGUI` | Qt6 desktop app that displays contact data, plots force magnitude, and spawns models |
 
 Both read from Gazebo transport contact topics. The plugin renders in the 3D view; the GUI provides a separate analysis window.
 
 Bundled assets:
 
 - `models/` contains the instrumented iCub model and simple spawn primitives
-- `worlds/robot.world` is the demo Gazebo world
+- `worlds/robot.world` is the demo Gazebo Sim world
+
+## Target stack (Ubuntu 24.04 Noble, 2026)
+
+| Module | Target version |
+|--------|----------------|
+| OS | Ubuntu 24.04.3 LTS Noble |
+| Gazebo | Harmonic (`gz-sim` 8.x) via `gz-harmonic` |
+| Math / transport / msgs | `gz-math` 7.x, `gz-transport` 13.x, `gz-msgs` 10.x (Harmonic bundle) |
+| Qt | Qt 6.4.2 |
+| QCustomPlot | 2.1.1 |
+| Boost | 1.83 |
+| Protobuf | 3.21 |
+| CMake | 3.16+ (3.28 on Noble) |
+| C++ | C++17 |
+| Catch2 | 2.13.10 (vendored; v3 optional) |
+| DSPFilters | Vendored; no change required |
 
 ## Contact sensor naming
 
-Each contact sensor must be named after its link:
+Each contact sensor publishes on an explicit topic (recommended) or on the Harmonic default path. This project uses short, stable topics:
 
 ```text
-LINK_NAME_contact
+/vectorview/MODEL_INSTANCE/LINK_NAME
 ```
 
-Example: link `l_hand` uses sensor `l_hand_contact`.
+Example: link `l_hand` on model instance `iCub_fixed` uses `/vectorview/iCub_fixed/l_hand`.
 
-The plugin is attached to the link visual (for example `l_hand_visual`). Topic names are resolved from the link name, not the visual name. See [Topic paths](#topic-paths) below.
+The VectorView system plugin is attached at the **model** level (not on a visual). Topic names are resolved from the link name. See [Topic paths](#topic-paths) below.
 
 ## Repository layout
 
 ```text
 include/vectorview/     Public headers
-src/plugin/             Gazebo visual plugin
-src/gui/                Qt application
+src/plugin/             Gazebo Sim system plugin
+src/gui/                Qt6 application
 src/filters/            Butterworth force filter wrapper
-src/common/             Shared logic (ContactUtils, TopicPath)
-third_party/            Vendored DSPFilters, QCustomPlot, Catch2
+src/common/             Shared logic (ContactUtils, TopicPath, ContactMessage)
+third_party/            Vendored DSPFilters, QCustomPlot 2.1.1, Catch2
 models/                 Gazebo models
-worlds/                 Gazebo world files
+worlds/                 Gazebo Sim world files
 scripts/                Demo launcher and format helper
 tests/                  Unit tests (no Gazebo required)
 .env.example            Environment variable template
+docs/estimate.md        Modernization effort estimate vs. actual time
 ```
 
 ## Requirements
 
 ### Build the plugin and GUI
 
-These targets target a **legacy Gazebo Classic + Qt4** stack:
-
 | Dependency | Notes |
 |------------|-------|
-| CMake 3.10+ | Build system |
-| C++11 compiler | GCC or Clang |
-| pkg-config | Dependency discovery |
-| Gazebo Classic | `pkg-config --modversion gazebo` |
-| OGRE 1.9 | Rendering |
-| Protobuf, Boost | Pulled in by Gazebo |
-| Qt4 | QtGui, QtXml, QtCore |
+| CMake 3.16+ | Build system |
+| C++17 compiler | GCC 13+ or Clang |
+| Gazebo Harmonic | `sudo apt install gz-harmonic` (OSRF repo on Noble) |
+| Qt6 | `qt6-base-dev`, `libqt6opengl6-dev` |
+| Protobuf, Boost | Pulled in by the Gazebo stack |
 
-On **Ubuntu 20.04**, a typical install looks like:
+On **Ubuntu 24.04 Noble**, install OSRF Gazebo Harmonic and Qt6:
 
 ```bash
 sudo apt update
-sudo apt install cmake g++ pkg-config \
-  libgazebo-dev libogre-1.9-dev libprotobuf-dev \
-  libboost-system-dev libboost-filesystem-dev \
-  libqt4-dev libqt4-opengl-dev
+sudo apt install curl lsb-release gnupg cmake g++ pkg-config \
+  qt6-base-dev libqt6opengl6-dev
+
+# Gazebo Harmonic (not in default Ubuntu repos)
+sudo curl https://packages.osrfoundation.org/gazebo.gpg \
+  --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) \
+  signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] \
+  https://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" \
+  | sudo tee /etc/apt/sources.list.d/gazebo-stable.list
+sudo apt update
+sudo apt install gz-harmonic
 ```
-
-Package names vary by distribution and Gazebo version. Adjust as needed.
-
-On **Ubuntu 22.04 and later**, Qt4 and Gazebo Classic are generally not available from the default repositories. You can still [build and run the unit tests](#unit-tests) without them.
 
 ### Run the full iCub demo
 
-The original internship workflow also depends on external robotics software:
+The internship workflow also depends on external robotics software:
 
 - [YARP](https://www.yarp.it/) and the iCub software stack
-- [gazebo-yarp-plugins](https://github.com/robotology/gazebo-yarp-plugins)
+- [gz-sim-yarp-plugins](https://github.com/robotology/gz-sim-yarp-plugins) (replaces gazebo-yarp-plugins on Noble)
 - [ocra-core](https://github.com/ocra-recipes/ocra-core)
 - [codyco-superbuild](https://github.com/alexandrelheinen/codyco-superbuild) (provides `ISIRWholeBodyController`)
 
@@ -85,7 +102,7 @@ There is no single `apt install` for this layer. Follow the installation guides 
 
 ### Bundled third-party code
 
-Sources for [DSPFilters](https://github.com/vinniefalco/DSPFilters) and [QCustomPlot](http://www.qcustomplot.com/) are vendored under `third_party/`. You do not need to install them separately.
+Sources for [DSPFilters](https://github.com/vinniefalco/DSPFilters) and [QCustomPlot 2.1.1](http://www.qcustomplot.com/) are vendored under `third_party/`. You do not need to install them separately.
 
 ## Quick start
 
@@ -95,7 +112,7 @@ Sources for [DSPFilters](https://github.com/vinniefalco/DSPFilters) and [QCustom
 git clone https://github.com/alexandrelheinen/vector-view.git
 cd vector-view
 mkdir build && cd build
-cmake ..
+cmake -DCMAKE_CXX_COMPILER=g++ ..
 make
 ```
 
@@ -103,11 +120,11 @@ CMake options (all enabled by default):
 
 | Option | Default | Purpose |
 |--------|---------|---------|
-| `BUILD_VECTORVIEW` | ON | Build the Gazebo plugin |
-| `BUILD_VECTORGUI` | ON | Build the Qt application |
+| `BUILD_VECTORVIEW` | ON | Build the Gazebo Sim system plugin |
+| `BUILD_VECTORGUI` | ON | Build the Qt6 application |
 | `BUILD_TESTS` | ON | Build unit tests |
 
-If Gazebo or Qt4 is not found, CMake disables the plugin and GUI targets automatically and prints a warning. Tests still build.
+If Gazebo Harmonic or Qt6 is not found, CMake disables the plugin and GUI targets automatically and prints a warning. Tests still build.
 
 Install to system paths (optional):
 
@@ -121,7 +138,7 @@ Tests cover pure C++ logic and do not require Gazebo or Qt:
 
 ```bash
 mkdir -p build && cd build
-cmake ..
+cmake -DCMAKE_CXX_COMPILER=g++ ..
 make
 ctest --output-on-failure
 ```
@@ -134,19 +151,20 @@ cmake .. -DBUILD_VECTORVIEW=OFF -DBUILD_VECTORGUI=OFF -DBUILD_TESTS=ON
 
 ## Configuration
 
-Gazebo must locate the built plugin (`.so`) and bundled models. Set this up once with a local environment file:
+Gazebo Sim must locate the built plugin (`.so`) and bundled models:
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` if your paths differ from the defaults. The file is loaded by `scripts/run.sh`. Shells do not read `.env` on their own; either source it manually or use the run script.
+Edit `.env` if your paths differ from the defaults. The file is loaded by `scripts/run.sh`.
 
 | Variable | Purpose |
 |----------|---------|
 | `VECTOR_VIEW` | Repository root (defaults to the directory above `scripts/`) |
-| `GAZEBO_PLUGIN_PATH` | Directory containing `libvectorview.so` |
-| `GAZEBO_MODEL_PATH` | Directory containing bundled `models/` |
+| `GZ_SIM_SYSTEM_PLUGIN_PATH` | Directory containing `libvectorview.so` |
+| `GZ_SIM_RESOURCE_PATH` | Directory containing bundled `models/` |
+| `GZ_SIM_USER_PATH` | Directory containing bundled `worlds/` |
 | `CODYCO_SUPERBUILD_ROOT` | Optional. Enables the ISIR controller step in `run.sh` |
 
 Equivalent manual exports:
@@ -154,8 +172,9 @@ Equivalent manual exports:
 ```bash
 export VECTOR_VIEW=/path/to/vector-view
 export PATH="$VECTOR_VIEW/build:$PATH"
-export GAZEBO_PLUGIN_PATH="$VECTOR_VIEW/build:${GAZEBO_PLUGIN_PATH:-}"
-export GAZEBO_MODEL_PATH="$VECTOR_VIEW/models:${GAZEBO_MODEL_PATH:-}"
+export GZ_SIM_SYSTEM_PLUGIN_PATH="$VECTOR_VIEW/build:${GZ_SIM_SYSTEM_PLUGIN_PATH:-}"
+export GZ_SIM_RESOURCE_PATH="$VECTOR_VIEW/models:${GZ_SIM_RESOURCE_PATH:-}"
+export GZ_SIM_USER_PATH="$VECTOR_VIEW/worlds:${GZ_SIM_USER_PATH:-}"
 ```
 
 ## Running the demo
@@ -170,14 +189,12 @@ chmod +x scripts/run.sh
 The script:
 
 1. Sources `.env` when present
-2. Exports Gazebo paths
-3. Opens YARP, Gazebo, two VectorGUI instances, and (if configured) the ISIR controller in separate `gnome-terminal` tabs
+2. Exports Gazebo Sim paths
+3. Opens YARP, `gz sim`, two VectorGUI instances, and (if configured) the ISIR controller in separate terminal tabs
 
 If `CODYCO_SUPERBUILD_ROOT` is unset, the controller step is skipped.
 
 ### Option 2: manual startup
-
-Open separate terminals and run:
 
 ```bash
 yarpserver
@@ -185,14 +202,14 @@ yarpserver
 
 ```bash
 cd "$VECTOR_VIEW"
-gazebo worlds/robot.world
+gz sim -r worlds/robot.world
 ```
 
 ```bash
 ISIRWholeBodyController --sequence StageTestTasks
 ```
 
-Requires the full iCub stack from [Requirements](#run-the-full-icub-demo).
+Requires the full iCub stack from [Requirements](#run-the-full-iCub-demo).
 
 ```bash
 vectorGUI l_hand
@@ -204,35 +221,34 @@ vectorGUI l_hand
 # Short link name (builds the topic from default model context)
 vectorGUI l_hand
 
-# Full Gazebo transport path
-vectorGUI /gazebo/default/iCub_fixed/iCub/r_hand/r_hand_contact
+# Full transport path
+vectorGUI /vectorview/iCub_fixed/r_hand
 
 # Optional robot name override (default: iCub)
 vectorGUI l_hand iCub
+
+# Optional world name for spawn service (default: default)
+vectorGUI l_hand iCub default
 ```
 
-Pass a link name (`l_hand`), not the sensor name (`l_hand_contact`). The program appends `_contact` automatically.
+Pass a link name (`l_hand`), not the sensor name (`l_hand_contact`). Short names map to `/vectorview/iCub_fixed/l_hand`.
 
 ## Topic paths
 
 Topic and collision names are built by `vectorview::TopicPath` in `src/common/TopicPath.cpp`.
 
-**Plugin (from visual name):**
-
-Given visual `iCub::l_hand::l_hand_visual`:
+**Plugin (from link name in SDF):**
 
 | Field | Value |
 |-------|-------|
-| Transport topic | `~/iCub/l_hand/l_hand_contact` |
+| Transport topic | `/vectorview/iCub_fixed/l_hand` |
 | Collision scope | `iCub::l_hand::l_hand_collision` |
-
-The `_visual` suffix is stripped to obtain the link name.
 
 **GUI (from CLI argument):**
 
 | Input | Result |
 |-------|--------|
-| `l_hand` | `/gazebo/default/iCub_fixed/iCub/l_hand/l_hand_contact` |
+| `l_hand` | `/vectorview/iCub_fixed/l_hand` |
 | Full path starting with `/` | Used as-is |
 
 Defaults for short names live in `vectorview::ModelContext` (`include/vectorview/ModelContext.h`).
@@ -253,12 +269,16 @@ Code under `third_party/` is excluded.
 
 | Target | Output |
 |--------|--------|
-| `vectorview` | `libvectorview.so` (Gazebo plugin) |
-| `vectorGUI` | Qt executable |
+| `vectorview` | `libvectorview.so` (Gazebo Sim system plugin) |
+| `vectorGUI` | Qt6 executable |
 | `vectorview_common` | Static library (shared utilities) |
 | `vectorview_filters` | Shared library (force filter) |
 | `dspfilters` | Vendored DSP library |
 | `test_contact_utils`, `test_force_filter` | Unit test executables |
+
+## Migration from Gazebo Classic
+
+v2.0 replaces the Gazebo Classic visual plugin and Qt4 GUI with a Harmonic system plugin and Qt6 GUI. See `docs/estimate.md` for the modernization scope and effort notes.
 
 ## License
 

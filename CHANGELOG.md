@@ -4,6 +4,29 @@ All notable changes to VectorView & VectorGUI are documented in this file.
 
 ---
 
+## [2.0.0] – 2026
+
+Native **Ubuntu 24.04 Noble** port using **Gazebo Harmonic**, **Qt 6.4**, and **QCustomPlot 2.1.1**.
+
+### Breaking changes
+
+- VectorView is now a **Gazebo Sim system plugin** (not a Gazebo Classic visual plugin).
+- Contact topics use `/vectorview/MODEL_INSTANCE/LINK_NAME` instead of `/gazebo/...`.
+- Model spawn uses the `/world/{world}/create` service instead of `~/factory`.
+- Environment variables renamed from `GAZEBO_*` to `GZ_SIM_*`.
+
+### Added
+
+- `docs/estimate.md` with modernization effort estimate vs. actual elapsed time.
+- GitHub Actions workflow for Noble (`gz-harmonic` + Qt6).
+
+### Changed
+
+- CMake requires 3.16+, C++17, target-based linking.
+- Demo script runs `gz sim` and documents `gz-sim-yarp-plugins`.
+
+---
+
 ## [1.0.0] – 2015 (Released 2025)
 
 This is the inaugural stable release of the **VectorView** Gazebo visual plugin and the companion **VectorGUI** desktop application, originally developed in 2015 during an internship at [ISIR](http://www.isir.upmc.fr/) (Institut des Systèmes Intelligents et de Robotique, CNRS / Université Pierre et Marie Curie).

@@ -1,14 +1,14 @@
-cmake_minimum_required(VERSION 3.10)
-project(vectorview LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.16)
+project(vectorview VERSION 2.0.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PROJECTNAME vectorview)
 set(GUINAME vectorGUI)
 
 option(BUILD_VECTORGUI "Build the Qt VectorGUI application" ON)
-option(BUILD_VECTORVIEW "Build the Gazebo VectorView visual plugin" ON)
+option(BUILD_VECTORVIEW "Build the Gazebo Sim VectorView system plugin" ON)
 option(BUILD_TESTS "Build unit tests" ON)
 
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
@@ -39,112 +39,101 @@ set(forcefilter_sources src/filters/ForceFilter.cpp)
 set(common_sources
   src/common/ContactUtils.cpp
   src/common/TopicPath.cpp)
-set(plugin_sources src/plugin/VectorView.cpp)
+set(gz_common_sources src/common/ContactMessage.cpp)
+set(plugin_sources
+  src/plugin/VectorView.cpp
+  ${gz_common_sources})
 set(gui_sources
+  include/vectorview/Interface.h
   src/gui/VectorGUI.cpp
   src/gui/Interface.cpp
+  ${gz_common_sources}
   third_party/qcustomplot/qcustomplot.cpp
 )
 
-# Optional dependencies for plugin/GUI targets only.
 if(BUILD_VECTORGUI)
-  set(QT_USE_QTGUI TRUE)
-  set(QT_USE_QTXML TRUE)
-  set(QT_USE_QTCORE TRUE)
-  find_package(Qt4 QUIET)
-  if(NOT QT4_FOUND)
+  find_package(Qt6 QUIET COMPONENTS Widgets PrintSupport Xml Core)
+  if(NOT Qt6_FOUND)
     message(WARNING
-      "Qt4 not found — disabling BUILD_VECTORGUI. "
-      "Install Qt4 or pass -DBUILD_VECTORGUI=OFF for a tests-only build.")
+      "Qt6 not found — disabling BUILD_VECTORGUI. "
+      "Install qt6-base-dev or pass -DBUILD_VECTORGUI=OFF for a tests-only build.")
     set(BUILD_VECTORGUI OFF CACHE BOOL "Build the Qt VectorGUI application" FORCE)
   endif()
 endif()
 
 if(BUILD_VECTORVIEW OR BUILD_VECTORGUI)
-  find_package(PkgConfig REQUIRED)
-  pkg_check_modules(GAZEBO QUIET gazebo)
-  pkg_check_modules(OGRE QUIET OGRE)
-  pkg_check_modules(OGRE-Terrain QUIET OGRE-Terrain)
+  find_package(gz-sim8 QUIET)
+  find_package(gz-plugin2 QUIET COMPONENTS register)
+  find_package(gz-transport13 QUIET)
+  find_package(gz-msgs10 QUIET)
+  find_package(gz-math7 QUIET)
 
-  if(NOT GAZEBO_FOUND)
+  if(NOT gz-sim8_FOUND OR NOT gz-transport13_FOUND OR NOT gz-msgs10_FOUND)
     message(WARNING
-      "Gazebo not found — disabling BUILD_VECTORVIEW and BUILD_VECTORGUI. "
-      "Install Gazebo or pass -DBUILD_VECTORVIEW=OFF -DBUILD_VECTORGUI=OFF "
+      "Gazebo Harmonic (gz-sim8) not found — disabling BUILD_VECTORVIEW and BUILD_VECTORGUI. "
+      "Install gz-harmonic or pass -DBUILD_VECTORVIEW=OFF -DBUILD_VECTORGUI=OFF "
       "for a tests-only build.")
-    set(BUILD_VECTORVIEW OFF CACHE BOOL "Build the Gazebo VectorView visual plugin" FORCE)
+    set(BUILD_VECTORVIEW OFF CACHE BOOL "Build the Gazebo Sim VectorView system plugin" FORCE)
     set(BUILD_VECTORGUI OFF CACHE BOOL "Build the Qt VectorGUI application" FORCE)
   endif()
-endif()
-
-if(BUILD_VECTORVIEW OR BUILD_VECTORGUI)
-  include(FindProtobuf)
-  find_package(Protobuf REQUIRED)
-  find_package(Boost REQUIRED COMPONENTS system filesystem)
-
-  foreach(fileName ${GAZEBO_INCLUDE_DIRS})
-    list(APPEND GAZEBO_ROOT_DIRS ${fileName}/gazebo)
-  endforeach()
-
-  include_directories(
-    ${GAZEBO_INCLUDE_DIRS}
-    ${GAZEBO_ROOT_DIRS}
-    ${OGRE_INCLUDE_DIRS}
-    ${OGRE-Terrain_INCLUDE_DIRS}
-    ${PROTOBUF_INCLUDE_DIR}
-    ${Boost_INCLUDE_DIRS})
-
-  link_directories(
-    ${GAZEBO_LIBRARY_DIRS}
-    ${OGRE_LIBRARY_DIRS}
-    ${Boost_LIBRARY_DIRS})
-
-  list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
-endif()
-
-if(BUILD_VECTORGUI)
-  set(CMAKE_INCLUDE_CURRENT_DIR ON)
-  set(CMAKE_AUTOMOC ON)
-  include(${QT_USE_FILE})
-  add_definitions(${QT_DEFINITIONS})
-  include_directories(${QT_INCLUDE_DIRS})
-  link_directories(${QT_LIBRARY_DIRS})
 endif()
 
 if(BUILD_VECTORVIEW OR BUILD_VECTORGUI OR BUILD_TESTS)
-  include_directories(
-    ${INCLUDE_DIR}
-    ${DSPFILTERS_INCLUDE}
-    ${QCUSTOMPLOT_INCLUDE})
-
   add_library(vectorview_common STATIC ${common_sources})
+  target_include_directories(vectorview_common
+    PUBLIC
+      ${INCLUDE_DIR}
+      ${DSPFILTERS_INCLUDE})
+
   add_library(dspfilters SHARED ${dspfilters_sources})
+  target_include_directories(dspfilters PUBLIC ${DSPFILTERS_INCLUDE})
+
   add_library(vectorview_filters SHARED ${forcefilter_sources})
-  target_link_libraries(vectorview_filters dspfilters)
+  target_link_libraries(vectorview_filters PUBLIC dspfilters)
+  target_include_directories(vectorview_filters
+    PUBLIC
+      ${INCLUDE_DIR}
+      ${DSPFILTERS_INCLUDE})
 endif()
 
 if(BUILD_VECTORVIEW)
   add_library(${PROJECTNAME} SHARED ${plugin_sources})
+  target_include_directories(${PROJECTNAME}
+    PRIVATE
+      ${INCLUDE_DIR}
+      ${DSPFILTERS_INCLUDE})
   target_link_libraries(${PROJECTNAME}
-    vectorview_common
-    vectorview_filters
-    dspfilters
-    ${GAZEBO_LIBRARIES}
-    ${OGRE_LIBRARIES}
-    ${Boost_LIBRARIES}
-    ${PROTOBUF_LIBRARY})
+    PRIVATE
+      vectorview_common
+      vectorview_filters
+      dspfilters
+      gz-sim8::gz-sim8
+      gz-plugin2::register
+      gz-transport13::gz-transport13
+      gz-msgs10::gz-msgs10
+      gz-math7::gz-math7)
 endif()
 
 if(BUILD_VECTORGUI)
+  set(CMAKE_AUTOMOC ON)
   add_executable(${GUINAME} ${gui_sources})
+  target_include_directories(${GUINAME}
+    PRIVATE
+      ${INCLUDE_DIR}
+      ${QCUSTOMPLOT_INCLUDE}
+      ${DSPFILTERS_INCLUDE})
   target_link_libraries(${GUINAME}
-    vectorview_common
-    vectorview_filters
-    dspfilters
-    ${GAZEBO_LIBRARIES}
-    ${OGRE_LIBRARIES}
-    ${QT_LIBRARIES}
-    ${Boost_LIBRARIES}
-    ${PROTOBUF_LIBRARY})
+    PRIVATE
+      vectorview_common
+      vectorview_filters
+      dspfilters
+      Qt6::Widgets
+      Qt6::PrintSupport
+      Qt6::Xml
+      Qt6::Core
+      gz-transport13::gz-transport13
+      gz-msgs10::gz-msgs10
+      gz-math7::gz-math7)
 endif()
 
 if(BUILD_TESTS)

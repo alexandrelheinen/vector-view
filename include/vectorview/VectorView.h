@@ -2,50 +2,54 @@
 #define VECTORVIEW_H
 
 #include "vectorview/Constants.h"
-
-// Gazebo includes
-#include <gazebo.hh>
-#include <rendering/Visual.hh>
-#include <rendering/rendering.hh>
-#include <msgs/msgs.hh>
-#include <common/common.hh>
-// general includes
-#include <iostream>
-#include <memory>
-#include <string>
-#include <vector>
-
 #include "vectorview/ForceFilter.h"
 
-namespace gazebo {
-  typedef rendering::DynamicLines* LinePtr;
+#include <gz/math/Pose3.hh>
+#include <gz/math/Vector3.hh>
+#include <gz/msgs/contacts.pb.h>
+#include <gz/msgs/marker.pb.h>
+#include <gz/sim/System.hh>
+#include <gz/transport/Node.hh>
 
-  class VectorView : public VisualPlugin
-  {
-  public:
-    // CONSTRUCTOR AND DESTRUCTOR
-    VectorView();
-    ~VectorView();
-    // FUNCTIONS
-    void Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf); // executed once the plugin is loaded
-    void VectorViewUpdate(ConstContactsPtr &_msg);                 // executed everytime a message is published by the sensor: updates the vector visual
-    void Init();
+#include <memory>
+#include <mutex>
+#include <string>
 
-  private:
-    // FUNCTIONS
-    void FindName();     // find the topic, output history and collision names based on the visual
-    void UpdateVector(const math::Vector3& force);
-    // VARIABLES
-    LinePtr forceVector; // the animated line representing the force
-    rendering::VisualPtr visual;
-    transport::SubscriberPtr subs;
-    transport::NodePtr node;
+namespace vectorview {
 
-    std::string collisionName;
-    std::string topicName;
+class VectorView : public gz::sim::System,
+                   public gz::sim::ISystemConfigure,
+                   public gz::sim::ISystemPostUpdate {
+ public:
+  VectorView();
+  ~VectorView() override;
 
-    std::unique_ptr<vectorview::ForceFilter> filter;
-  };
-}
+  void Configure(const gz::sim::Entity& entity, const std::shared_ptr<const sdf::Element>& sdf,
+                 gz::sim::EntityComponentManager& ecm,
+                 gz::sim::EventManager& eventMgr) override;
+
+  void PostUpdate(const gz::sim::UpdateInfo& info,
+                  const gz::sim::EntityComponentManager& ecm) override;
+
+ private:
+  void OnContacts(const gz::msgs::Contacts& message);
+  void PublishArrow(const gz::math::Vector3d& force);
+  gz::math::Vector3d ArrowPoint(const gz::math::Vector3d& begin, const gz::math::Vector3d& end,
+                                double yaw_sign) const;
+
+  gz::sim::Entity modelEntity{gz::sim::kNullEntity};
+  gz::sim::Entity linkEntity{gz::sim::kNullEntity};
+  gz::transport::Node node;
+  gz::transport::Node::Publisher markerPub;
+  gz::math::Pose3d linkWorldPose;
+  std::string contactTopic;
+  std::string collisionScope;
+  std::string markerNamespace;
+  int markerId{0};
+  std::unique_ptr<ForceFilter> filter;
+  std::mutex mutex;
+};
+
+}  // namespace vectorview
 
 #endif

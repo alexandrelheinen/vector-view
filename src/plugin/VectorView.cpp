@@ -1,100 +1,151 @@
 #include "vectorview/VectorView.h"
 
+#include "vectorview/ContactMessage.h"
 #include "vectorview/TopicPath.h"
 
-using namespace gazebo;
+#include <gz/math/Matrix3.hh>
+#include <gz/plugin/Register.hh>
+#include <gz/sim/Model.hh>
+#include <gz/sim/Util.hh>
+#include <gz/sim/components/Link.hh>
+#include <gz/sim/components/Name.hh>
+#include <gz/sim/components/ParentEntity.hh>
 
-GZ_REGISTER_VISUAL_PLUGIN(VectorView)
+#include <iostream>
 
-VectorView::VectorView() {}
+namespace vectorview {
 
-VectorView::~VectorView() {}
+VectorView::VectorView() = default;
 
-void VectorView::Load(rendering::VisualPtr _parent, sdf::ElementPtr _sdf) {
-  (void)_sdf;
-  this->visual = _parent;
-  filter.reset(new vectorview::ForceFilter());
-}
+VectorView::~VectorView() = default;
 
-void VectorView::Init() {
-  this->FindName();
+void VectorView::Configure(const gz::sim::Entity& entity,
+                           const std::shared_ptr<const sdf::Element>& sdf,
+                           gz::sim::EntityComponentManager& ecm,
+                           gz::sim::EventManager& /*eventMgr*/) {
+  this->modelEntity = entity;
+  this->filter = std::make_unique<ForceFilter>();
 
-  this->forceVector = this->visual->CreateDynamicLine(rendering::RENDERING_LINE_LIST);
-  this->forceVector->setMaterial("Gazebo/Blue");
-  this->forceVector->setVisibilityFlags(GZ_VISIBILITY_GUI);
-  for (int k = 0; k < 6; ++k) {
-    this->forceVector->AddPoint(math::Vector3::Zero);
+  std::string link_name;
+  if (sdf->HasElement("link_name")) {
+    link_name = sdf->Get<std::string>("link_name");
   }
 
-  this->forceVector->Update();
+  ModelContext context;
+  if (sdf->HasElement("contact_topic")) {
+    this->contactTopic = sdf->Get<std::string>("contact_topic");
+  } else if (!link_name.empty()) {
+    const TopicPath path = TopicPath::FromLinkName(link_name, context);
+    this->contactTopic = path.transport;
+  }
 
-  this->subs.reset();
-  node.reset(new gazebo::transport::Node());
-  node->Init();
-  this->subs = node->Subscribe(topicName, &VectorView::VectorViewUpdate, this);
+  if (sdf->HasElement("collision_scope")) {
+    this->collisionScope = sdf->Get<std::string>("collision_scope");
+  } else if (!link_name.empty()) {
+    const TopicPath path = TopicPath::FromLinkName(link_name, context);
+    this->collisionScope = path.collision_scope;
+  }
+
+  if (!link_name.empty()) {
+    gz::sim::Model model(entity);
+    this->linkEntity = model.LinkByName(ecm, link_name);
+  }
+
+  if (this->contactTopic.empty()) {
+    gzerr << "[VectorView] Missing contact_topic or link_name in plugin SDF.\n";
+    return;
+  }
+
+  this->markerNamespace = "vectorview/" + link_name;
+  this->markerId = static_cast<int>(std::hash<std::string>{}(this->markerNamespace) % 100000);
+
+  this->markerPub = this->node.Advertise<gz::msgs::Marker>("/marker");
+  this->node.Subscribe(this->contactTopic,
+                       &VectorView::OnContacts, this);
+
   std::cout << std::endl
-            << "-- VectorView plugin initialized" << std::endl
-            << "   topic path : " << topicName << std::endl
-            << "   collision  : " << collisionName << std::endl
+            << "-- VectorView system initialized" << std::endl
+            << "   contact topic : " << this->contactTopic << std::endl
+            << "   collision     : " << this->collisionScope << std::endl
             << std::endl;
 }
 
-void VectorView::UpdateVector(const math::Vector3& force) {
-  math::Vector3 begin = math::Vector3::Zero;
-  math::Vector3 end =
-      begin + FORCE_SCALE * (visual->GetWorldPose().rot.RotateVectorReverse(force));
-  this->forceVector->SetPoint(0, begin);
-  this->forceVector->SetPoint(1, end);
-  this->forceVector->SetPoint(2, end);
-  this->forceVector->SetPoint(
-      3, end - ARROW_LENGTH * math::Matrix3(1, 0, 0, 0, 0.9848, -0.1736, 0, 0.1736, 0.9848) *
-               (end - begin).Normalize());
-  this->forceVector->SetPoint(4, end);
-  this->forceVector->SetPoint(
-      5, end - ARROW_LENGTH * math::Matrix3(1, 0, 0, 0, 0.9848, 0.1736, 0, -0.1736, 0.9848) *
-               (end - begin).Normalize());
-}
-
-void VectorView::FindName() {
-  vectorview::TopicPath path = vectorview::TopicPath::FromVisualName(this->visual->GetName());
-  if (!path.valid) {
-    gzerr << "[VectorView] Could not parse visual name.\n";
+void VectorView::PostUpdate(const gz::sim::UpdateInfo& /*info*/,
+                            const gz::sim::EntityComponentManager& ecm) {
+  if (this->linkEntity == gz::sim::kNullEntity) {
     return;
   }
-  topicName = path.transport;
-  collisionName = path.collision_scope;
+
+  std::lock_guard<std::mutex> lock(this->mutex);
+  this->linkWorldPose = gz::sim::worldPose(this->linkEntity, ecm);
 }
 
-void VectorView::VectorViewUpdate(ConstContactsPtr &message) {
-  std::vector<vectorview::ContactForce> contacts;
-  contacts.reserve(message->contact_size());
-
-  for (int n = 0; n < message->contact_size(); ++n) {
-    vectorview::ContactForce contact;
-    for (int m = 0; m < message->contact(n).wrench_size(); ++m) {
-      vectorview::WrenchForce wrench;
-      const msgs::Wrench &body_1_wrench = message->contact(n).wrench(m).body_1_wrench();
-      const msgs::Wrench &body_2_wrench = message->contact(n).wrench(m).body_2_wrench();
-      wrench.body_1_name = message->contact(n).wrench(m).body_1_name();
-      wrench.body_2_name = message->contact(n).wrench(m).body_2_name();
-      wrench.body_1_force = vectorview::Vec3(body_1_wrench.force().x(), body_1_wrench.force().y(),
-                                             body_1_wrench.force().z());
-      wrench.body_2_force = vectorview::Vec3(body_2_wrench.force().x(), body_2_wrench.force().y(),
-                                             body_2_wrench.force().z());
-      contact.wrenches.push_back(wrench);
-    }
-    contacts.push_back(contact);
-  }
-
-  vectorview::Vec3 aggregated =
-      vectorview::AggregatePluginForces(contacts, this->collisionName);
-
-  filter->Filter(&aggregated);
+void VectorView::OnContacts(const gz::msgs::Contacts& message) {
+  const std::vector<ContactForce> contacts = ContactsFromMessage(message);
+  Vec3 aggregated = AggregatePluginForces(contacts, this->collisionScope);
+  this->filter->Filter(&aggregated);
 
   if (aggregated.Length() < NOISE_THRESHOLD) {
-    aggregated = vectorview::Vec3();
+    aggregated = Vec3();
   }
 
-  math::Vector3 force(aggregated.x, aggregated.y, aggregated.z);
-  this->UpdateVector(force);
+  std::lock_guard<std::mutex> lock(this->mutex);
+  this->PublishArrow(gz::math::Vector3d(aggregated.x, aggregated.y, aggregated.z));
 }
+
+gz::math::Vector3d VectorView::ArrowPoint(const gz::math::Vector3d& begin,
+                                          const gz::math::Vector3d& end,
+                                          double yaw_sign) const {
+  const gz::math::Vector3d direction = (end - begin).Normalized();
+  const gz::math::Matrix3d rotation(1, 0, 0, 0, 0.9848, yaw_sign * -0.1736, 0,
+                                    yaw_sign * 0.1736, 0.9848);
+  return end - ARROW_LENGTH * rotation * direction;
+}
+
+void VectorView::PublishArrow(const gz::math::Vector3d& force) {
+  const gz::math::Vector3d begin = gz::math::Vector3d::Zero;
+  const gz::math::Vector3d local_force =
+      this->linkWorldPose.Rot().RotateVectorReverse(force);
+  const gz::math::Vector3d end = begin + FORCE_SCALE * local_force;
+
+  const auto to_world = [this](const gz::math::Vector3d& local_point) {
+    return this->linkWorldPose.Pos() + this->linkWorldPose.Rot().RotateVector(local_point);
+  };
+
+  gz::msgs::Marker marker;
+  marker.set_ns(this->markerNamespace);
+  marker.set_id(this->markerId);
+  marker.set_action(gz::msgs::Marker::ADD_MODIFY);
+  marker.set_type(gz::msgs::Marker::LINE_LIST);
+  marker.mutable_material()->mutable_ambient()->set_r(0.0f);
+  marker.mutable_material()->mutable_ambient()->set_g(0.0f);
+  marker.mutable_material()->mutable_ambient()->set_b(1.0f);
+  marker.mutable_material()->mutable_ambient()->set_a(1.0f);
+  marker.mutable_material()->mutable_diffuse()->set_r(0.0f);
+  marker.mutable_material()->mutable_diffuse()->set_g(0.0f);
+  marker.mutable_material()->mutable_diffuse()->set_b(1.0f);
+  marker.mutable_material()->mutable_diffuse()->set_a(1.0f);
+
+  auto set_point = [&marker](const gz::math::Vector3d& point) {
+    gz::msgs::Vector3d* msg_point = marker.add_point();
+    msg_point->set_x(point.X());
+    msg_point->set_y(point.Y());
+    msg_point->set_z(point.Z());
+  };
+
+  set_point(to_world(begin));
+  set_point(to_world(end));
+  set_point(to_world(end));
+  set_point(to_world(ArrowPoint(begin, end, 1.0)));
+  set_point(to_world(end));
+  set_point(to_world(ArrowPoint(begin, end, -1.0)));
+
+  this->markerPub.Publish(marker);
+}
+
+}  // namespace vectorview
+
+GZ_ADD_PLUGIN(vectorview::VectorView, gz::sim::System, vectorview::VectorView::ISystemConfigure,
+              vectorview::VectorView::ISystemPostUpdate)
+
+GZ_ADD_PLUGIN_ALIAS(vectorview::VectorView, "vectorview::VectorView")

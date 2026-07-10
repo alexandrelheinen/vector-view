@@ -1,0 +1,40 @@
+name: Noble build
+
+on:
+  push:
+    branches: [master, cursor/**]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install base dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ pkg-config qt6-base-dev libqt6opengl6-dev \
+            curl lsb-release gnupg
+
+      - name: Install Gazebo Harmonic
+        run: |
+          sudo curl -fsSL https://packages.osrfoundation.org/gazebo.gpg \
+            -o /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) \
+            signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] \
+            https://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" \
+            | sudo tee /etc/apt/sources.list.d/gazebo-stable.list
+          sudo apt-get update
+          sudo apt-get install -y gz-harmonic
+
+      - name: Configure
+        run: |
+          cmake -S . -B build -DCMAKE_CXX_COMPILER=g++ \
+            -DBUILD_VECTORVIEW=ON -DBUILD_VECTORGUI=ON -DBUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build build -j"$(nproc)"
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure

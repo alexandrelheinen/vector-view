@@ -2,19 +2,24 @@
 #define INTERFACE_H
 
 #include "vectorview/Constants.h"
+#include "vectorview/ContactUtils.h"
 #include "vectorview/ForceFilter.h"
 
-#include <QtGui>
+#include <QComboBox>
+#include <QFrame>
 #include <QGridLayout>
+#include <QGroupBox>
 #include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QTimer>
 #include <QWidget>
 
-#include <gazebo.hh>
+#include <gz/msgs/contacts.pb.h>
+#include <gz/transport/Node.hh>
 
-#include <boost/thread/mutex.hpp>
-#include <iostream>
 #include <memory>
-#include <sstream>
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -28,24 +33,24 @@ class Interface : public QWidget {
   void UpdatePlot();
 
  public:
-  Interface(std::string _path, const std::string& robot_name = "iCub");
+  Interface(const std::string& path, const std::string& robot_name = "iCub",
+            const std::string& world_name = "default");
   ~Interface();
-  void setPosition(gazebo::math::Vector3 position);
-  void setObjectContact(std::string name);
-  void setForce(gazebo::math::Vector3 force);
-  void Spawn(std::string model, gazebo::math::Pose pose);
-  void Update(gazebo::ConstContactsPtr& _msg);
+  void setPosition(const vectorview::Vec3& position);
+  void setObjectContact(const std::string& name);
+  void setForce(const vectorview::Vec3& force);
+  void Spawn(const std::string& model, const vectorview::Vec3& position);
+  void Update(const gz::msgs::Contacts& message);
   std::vector<std::string> models;
 
  private:
   static std::string d2s(double d);
   int counter;
-  boost::mutex mutex;
+  std::mutex mutex;
   std::string topicPath;
-  std::string factoryPath;
+  std::string worldName;
   std::string robotName;
-  gazebo::transport::PublisherPtr pub;
-  gazebo::transport::SubscriberPtr subs;
+  gz::transport::Node node;
   std::vector<QLabel*> contactLabels;
   std::vector<QLabel*> contactData;
   QComboBox* dropMenu;
@@ -54,7 +59,8 @@ class Interface : public QWidget {
   QCustomPlot* plot;
   QTimer* dataTimer;
   QVector<double> timeAxis;
-  QVector<double> forceAxis, filterAxis;
+  QVector<double> forceAxis;
+  QVector<double> filterAxis;
   double forceMax;
   std::unique_ptr<vectorview::ForceFilter> filter;
 };
