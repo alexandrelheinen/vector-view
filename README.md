@@ -59,7 +59,7 @@ export GAZEBO_MODEL_PATH=$VECTOR_VIEW/models:${GAZEBO_MODEL_PATH}
 By running those three commands in respective order in different terminals to test the plugin (give your computer some time to process each command):
 ```bash
 yarpserver
-cd $VECTOR_VIEW && gazebo robot.world
+cd $VECTOR_VIEW && gazebo worlds/robot.world
 ISIRWholeBodyController --sequence StageTestTasks
 ```
 
@@ -75,9 +75,9 @@ By clicking on **Spawn** button, the chosen model in the drop down menu is spawn
 
 ### SHELL SCRIPT ###
 
-To easily start the plugin, just run the shell script `run.sh` as follows. It will trigger out all application modules (maybe you should change its permission by typing `chmod +x run.sh` on your terminal), including test sequence tasks.
+To easily start the plugin, just run the shell script `scripts/run.sh` as follows. It will trigger out all application modules (maybe you should change its permission by typing `chmod +x scripts/run.sh` on your terminal), including test sequence tasks.
 ```bash
-cd $VECTOR_VIEW && ./run.sh
+cd $VECTOR_VIEW && ./scripts/run.sh
 ```
 The execution should be something like in the figure below
 ![shell script execution example](/images/execution_example.png "shell script execution example")
