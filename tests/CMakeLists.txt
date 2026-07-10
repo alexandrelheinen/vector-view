@@ -8,7 +8,10 @@ include_directories(
   ${DSPFILTERS_INCLUDE}
   ${CATCH_INCLUDE})
 
+set(catch_main catch_main.cpp)
+
 add_executable(test_contact_utils
+  ${catch_main}
   test_contact_utils.cpp)
 
 target_link_libraries(test_contact_utils vectorview_common)
@@ -16,6 +19,7 @@ target_link_libraries(test_contact_utils vectorview_common)
 add_test(NAME ContactUtils COMMAND test_contact_utils)
 
 add_executable(test_force_filter
+  ${catch_main}
   test_force_filter.cpp)
 
 target_link_libraries(test_force_filter vectorview_filters dspfilters)
