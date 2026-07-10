@@ -12,6 +12,7 @@ find_package(PkgConfig REQUIRED)
 
 option(BUILD_VECTORGUI "Enables VectorGUI interface installation" TRUE)
 option(BUILD_VECTORVIEW "Either VectorView Visual Plugin is built or not" TRUE)
+option(BUILD_TESTS "Build unit tests" TRUE)
 
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(DSPFILTERS_INCLUDE ${PROJECT_SOURCE_DIR}/third_party/dspfilters/include)
@@ -95,7 +96,7 @@ if(BUILD_VECTORGUI)
   link_directories(${QT_LIBRARY_DIRS})
 endif()
 
-if(BUILD_VECTORVIEW OR BUILD_VECTORGUI)
+if(BUILD_VECTORVIEW OR BUILD_VECTORGUI OR BUILD_TESTS)
   add_library(vectorview_common STATIC ${common_sources})
   add_library(dspfilters SHARED ${dspfilters_sources})
   add_library(vectorview_filters SHARED ${forcefilter_sources})
@@ -125,4 +126,8 @@ if(BUILD_VECTORGUI)
     ${QT_LIBRARIES}
     ${Boost_LIBRARIES}
     ${PROTOBUF_LIBRARY})
+endif()
+
+if(BUILD_TESTS)
+  add_subdirectory(tests)
 endif()
