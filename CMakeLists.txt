@@ -41,6 +41,10 @@ set(forcefilter_sources
   src/filters/ForceFilter.cpp
 )
 
+set(common_sources
+  src/common/ContactUtils.cpp
+)
+
 set(plugin_sources
   src/plugin/VectorView.cpp
 )
@@ -92,6 +96,7 @@ if(BUILD_VECTORGUI)
 endif()
 
 if(BUILD_VECTORVIEW OR BUILD_VECTORGUI)
+  add_library(vectorview_common STATIC ${common_sources})
   add_library(dspfilters SHARED ${dspfilters_sources})
   add_library(vectorview_filters SHARED ${forcefilter_sources})
   target_link_libraries(vectorview_filters dspfilters ${GAZEBO_LIBRARIES})
@@ -100,6 +105,7 @@ endif()
 if(BUILD_VECTORVIEW)
   add_library(${PROJECTNAME} SHARED ${plugin_sources})
   target_link_libraries(${PROJECTNAME}
+    vectorview_common
     vectorview_filters
     dspfilters
     ${GAZEBO_LIBRARIES}
@@ -111,6 +117,7 @@ endif()
 if(BUILD_VECTORGUI)
   add_executable(${GUINAME} ${gui_sources})
   target_link_libraries(${GUINAME}
+    vectorview_common
     vectorview_filters
     dspfilters
     ${GAZEBO_LIBRARIES}

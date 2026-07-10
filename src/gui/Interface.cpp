@@ -1,5 +1,7 @@
 #include "vectorview/Interface.h"
 
+#include "vectorview/ContactUtils.h"
+
 using namespace gazebo;
 
 Interface::Interface(std::string _path) : QWidget(NULL)
@@ -210,45 +212,46 @@ void Interface::Update(ConstContactsPtr &message)
   math::Vector3 force = math::Vector3::Zero;
   std::string robotName = "iCub";
 
-	if(message->contact_size() > 0)
-	{
-    std::string name;
+  if (message->contact_size() > 0) {
     position = msgs::Convert(message->contact(0).position(0));
-    int n, m;
-    for(n = 0; n < message->contact_size(); ++n)
-    {
-      for (m = 0; m < message->contact(n).wrench_size(); ++m)
-      {
-        if (message->contact(n).wrench(m).body_1_name().find(robotName) != std::string::npos)
-        {
-          name = message->contact(n).wrench(m).body_2_name();
-          force = force + msgs::Convert(message->contact(n).wrench(m).body_1_wrench().force());
-        }
-        else
-        {
-          name = message->contact(n).wrench(m).body_1_name();
-          force = force + msgs::Convert(message->contact(n).wrench(m).body_2_wrench().force()); // generally it's number 2
-        }
+
+    std::vector<vectorview::ContactForce> contacts;
+    contacts.reserve(message->contact_size());
+    for (int n = 0; n < message->contact_size(); ++n) {
+      vectorview::ContactForce contact;
+      for (int m = 0; m < message->contact(n).wrench_size(); ++m) {
+        vectorview::WrenchForce wrench;
+        const msgs::Wrench &body_1_wrench = message->contact(n).wrench(m).body_1_wrench();
+        const msgs::Wrench &body_2_wrench = message->contact(n).wrench(m).body_2_wrench();
+        wrench.body_1_name = message->contact(n).wrench(m).body_1_name();
+        wrench.body_2_name = message->contact(n).wrench(m).body_2_name();
+        wrench.body_1_force = vectorview::Vec3(body_1_wrench.force().x(),
+                                               body_1_wrench.force().y(),
+                                               body_1_wrench.force().z());
+        wrench.body_2_force = vectorview::Vec3(body_2_wrench.force().x(),
+                                               body_2_wrench.force().y(),
+                                               body_2_wrench.force().z());
+        contact.wrenches.push_back(wrench);
       }
+      contacts.push_back(contact);
     }
 
-    force = force/n; // we choose the mean of all contacts in the message
+    vectorview::GuiContactResult aggregated =
+        vectorview::AggregateGuiForces(contacts, robotName);
+    force = math::Vector3(aggregated.force.x, aggregated.force.y, aggregated.force.z);
+    const std::string name = aggregated.object_name;
 
-    // update contact infos
-    if(++counter > 10)
-    {
-  		if(force.GetLength() > NOISE_THRESHOLD)
-  		{
-  			this->setObjectContact(name);
-  			this->setPosition(position);
-  			this->setForce(force);
+    if (++counter > 10) {
+      if (force.GetLength() > NOISE_THRESHOLD) {
+        this->setObjectContact(name);
+        this->setPosition(position);
+        this->setForce(force);
         counter = 0;
-  		}
+      }
     }
   }
 
-  // update unfiltered plot data
-  this->timeAxis.push_back(message->time().sec() + 0.000000001*message->time().nsec());
+  this->timeAxis.push_back(message->time().sec() + 0.000000001 * message->time().nsec());
   this->forceAxis.push_back(filter->Filter(&force));
   this->filterAxis.push_back(force.GetLength());
 }
