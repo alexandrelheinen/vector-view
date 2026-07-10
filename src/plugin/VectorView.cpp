@@ -1,6 +1,6 @@
 #include "vectorview/VectorView.h"
 
-#include "vectorview/ContactUtils.h"
+#include "vectorview/TopicPath.h"
 
 using namespace gazebo;
 
@@ -56,13 +56,13 @@ void VectorView::UpdateVector(const math::Vector3& force) {
 }
 
 void VectorView::FindName() {
-  vectorview::TopicNames names = vectorview::DeriveTopicNames(this->visual->GetName());
-  if (!names.valid) {
+  vectorview::TopicPath path = vectorview::TopicPath::FromVisualName(this->visual->GetName());
+  if (!path.valid) {
     gzerr << "[VectorView] Could not parse visual name.\n";
     return;
   }
-  topicName = names.topic;
-  collisionName = names.collision;
+  topicName = path.transport;
+  collisionName = path.collision_scope;
 }
 
 void VectorView::VectorViewUpdate(ConstContactsPtr &message) {
