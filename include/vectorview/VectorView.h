@@ -11,6 +11,7 @@
 #include <common/common.hh>
 // general includes
 #include <iostream>
+#include <memory>
 #include <string>
 #include <vector>
 // #include <boost/shared_ptr.hpp>
@@ -46,7 +47,7 @@ namespace gazebo
     std::string collisionName;
     std::string topicName;
 
-    vectorview::ForceFilter* filter;
+    std::unique_ptr<vectorview::ForceFilter> filter;
   };
 }
 

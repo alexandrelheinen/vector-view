@@ -13,6 +13,7 @@
 // general includes
 #include <vector>
 #include <iostream>
+#include <memory>
 #include <string>
 #include <sstream>
 #include <boost/thread/mutex.hpp>
@@ -62,7 +63,7 @@ private:
   QVector<double> timeAxis;
   QVector<double> forceAxis, filterAxis;
   double forceMax;
-  vectorview::ForceFilter* filter;
+  std::unique_ptr<vectorview::ForceFilter> filter;
 
 };
 

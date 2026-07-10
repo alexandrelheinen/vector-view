@@ -145,7 +145,7 @@ Interface::Interface(std::string _path) : QWidget(NULL)
   dataTimer->start(1000.0/RATE);
 
   // filter setup
-  filter = new vectorview::ForceFilter();
+  filter.reset(new vectorview::ForceFilter());
 
   // gazebo setup
   transport::init();
