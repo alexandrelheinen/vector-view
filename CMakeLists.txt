@@ -46,8 +46,11 @@ set(gui_sources
 
 # Optional dependencies for plugin/GUI targets only.
 if(BUILD_VECTORGUI)
-  find_package(Qt4 QUIET QtGui QtXml QtCore)
-  if(NOT Qt4_FOUND)
+  set(QT_USE_QTGUI TRUE)
+  set(QT_USE_QTXML TRUE)
+  set(QT_USE_QTCORE TRUE)
+  find_package(Qt4 QUIET)
+  if(NOT QT4_FOUND)
     message(WARNING
       "Qt4 not found — disabling BUILD_VECTORGUI. "
       "Install Qt4 or pass -DBUILD_VECTORGUI=OFF for a tests-only build.")
