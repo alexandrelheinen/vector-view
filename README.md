@@ -14,7 +14,7 @@ Bundled assets:
 - `models/` contains the instrumented iCub model and simple spawn primitives
 - `worlds/robot.world` is the demo Gazebo Sim world
 
-## A little bit o history
+## A little bit of history
 
 VectorView began in the summer of **2015**, during a second-year engineering internship (*stage de fin de 2A*) at [ISIR](https://www.isir.upmc.fr/) — the Institut des Systèmes Intelligents et de Robotique (Sorbonne Université / CNRS). The work took place in the **SYROCO** team (complex robotic systems) on the CentraleSupélec campus at **Gif-sur-Yvette**, within the broader [CoDyCo](https://www.codyco.eu/) research effort on whole-body contact control for the [iCub](https://icub.iit.it/) humanoid.
 
@@ -23,7 +23,7 @@ The goal was straightforward: make **contact forces visible in real time** in **
 - **VectorView** — a Gazebo plugin that draws a live force arrow on each instrumented link
 - **VectorGUI** — a desktop app that plots force magnitude and spawns test objects into the running world
 
-The original write-up is in the internship report (French, October 2015): [`docs/reports/Rapport_de_Stage_2A_2015.pdf`](docs/reports/Rapport_de_Stage_2A_2015.pdf).
+The work is described in a French internship report from October 2015. That document is not distributed with this repository.
 
 The code from that summer shows it. Raw pointers, `using namespace` in headers, CMake 2.8, and architecture decisions best summarized as *"it compiled on my machine in 2015."* Eventually I could not open the tree without wincing—which is why [`docs/issues-report.md`](docs/issues-report.md) exists.
 
