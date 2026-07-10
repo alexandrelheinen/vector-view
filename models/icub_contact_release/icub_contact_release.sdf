@@ -1,0 +1,77 @@
+<?xml version='1.0'?>
+<!--
+  Release-demo variant of icub_contact: adds JointPositionController plugins so
+  scripts/animate_grasp.sh can drive the arms without YARP or ISIRWholeBodyController.
+-->
+<sdf version='1.4'>
+  <model name="iCub_fixed">
+    <include>
+      <uri>model://icub</uri>
+      <pose>0.0 0 1.0 0 0 3.14</pose>
+
+      <!-- Left arm -->
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_shoulder_pitch</joint_name>
+        <topic_name>/grasp_demo/l_shoulder_pitch</topic_name>
+        <p_gain>80</p_gain><i_gain>0</i_gain><d_gain>8</d_gain>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_shoulder_roll</joint_name>
+        <topic_name>/grasp_demo/l_shoulder_roll</topic_name>
+        <p_gain>80</p_gain><i_gain>0</i_gain><d_gain>8</d_gain>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_elbow</joint_name>
+        <topic_name>/grasp_demo/l_elbow</topic_name>
+        <p_gain>80</p_gain><i_gain>0</i_gain><d_gain>8</d_gain>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_wrist_pitch</joint_name>
+        <topic_name>/grasp_demo/l_wrist_pitch</topic_name>
+        <p_gain>60</p_gain><i_gain>0</i_gain><d_gain>6</d_gain>
+      </plugin>
+
+      <!-- Right arm -->
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_shoulder_pitch</joint_name>
+        <topic_name>/grasp_demo/r_shoulder_pitch</topic_name>
+        <p_gain>80</p_gain><i_gain>0</i_gain><d_gain>8</d_gain>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_shoulder_roll</joint_name>
+        <topic_name>/grasp_demo/r_shoulder_roll</topic_name>
+        <p_gain>80</p_gain><i_gain>0</i_gain><d_gain>8</d_gain>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_elbow</joint_name>
+        <topic_name>/grasp_demo/r_elbow</topic_name>
+        <p_gain>80</p_gain><i_gain>0</i_gain><d_gain>8</d_gain>
+      </plugin>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_wrist_pitch</joint_name>
+        <topic_name>/grasp_demo/r_wrist_pitch</topic_name>
+        <p_gain>60</p_gain><i_gain>0</i_gain><d_gain>6</d_gain>
+      </plugin>
+    </include>
+
+    <joint name="fixed to ground" type="revolute">
+      <parent>world</parent>
+      <child>iCub::root_link</child>
+      <axis>
+        <limit>
+          <lower>0</lower>
+          <upper>0</upper>
+        </limit>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+  </model>
+</sdf>
