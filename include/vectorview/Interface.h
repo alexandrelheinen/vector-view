@@ -2,70 +2,61 @@
 #define INTERFACE_H
 
 #include "vectorview/Constants.h"
-
-// Qt includes
-#include <QtGui>
-#include <QWidget>
-#include <QGridLayout>
-#include <QLabel>
-// gazebo includes
-#include <gazebo.hh>
-// general includes
-#include <vector>
-#include <iostream>
-#include <memory>
-#include <string>
-#include <sstream>
-#include <boost/thread/mutex.hpp>
-// local includes
-#include "qcustomplot.h"
 #include "vectorview/ForceFilter.h"
 
-using namespace gazebo;
+#include <QtGui>
+#include <QGridLayout>
+#include <QLabel>
+#include <QWidget>
 
-class Interface : public QWidget
-{
+#include <gazebo.hh>
+
+#include <boost/thread/mutex.hpp>
+#include <iostream>
+#include <memory>
+#include <sstream>
+#include <string>
+#include <vector>
+
+#include "qcustomplot.h"
+
+class Interface : public QWidget {
   Q_OBJECT
 
-protected slots:
+ protected slots:
   void SpawnModel();
   void UpdatePlot();
 
-public:
+ public:
   Interface(std::string _path, const std::string& robot_name = "iCub");
   ~Interface();
-  void setPosition(math::Vector3 position);
+  void setPosition(gazebo::math::Vector3 position);
   void setObjectContact(std::string name);
-  void setForce(math::Vector3 force);
-  void Spawn(std::string model, math::Pose pose);
-  void Update(ConstContactsPtr &_msg);
+  void setForce(gazebo::math::Vector3 force);
+  void Spawn(std::string model, gazebo::math::Pose pose);
+  void Update(gazebo::ConstContactsPtr& _msg);
   std::vector<std::string> models;
 
-private:
-  // auxiliar
+ private:
   static std::string d2s(double d);
   int counter;
   boost::mutex mutex;
-  // gazebo
   std::string topicPath;
   std::string factoryPath;
   std::string robotName;
-  transport::PublisherPtr pub;
-  transport::SubscriberPtr subs;
-  // labels, buttons and menus
+  gazebo::transport::PublisherPtr pub;
+  gazebo::transport::SubscriberPtr subs;
   std::vector<QLabel*> contactLabels;
   std::vector<QLabel*> contactData;
   QComboBox* dropMenu;
   std::vector<QLineEdit*> entries;
   QPushButton* okButton;
-  // graphics
   QCustomPlot* plot;
   QTimer* dataTimer;
   QVector<double> timeAxis;
   QVector<double> forceAxis, filterAxis;
   double forceMax;
   std::unique_ptr<vectorview::ForceFilter> filter;
-
 };
 
 #endif
