@@ -51,6 +51,24 @@ animate_pose() {
   wait
 }
 
+hold_pose() {
+  local duration="$1"
+  local interval="${2:-0.1}"
+  shift 2
+  local -a specs=("$@")
+  local spec topic value
+  local elapsed=0
+
+  while awk -v e="$elapsed" -v d="$duration" 'BEGIN { exit !(e < d) }'; do
+    for spec in "${specs[@]}"; do
+      IFS=',' read -r topic value <<<"$spec"
+      publish_joint "$topic" "$value"
+    done
+    sleep "$interval"
+    elapsed="$(awk -v e="$elapsed" -v i="$interval" 'BEGIN { printf "%.4f", e + i }')"
+  done
+}
+
 # 2015 default arm configuration from icub.sdf initialConfiguration
 SP=-0.52
 SR=0.52
@@ -60,56 +78,75 @@ WP=0
 WY=0
 WYAW=0.698
 
+# Reach and press targets from the original CoDyCo StageTestTasks grasp sequence.
+REACH_SP=-0.95
+REACH_SR=1.35
+REACH_EL=1.35
+REACH_WY=-0.55
+
+PRESS_SP=-1.25
+PRESS_SR=1.45
+PRESS_EL=0.55
+PRESS_WY=-0.35
+
 echo "Grasp demo: hold standing pose"
-sleep 2.0
+sleep 1.0
 
 echo "Grasp demo: reach toward the box"
 animate_pose 3.0 \
-  "/grasp_demo/l_shoulder_pitch,${SP},-1.05" \
-  "/grasp_demo/l_shoulder_roll,${SR},1.25" \
-  "/grasp_demo/l_shoulder_yaw,${SY},0" \
-  "/grasp_demo/l_elbow,${EL},1.20" \
-  "/grasp_demo/l_wrist_prosup,${WP},0" \
-  "/grasp_demo/l_wrist_pitch,${WY},-0.45" \
-  "/grasp_demo/l_wrist_yaw,${WYAW},0.55" \
-  "/grasp_demo/r_shoulder_pitch,${SP},-1.05" \
-  "/grasp_demo/r_shoulder_roll,${SR},1.25" \
-  "/grasp_demo/r_shoulder_yaw,${SY},0" \
-  "/grasp_demo/r_elbow,${EL},1.20" \
-  "/grasp_demo/r_wrist_prosup,${WP},0" \
-  "/grasp_demo/r_wrist_pitch,${WY},-0.45" \
-  "/grasp_demo/r_wrist_yaw,${WYAW},0.55"
+  "/grasp_demo/l_shoulder_pitch,${SP},${REACH_SP}" \
+  "/grasp_demo/l_shoulder_roll,${SR},${REACH_SR}" \
+  "/grasp_demo/l_shoulder_yaw,${SY},${SY}" \
+  "/grasp_demo/l_elbow,${EL},${REACH_EL}" \
+  "/grasp_demo/l_wrist_prosup,${WP},${WP}" \
+  "/grasp_demo/l_wrist_pitch,${WY},${REACH_WY}" \
+  "/grasp_demo/l_wrist_yaw,${WYAW},${WYAW}" \
+  "/grasp_demo/r_shoulder_pitch,${SP},${REACH_SP}" \
+  "/grasp_demo/r_shoulder_roll,${SR},${REACH_SR}" \
+  "/grasp_demo/r_shoulder_yaw,${SY},${SY}" \
+  "/grasp_demo/r_elbow,${EL},${REACH_EL}" \
+  "/grasp_demo/r_wrist_prosup,${WP},${WP}" \
+  "/grasp_demo/r_wrist_pitch,${WY},${REACH_WY}" \
+  "/grasp_demo/r_wrist_yaw,${WYAW},${WYAW}"
 
 echo "Grasp demo: press the box (contact arrows appear)"
 animate_pose 2.5 \
-  "/grasp_demo/l_shoulder_pitch,-1.05,-1.30" \
-  "/grasp_demo/l_shoulder_roll,1.25,1.35" \
-  "/grasp_demo/l_elbow,1.20,0.60" \
-  "/grasp_demo/l_wrist_pitch,-0.45,-0.25" \
-  "/grasp_demo/r_shoulder_pitch,-1.05,-1.30" \
-  "/grasp_demo/r_shoulder_roll,1.25,1.35" \
-  "/grasp_demo/r_elbow,1.20,0.60" \
-  "/grasp_demo/r_wrist_pitch,-0.45,-0.25"
+  "/grasp_demo/l_shoulder_pitch,${REACH_SP},${PRESS_SP}" \
+  "/grasp_demo/l_shoulder_roll,${REACH_SR},${PRESS_SR}" \
+  "/grasp_demo/l_elbow,${REACH_EL},${PRESS_EL}" \
+  "/grasp_demo/l_wrist_pitch,${REACH_WY},${PRESS_WY}" \
+  "/grasp_demo/r_shoulder_pitch,${REACH_SP},${PRESS_SP}" \
+  "/grasp_demo/r_shoulder_roll,${REACH_SR},${PRESS_SR}" \
+  "/grasp_demo/r_elbow,${REACH_EL},${PRESS_EL}" \
+  "/grasp_demo/r_wrist_pitch,${REACH_WY},${PRESS_WY}"
 
-echo "Grasp demo: hold contact"
-sleep 2.0
+echo "Grasp demo: hold contact (force arrows visible)"
+hold_pose 5.0 0.1 \
+  "/grasp_demo/l_shoulder_pitch,${PRESS_SP}" \
+  "/grasp_demo/l_shoulder_roll,${PRESS_SR}" \
+  "/grasp_demo/l_elbow,${PRESS_EL}" \
+  "/grasp_demo/l_wrist_pitch,${PRESS_WY}" \
+  "/grasp_demo/r_shoulder_pitch,${PRESS_SP}" \
+  "/grasp_demo/r_shoulder_roll,${PRESS_SR}" \
+  "/grasp_demo/r_elbow,${PRESS_EL}" \
+  "/grasp_demo/r_wrist_pitch,${PRESS_WY}"
 
 echo "Grasp demo: release and return to standing"
 animate_pose 3.0 \
-  "/grasp_demo/l_shoulder_pitch,-1.30,${SP}" \
-  "/grasp_demo/l_shoulder_roll,1.35,${SR}" \
-  "/grasp_demo/l_shoulder_yaw,0,${SY}" \
-  "/grasp_demo/l_elbow,0.60,${EL}" \
-  "/grasp_demo/l_wrist_prosup,0,${WP}" \
-  "/grasp_demo/l_wrist_pitch,-0.25,${WY}" \
-  "/grasp_demo/l_wrist_yaw,0.55,${WYAW}" \
-  "/grasp_demo/r_shoulder_pitch,-1.30,${SP}" \
-  "/grasp_demo/r_shoulder_roll,1.35,${SR}" \
-  "/grasp_demo/r_shoulder_yaw,0,${SY}" \
-  "/grasp_demo/r_elbow,0.60,${EL}" \
-  "/grasp_demo/r_wrist_prosup,0,${WP}" \
-  "/grasp_demo/r_wrist_pitch,-0.25,${WY}" \
-  "/grasp_demo/r_wrist_yaw,0.55,${WYAW}"
+  "/grasp_demo/l_shoulder_pitch,${PRESS_SP},${SP}" \
+  "/grasp_demo/l_shoulder_roll,${PRESS_SR},${SR}" \
+  "/grasp_demo/l_shoulder_yaw,${SY},${SY}" \
+  "/grasp_demo/l_elbow,${PRESS_EL},${EL}" \
+  "/grasp_demo/l_wrist_prosup,${WP},${WP}" \
+  "/grasp_demo/l_wrist_pitch,${PRESS_WY},${WY}" \
+  "/grasp_demo/l_wrist_yaw,${WYAW},${WYAW}" \
+  "/grasp_demo/r_shoulder_pitch,${PRESS_SP},${SP}" \
+  "/grasp_demo/r_shoulder_roll,${PRESS_SR},${SR}" \
+  "/grasp_demo/r_shoulder_yaw,${SY},${SY}" \
+  "/grasp_demo/r_elbow,${PRESS_EL},${EL}" \
+  "/grasp_demo/r_wrist_prosup,${WP},${WP}" \
+  "/grasp_demo/r_wrist_pitch,${PRESS_WY},${WY}" \
+  "/grasp_demo/r_wrist_yaw,${WYAW},${WYAW}"
 
-sleep 1.5
+sleep 1.0
 echo "Grasp demo animation complete"

@@ -119,10 +119,10 @@
       </link>
     </model>
 
-    <!-- Camera framing similar to the 2015 internship demo screenshot -->
+    <!-- Camera framing matched to images/execution_example.png -->
     <model name="release_camera">
       <static>true</static>
-      <pose>0.8 -2.2 1.15 0 0.22 1.57</pose>
+      <pose>0.6 -1.8 1.05 0 0.18 1.35</pose>
       <link name="link">
         <sensor name="camera" type="camera">
           <camera>
