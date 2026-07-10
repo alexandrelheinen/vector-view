@@ -31,18 +31,12 @@ std::string ExtractLinkName(const std::string& visual_segment) {
   return visual_segment;
 }
 
-std::string BuildTransportTopic(const std::vector<std::string>& segments,
-                                const std::string& link_name) {
-  std::string topic = "~";
-  for (size_t i = 0; i + 1 < segments.size(); ++i) {
-    topic += "/" + segments[i];
-  }
-  topic += "/" + link_name + "/" + link_name + "_contact";
-  return topic;
-}
-
 std::string BuildCollisionScope(const std::vector<std::string>& segments,
                                 const std::string& link_name) {
+  if (segments.size() <= 1) {
+    return link_name + "::" + link_name + "_collision";
+  }
+
   std::string collision;
   for (size_t i = 0; i + 1 < segments.size(); ++i) {
     if (!collision.empty()) {
@@ -56,6 +50,10 @@ std::string BuildCollisionScope(const std::vector<std::string>& segments,
   }
   collision += link_name + "_collision";
   return collision;
+}
+
+std::string BuildTransportTopic(const std::string& link_name, const ModelContext& context) {
+  return "/vectorview/" + context.model_instance + "/" + link_name;
 }
 
 }  // namespace
@@ -76,8 +74,26 @@ TopicPath TopicPath::FromVisualName(const std::string& visual_name) {
     return result;
   }
 
-  result.transport = BuildTransportTopic(segments, link_name);
+  ModelContext context;
+  if (segments.size() >= 2) {
+    context.robot_model = segments[segments.size() - 2];
+  }
+
+  result.transport = BuildTransportTopic(link_name, context);
   result.collision_scope = BuildCollisionScope(segments, link_name);
+  result.valid = true;
+  return result;
+}
+
+TopicPath TopicPath::FromLinkName(const std::string& link_name, const ModelContext& context) {
+  TopicPath result;
+  if (link_name.empty()) {
+    return result;
+  }
+
+  result.transport = BuildTransportTopic(link_name, context);
+  result.collision_scope =
+      context.robot_model + "::" + link_name + "::" + link_name + "_collision";
   result.valid = true;
   return result;
 }
@@ -102,14 +118,7 @@ TopicPath TopicPath::FromCliArgument(const std::string& argument, const ModelCon
     link_name.erase(link_name.size() - contact_suffix.size());
   }
 
-  if (link_name.empty()) {
-    return result;
-  }
-
-  result.transport = "/gazebo/" + context.world_name + "/" + context.model_instance + "/" +
-                     context.robot_model + "/" + link_name + "/" + link_name + "_contact";
-  result.valid = true;
-  return result;
+  return FromLinkName(link_name, context);
 }
 
 }  // namespace vectorview

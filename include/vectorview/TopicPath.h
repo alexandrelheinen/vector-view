@@ -15,6 +15,7 @@ struct TopicPath {
   TopicPath() : valid(false) {}
 
   static TopicPath FromVisualName(const std::string& visual_name);
+  static TopicPath FromLinkName(const std::string& link_name, const ModelContext& context);
   static TopicPath FromCliArgument(const std::string& argument, const ModelContext& context);
 };
 

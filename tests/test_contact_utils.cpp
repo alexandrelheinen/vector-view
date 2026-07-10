@@ -9,7 +9,7 @@ TEST_CASE("TopicPath derives link-based topics from visual names", "[topic_path]
       vectorview::TopicPath::FromVisualName("iCub::l_hand::l_hand_visual");
 
   REQUIRE(path.valid);
-  REQUIRE(path.transport == "~/iCub/l_hand/l_hand_contact");
+  REQUIRE(path.transport == "/vectorview/iCub_fixed/l_hand");
   REQUIRE(path.collision_scope == "iCub::l_hand::l_hand_collision");
 }
 
@@ -17,7 +17,7 @@ TEST_CASE("TopicPath handles single-segment visual names", "[topic_path]") {
   const vectorview::TopicPath path = vectorview::TopicPath::FromVisualName("l_hand_visual");
 
   REQUIRE(path.valid);
-  REQUIRE(path.transport == "~/l_hand/l_hand_contact");
+  REQUIRE(path.transport == "/vectorview/iCub_fixed/l_hand");
   REQUIRE(path.collision_scope == "l_hand::l_hand_collision");
 }
 
@@ -31,16 +31,16 @@ TEST_CASE("TopicPath builds GUI topics from short link names", "[topic_path]") {
   const vectorview::TopicPath path = vectorview::TopicPath::FromCliArgument("l_hand", context);
 
   REQUIRE(path.valid);
-  REQUIRE(path.transport == "/gazebo/default/iCub_fixed/iCub/l_hand/l_hand_contact");
+  REQUIRE(path.transport == "/vectorview/iCub_fixed/l_hand");
 }
 
 TEST_CASE("TopicPath accepts full transport paths unchanged", "[topic_path]") {
   const vectorview::ModelContext context;
   const vectorview::TopicPath path = vectorview::TopicPath::FromCliArgument(
-      "/gazebo/default/iCub_fixed/iCub/r_hand/r_hand_contact", context);
+      "/vectorview/iCub_fixed/r_hand", context);
 
   REQUIRE(path.valid);
-  REQUIRE(path.transport == "/gazebo/default/iCub_fixed/iCub/r_hand/r_hand_contact");
+  REQUIRE(path.transport == "/vectorview/iCub_fixed/r_hand");
 }
 
 TEST_CASE("TopicPath strips _contact suffix from short names", "[topic_path]") {
@@ -49,7 +49,7 @@ TEST_CASE("TopicPath strips _contact suffix from short names", "[topic_path]") {
       vectorview::TopicPath::FromCliArgument("l_hand_contact", context);
 
   REQUIRE(path.valid);
-  REQUIRE(path.transport == "/gazebo/default/iCub_fixed/iCub/l_hand/l_hand_contact");
+  REQUIRE(path.transport == "/vectorview/iCub_fixed/l_hand");
 }
 
 TEST_CASE("AggregatePluginForces averages contact forces", "[contact_utils]") {

@@ -1378,7 +1378,6 @@
         </geometry>
       </collision>
       <visual name='l_hand_visual'>
-        <plugin name='l_hand_force' filename='libvectorview.so'/>
         <pose>-1.25973e-12 0.0204334 -0.000143922 5.10271e-12 -2.64186e-12 1.49622e-11</pose>
         <geometry>
           <mesh>
@@ -1391,6 +1390,7 @@
         <update_rate>25</update_rate>
         <contact>
           <collision>l_hand_collision</collision>
+          <topic>/vectorview/iCub_fixed/l_hand</topic>
         </contact>
       </sensor>
     </link>
@@ -1930,7 +1930,6 @@
         </geometry>
       </collision>
       <visual name='r_hand_visual'>
-        <plugin name='r_hand_force' filename='libvectorview.so'/>
         <pose>1.0721e-12 0.0204334 0.000143922 1.53098e-11 2.00656e-11 -3.14159</pose>
         <geometry>
           <mesh>
@@ -1943,6 +1942,7 @@
         <update_rate>25</update_rate>
         <contact>
           <collision>r_hand_collision</collision>
+          <topic>/vectorview/iCub_fixed/r_hand</topic>
         </contact>
       </sensor>
     </link>
@@ -1966,6 +1966,16 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
+    <plugin filename="libvectorview.so" name="vectorview::VectorView">
+      <link_name>l_hand</link_name>
+      <contact_topic>/vectorview/iCub_fixed/l_hand</contact_topic>
+      <collision_scope>iCub::l_hand::l_hand_collision</collision_scope>
+    </plugin>
+    <plugin filename="libvectorview.so" name="vectorview::VectorView">
+      <link_name>r_hand</link_name>
+      <contact_topic>/vectorview/iCub_fixed/r_hand</contact_topic>
+      <collision_scope>iCub::r_hand::r_hand_collision</collision_scope>
+    </plugin>
     <plugin name='controlboard_torso' filename='libgazebo_yarp_controlboard.so'>
       <yarpConfigurationFile>model://icub/conf/gazebo_icub_torso.ini</yarpConfigurationFile>
     </plugin>
