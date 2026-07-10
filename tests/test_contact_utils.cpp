@@ -1,27 +1,55 @@
 #include "catch.hpp"
 
 #include "vectorview/ContactUtils.h"
+#include "vectorview/ModelContext.h"
+#include "vectorview/TopicPath.h"
 
-TEST_CASE("DeriveTopicNames parses nested visual names", "[contact_utils]") {
-  const vectorview::TopicNames names =
-      vectorview::DeriveTopicNames("iCub::l_hand::l_hand_visual");
+TEST_CASE("TopicPath derives link-based topics from visual names", "[topic_path]") {
+  const vectorview::TopicPath path =
+      vectorview::TopicPath::FromVisualName("iCub::l_hand::l_hand_visual");
 
-  REQUIRE(names.valid);
-  REQUIRE(names.topic == "~/iCub/l_hand/l_hand_visual/l_hand_visual_contact");
-  REQUIRE(names.collision == "iCub::l_hand::l_hand_visual::l_hand_visual_collision");
+  REQUIRE(path.valid);
+  REQUIRE(path.transport == "~/iCub/l_hand/l_hand_contact");
+  REQUIRE(path.collision_scope == "iCub::l_hand::l_hand_collision");
 }
 
-TEST_CASE("DeriveTopicNames handles single-segment names", "[contact_utils]") {
-  const vectorview::TopicNames names = vectorview::DeriveTopicNames("l_hand_visual");
+TEST_CASE("TopicPath handles single-segment visual names", "[topic_path]") {
+  const vectorview::TopicPath path = vectorview::TopicPath::FromVisualName("l_hand_visual");
 
-  REQUIRE(names.valid);
-  REQUIRE(names.topic == "~/l_hand_visual/l_hand_visual_contact");
-  REQUIRE(names.collision == "l_hand_visual::l_hand_visual_collision");
+  REQUIRE(path.valid);
+  REQUIRE(path.transport == "~/l_hand/l_hand_contact");
+  REQUIRE(path.collision_scope == "l_hand::l_hand_collision");
 }
 
-TEST_CASE("DeriveTopicNames rejects empty names", "[contact_utils]") {
-  const vectorview::TopicNames names = vectorview::DeriveTopicNames("");
-  REQUIRE_FALSE(names.valid);
+TEST_CASE("TopicPath rejects empty visual names", "[topic_path]") {
+  const vectorview::TopicPath path = vectorview::TopicPath::FromVisualName("");
+  REQUIRE_FALSE(path.valid);
+}
+
+TEST_CASE("TopicPath builds GUI topics from short link names", "[topic_path]") {
+  const vectorview::ModelContext context;
+  const vectorview::TopicPath path = vectorview::TopicPath::FromCliArgument("l_hand", context);
+
+  REQUIRE(path.valid);
+  REQUIRE(path.transport == "/gazebo/default/iCub_fixed/iCub/l_hand/l_hand_contact");
+}
+
+TEST_CASE("TopicPath accepts full transport paths unchanged", "[topic_path]") {
+  const vectorview::ModelContext context;
+  const vectorview::TopicPath path = vectorview::TopicPath::FromCliArgument(
+      "/gazebo/default/iCub_fixed/iCub/r_hand/r_hand_contact", context);
+
+  REQUIRE(path.valid);
+  REQUIRE(path.transport == "/gazebo/default/iCub_fixed/iCub/r_hand/r_hand_contact");
+}
+
+TEST_CASE("TopicPath strips _contact suffix from short names", "[topic_path]") {
+  const vectorview::ModelContext context;
+  const vectorview::TopicPath path =
+      vectorview::TopicPath::FromCliArgument("l_hand_contact", context);
+
+  REQUIRE(path.valid);
+  REQUIRE(path.transport == "/gazebo/default/iCub_fixed/iCub/l_hand/l_hand_contact");
 }
 
 TEST_CASE("AggregatePluginForces averages contact forces", "[contact_utils]") {
