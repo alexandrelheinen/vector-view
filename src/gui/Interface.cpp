@@ -33,6 +33,7 @@ Interface::Interface(const std::string& path, const std::string& robot_name,
   QGroupBox* topicFrame = new QGroupBox(tr("Current topic path"));
   QGroupBox* contactFrame = new QGroupBox(tr("Contact info"));
   QGroupBox* buttonFrame = new QGroupBox(tr("Spawn models"));
+  QGroupBox* settingsFrame = new QGroupBox(tr("Settings"));
   QFrame* entriesFrame = new QFrame();
   QGroupBox* plotFrame = new QGroupBox(tr("Magnitude plot"));
 
@@ -40,6 +41,7 @@ Interface::Interface(const std::string& path, const std::string& robot_name,
   topicFrame->setLayout(topicLayout);
   contactFrame->setLayout(contactLayout);
   buttonFrame->setLayout(buttonLayout);
+  settingsFrame->setLayout(new QGridLayout());
   entriesFrame->setLayout(entriesLayout);
   plotFrame->setLayout(plotLayout);
   entriesFrame->setMaximumWidth(100);
@@ -48,8 +50,9 @@ Interface::Interface(const std::string& path, const std::string& robot_name,
   buttonFrame->setMinimumWidth(120);
 
   mainLayout->addWidget(topicFrame, 0, 0);
-  mainLayout->addWidget(infoFrame, 1, 0);
-  mainLayout->addWidget(plotFrame, 2, 0);
+  mainLayout->addWidget(settingsFrame, 1, 0);
+  mainLayout->addWidget(infoFrame, 2, 0);
+  mainLayout->addWidget(plotFrame, 3, 0);
   infoLayout->addWidget(contactFrame, 0, 0);
   infoLayout->addWidget(buttonFrame, 0, 1);
 
@@ -111,7 +114,43 @@ Interface::Interface(const std::string& path, const std::string& robot_name,
   buttonLayout->addWidget(entriesFrame);
   buttonLayout->addWidget(okButton);
 
+  timeWindow = TIME_MAX;
+  updateRate = RATE;
+  noiseThreshold = NOISE_THRESHOLD;
+  filterOrder = 3;
+  filterCutoff = 1.5;
   forceMax = 10;
+
+  QGridLayout* settingsLayout = qobject_cast<QGridLayout*>(settingsFrame->layout());
+  const std::vector<std::pair<std::string, std::string>> settingFields = {
+      {"time window (s):", std::to_string(static_cast<int>(timeWindow))},
+      {"update rate (Hz):", std::to_string(static_cast<int>(updateRate))},
+      {"noise threshold (N):", "0.001"},
+      {"force axis max (N):", std::to_string(static_cast<int>(forceMax))},
+      {"filter order:", std::to_string(filterOrder)},
+      {"filter cutoff (Hz):", "1.5"}};
+
+  QDoubleValidator* positiveValidator = new QDoubleValidator(0.0, 1e9, 6, this);
+  QDoubleValidator* positiveIntValidator = new QDoubleValidator(1.0, 1e9, 0, this);
+
+  for (unsigned int k = 0; k < settingFields.size(); ++k) {
+    QLabel* title = new QLabel(settingFields.at(k).first.c_str());
+    title->setAlignment(Qt::AlignRight);
+    QLineEdit* field = new QLineEdit(settingFields.at(k).second.c_str());
+    if (k == 4) {
+      field->setValidator(positiveIntValidator);
+    } else {
+      field->setValidator(positiveValidator);
+    }
+    settingsEntries.push_back(field);
+    settingsLayout->addWidget(title, static_cast<int>(k), 0);
+    settingsLayout->addWidget(field, static_cast<int>(k), 1);
+  }
+
+  QPushButton* applyButton = new QPushButton("Apply");
+  connect(applyButton, &QPushButton::clicked, this, &Interface::ApplySettings);
+  settingsLayout->addWidget(applyButton, static_cast<int>(settingFields.size()), 0, 1, 2);
+
   plot = new QCustomPlot();
   plotLayout->addWidget(plot);
   plot->addGraph();
@@ -120,7 +159,7 @@ Interface::Interface(const std::string& path, const std::string& robot_name,
   connect(plot->yAxis, SIGNAL(rangeChanged(QCPRange)), plot->yAxis2, SLOT(setRange(QCPRange)));
   plot->xAxis->setLabel("time (s)");
   plot->yAxis->setLabel("force (N)");
-  plot->xAxis->setRange(0, TIME_MAX);
+  plot->xAxis->setRange(0, timeWindow);
   plot->yAxis->setRange(0, forceMax);
   plot->graph(0)->setPen(QPen(Qt::gray));
   plot->graph(1)->setPen(QPen(Qt::darkBlue));
@@ -136,25 +175,25 @@ Interface::Interface(const std::string& path, const std::string& robot_name,
 
   dataTimer = new QTimer;
   connect(dataTimer, &QTimer::timeout, this, &Interface::UpdatePlot);
-  dataTimer->start(1000.0 / RATE);
+  dataTimer->start(static_cast<int>(1000.0 / updateRate));
 
-  filter = std::make_unique<vectorview::ForceFilter>();
+  filter = std::make_unique<vectorview::ForceFilter>(updateRate, filterOrder, filterCutoff);
 
   this->node.Subscribe(this->topicPath, &Interface::Update, this);
 
   topicLayout->addWidget(new QLabel(("spawn: /world/" + world_name + "/create").c_str()), 0, 0);
   topicLayout->addWidget(new QLabel(this->topicPath.c_str()), 1, 0);
 
-  this->setWindowTitle(("VectorGUI [" + this->topicPath + "]").c_str());
+  this->setWindowTitle(("Vector GUI [" + this->topicPath + "]").c_str());
   this->move(20, 20);
   this->setMaximumWidth(480);
   this->setMinimumWidth(480);
-  this->setMaximumHeight(660);
-  this->setMinimumHeight(660);
+  this->setMaximumHeight(860);
+  this->setMinimumHeight(860);
 }
 
 Interface::~Interface() {
-  std::cout << "VectorGUI interface [" << this->topicPath << "] ended" << std::endl;
+  std::cout << "Vector GUI interface [" << this->topicPath << "] ended" << std::endl;
 }
 
 void Interface::setObjectContact(const std::string& name) {
@@ -199,7 +238,7 @@ void Interface::Update(const gz::msgs::Contacts& message) {
 
     if (++counter > 10) {
       counter = 0;
-      if (force.Length() > NOISE_THRESHOLD) {
+      if (force.Length() > noiseThreshold) {
         this->setObjectContact(aggregated.object_name);
         this->setPosition(position);
         this->setForce(force);
@@ -251,8 +290,8 @@ void Interface::UpdatePlot() {
 
   plot->graph(0)->addData(timeAxis, forceAxis);
   plot->graph(1)->addData(timeAxis, filterAxis);
-  if (timeAxis.back() > TIME_MAX) {
-    plot->xAxis->setRange(timeAxis.back() - TIME_MAX, timeAxis.back());
+  if (timeAxis.back() > timeWindow) {
+    plot->xAxis->setRange(timeAxis.back() - timeWindow, timeAxis.back());
   }
 
   if (forceAxis.back() > forceMax) {
@@ -263,4 +302,25 @@ void Interface::UpdatePlot() {
   timeAxis.clear();
   forceAxis.clear();
   filterAxis.clear();
+}
+
+void Interface::ApplySettings() {
+  timeWindow = settingsEntries.at(0)->text().toDouble();
+  updateRate = settingsEntries.at(1)->text().toDouble();
+  noiseThreshold = settingsEntries.at(2)->text().toDouble();
+  forceMax = settingsEntries.at(3)->text().toDouble();
+  filterOrder = static_cast<int>(settingsEntries.at(4)->text().toDouble());
+  filterCutoff = settingsEntries.at(5)->text().toDouble();
+
+  if (timeWindow <= 0 || updateRate <= 0 || forceMax <= 0 || filterOrder <= 0 ||
+      filterCutoff <= 0) {
+    std::cerr << " >> invalid settings: all values must be positive" << std::endl;
+    return;
+  }
+
+  plot->xAxis->setRange(0, timeWindow);
+  plot->yAxis->setRange(0, forceMax);
+  dataTimer->setInterval(static_cast<int>(1000.0 / updateRate));
+  filter->Configure(updateRate, filterOrder, filterCutoff);
+  plot->replot();
 }

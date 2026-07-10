@@ -6,6 +6,7 @@
 #include "vectorview/ForceFilter.h"
 
 #include <QComboBox>
+#include <QDoubleValidator>
 #include <QFrame>
 #include <QGridLayout>
 #include <QGroupBox>
@@ -31,6 +32,7 @@ class Interface : public QWidget {
  protected slots:
   void SpawnModel();
   void UpdatePlot();
+  void ApplySettings();
 
  public:
   Interface(const std::string& path, const std::string& robot_name = "iCub",
@@ -62,6 +64,12 @@ class Interface : public QWidget {
   QVector<double> forceAxis;
   QVector<double> filterAxis;
   double forceMax;
+  double timeWindow;
+  double updateRate;
+  double noiseThreshold;
+  int filterOrder;
+  double filterCutoff;
+  std::vector<QLineEdit*> settingsEntries;
   std::unique_ptr<vectorview::ForceFilter> filter;
 };
 
