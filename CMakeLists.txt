@@ -172,9 +172,9 @@ if(BUILD_VECTOR_GUI)
     RUNTIME DESTINATION ${INSTALL_BINDIR})
 endif()
 
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/models/
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/assets/models/
   DESTINATION ${INSTALL_DATADIR}/models)
 install(FILES
-  ${PROJECT_SOURCE_DIR}/worlds/robot.world
-  ${PROJECT_SOURCE_DIR}/worlds/release_demo.world
+  ${PROJECT_SOURCE_DIR}/assets/worlds/robot.world
+  ${PROJECT_SOURCE_DIR}/assets/worlds/release_demo.world
   DESTINATION ${INSTALL_DATADIR}/worlds)

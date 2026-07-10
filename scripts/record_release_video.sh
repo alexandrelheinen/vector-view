@@ -4,14 +4,14 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUTPUT="${1:-$ROOT/grasp_demo.mp4}"
-WORLD="$ROOT/worlds/release_demo.world"
+WORLD="$ROOT/assets/worlds/release_demo.world"
 RECORD_TOPIC="/camera/record_video"
 SIM_LOG="/tmp/gz_sim_release_demo.log"
 
 export VECTOR_VIEW="$ROOT"
 export GZ_SIM_SYSTEM_PLUGIN_PATH="$ROOT/build:${GZ_SIM_SYSTEM_PLUGIN_PATH:-}"
-export GZ_SIM_RESOURCE_PATH="$ROOT/models:${GZ_SIM_RESOURCE_PATH:-}"
-export GZ_SIM_USER_PATH="$ROOT/worlds:${GZ_SIM_USER_PATH:-}"
+export GZ_SIM_RESOURCE_PATH="$ROOT/assets/models:${GZ_SIM_RESOURCE_PATH:-}"
+export GZ_SIM_USER_PATH="$ROOT/assets/worlds:${GZ_SIM_USER_PATH:-}"
 
 if [ ! -f "$ROOT/build/libvector-view.so" ]; then
   echo "error: build/libvector-view.so not found. Build the project first." >&2

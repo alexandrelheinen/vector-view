@@ -11,8 +11,8 @@ Both read from Gazebo transport contact topics. The plugin renders in the 3D vie
 
 Bundled assets:
 
-- `models/` contains the instrumented iCub model and simple spawn primitives
-- `worlds/robot.world` is the demo Gazebo Sim world
+- `assets/models/` contains the instrumented iCub model and simple spawn primitives
+- `assets/worlds/robot.world` is the demo Gazebo Sim world
 
 ## A little bit of history
 
@@ -66,11 +66,12 @@ src/gui/                Qt6 application
 src/filters/            Butterworth force filter wrapper
 src/common/             Shared logic (ContactUtils, TopicPath, ContactMessage)
 external/            Vendored DSPFilters, QCustomPlot 2.1.1, Catch2
-models/                 Gazebo models
-worlds/                 Gazebo Sim world files
+assets/models/         Gazebo models
+assets/worlds/         Gazebo Sim world files
 scripts/                Demo launcher and format helper
 tests/                  Unit tests (no Gazebo required)
 .env.example            Environment variable template
+docs/                   Project documentation and screenshots
 docs/estimate.md        Modernization effort estimate vs. actual time
 ```
 
@@ -178,8 +179,8 @@ Edit `.env` if your paths differ from the defaults. The file is loaded by `scrip
 |----------|---------|
 | `VECTOR_VIEW` | Repository root (defaults to the directory above `scripts/`) |
 | `GZ_SIM_SYSTEM_PLUGIN_PATH` | Directory containing `libvector-view.so` |
-| `GZ_SIM_RESOURCE_PATH` | Directory containing bundled `models/` |
-| `GZ_SIM_USER_PATH` | Directory containing bundled `worlds/` |
+| `GZ_SIM_RESOURCE_PATH` | Directory containing bundled `assets/models/` |
+| `GZ_SIM_USER_PATH` | Directory containing bundled `assets/worlds/` |
 | `CODYCO_SUPERBUILD_ROOT` | Optional. Enables the ISIR controller step in `run.sh` |
 
 Equivalent manual exports:
@@ -188,8 +189,8 @@ Equivalent manual exports:
 export VECTOR_VIEW=/path/to/vector-view
 export PATH="$VECTOR_VIEW/build:$PATH"
 export GZ_SIM_SYSTEM_PLUGIN_PATH="$VECTOR_VIEW/build:${GZ_SIM_SYSTEM_PLUGIN_PATH:-}"
-export GZ_SIM_RESOURCE_PATH="$VECTOR_VIEW/models:${GZ_SIM_RESOURCE_PATH:-}"
-export GZ_SIM_USER_PATH="$VECTOR_VIEW/worlds:${GZ_SIM_USER_PATH:-}"
+export GZ_SIM_RESOURCE_PATH="$VECTOR_VIEW/assets/models:${GZ_SIM_RESOURCE_PATH:-}"
+export GZ_SIM_USER_PATH="$VECTOR_VIEW/assets/worlds:${GZ_SIM_USER_PATH:-}"
 ```
 
 ## Running the demo
@@ -217,7 +218,7 @@ yarpserver
 
 ```bash
 cd "$VECTOR_VIEW"
-gz sim -r worlds/robot.world
+gz sim -r assets/worlds/robot.world
 ```
 
 ```bash

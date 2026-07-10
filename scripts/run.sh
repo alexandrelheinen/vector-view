@@ -11,8 +11,8 @@ fi
 export VECTOR_VIEW="${VECTOR_VIEW:-$ROOT}"
 export PATH="$VECTOR_VIEW/build:${PATH}"
 export GZ_SIM_SYSTEM_PLUGIN_PATH="$VECTOR_VIEW/build:${GZ_SIM_SYSTEM_PLUGIN_PATH:-}"
-export GZ_SIM_RESOURCE_PATH="$VECTOR_VIEW/models:${GZ_SIM_RESOURCE_PATH:-}"
-export GZ_SIM_USER_PATH="$VECTOR_VIEW/worlds:${GZ_SIM_USER_PATH:-}"
+export GZ_SIM_RESOURCE_PATH="$VECTOR_VIEW/assets/models:${GZ_SIM_RESOURCE_PATH:-}"
+export GZ_SIM_USER_PATH="$VECTOR_VIEW/assets/worlds:${GZ_SIM_USER_PATH:-}"
 
 detect_terminal() {
   for t in gnome-terminal xfce4-terminal konsole xterm; do
@@ -33,7 +33,7 @@ $TERMINAL --tab -e "yarpserver --write"
 sleep 1
 
 echo "2. Running robot world at Gazebo Sim (Harmonic)."
-$TERMINAL --tab -e "gz sim -r $VECTOR_VIEW/worlds/robot.world"
+$TERMINAL --tab -e "gz sim -r $VECTOR_VIEW/assets/worlds/robot.world"
 sleep 6
 
 echo "3. Opening the GUI interface for force analysis."
