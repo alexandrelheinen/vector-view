@@ -159,7 +159,7 @@
       <child>l_hip_3</child>
       <parent>l_hip_2</parent>
       <axis>
-        <xyz>0 0 0</xyz>
+        <xyz>0 0 1</xyz>
         <limit>
           <lower>0</lower>
           <upper>0</upper>
@@ -440,7 +440,7 @@
       <child>l_foot</child>
       <parent>l_ankle_2</parent>
       <axis>
-        <xyz>0 0 0</xyz>
+        <xyz>0 0 1</xyz>
         <limit>
           <lower>0</lower>
           <upper>0</upper>
@@ -587,7 +587,7 @@
       <child>r_hip_3</child>
       <parent>r_hip_2</parent>
       <axis>
-        <xyz>0 0 -0</xyz>
+        <xyz>0 0 1</xyz>
         <limit>
           <lower>0</lower>
           <upper>0</upper>
@@ -868,7 +868,7 @@
       <child>r_foot</child>
       <parent>r_ankle_2</parent>
       <axis>
-        <xyz>0 0 0</xyz>
+        <xyz>0 0 1</xyz>
         <limit>
           <lower>0</lower>
           <upper>0</upper>
@@ -1209,7 +1209,7 @@
       <child>l_upper_arm</child>
       <parent>l_shoulder_3</parent>
       <axis>
-        <xyz>-0 0 0</xyz>
+        <xyz>0 0 1</xyz>
         <limit>
           <lower>0</lower>
           <upper>0</upper>
@@ -1761,7 +1761,7 @@
       <child>r_upper_arm</child>
       <parent>r_shoulder_3</parent>
       <axis>
-        <xyz>-0 0 0</xyz>
+        <xyz>0 0 1</xyz>
         <limit>
           <lower>0</lower>
           <upper>0</upper>

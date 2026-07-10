@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<!--
+  Automated release demo: iCub presses and releases the box while VectorView
+  draws contact-force arrows. A headless camera records the scene.
+
+  Start recording:
+    gz service -s /camera/record_video \
+      --reqtype gz.msgs.VideoRecord --reptype gz.msgs.Boolean --timeout 300 \
+      --req 'start: true, format:"mp4", save_filename:"grasp_demo.mp4"'
+
+  Stop recording:
+    gz service -s /camera/record_video \
+      --reqtype gz.msgs.VideoRecord --reptype gz.msgs.Boolean --timeout 300 \
+      --req 'stop: true'
+-->
+<sdf version="1.8">
+  <world name="default">
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-contact-system" name="gz::sim::systems::Contact"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster">
+      <state_hertz>30</state_hertz>
+    </plugin>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>0.5 0.5 0.5 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <include>
+      <uri>model://icub_contact_release</uri>
+      <name>iCub_fixed</name>
+      <pose>0 0 -.4 0 0 0</pose>
+    </include>
+
+    <model name='box_table'>
+      <static>true</static>
+      <pose>0.40 0 0.25 0 0 0</pose>
+      <link name='box'>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.4 0.6 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.4 0.6 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.85 0.85 0.85 1</ambient>
+            <diffuse>0.85 0.85 0.85 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='object'>
+      <pose>0.365 0 0.5 0 0 0</pose>
+      <link name='main'>
+        <inertial>
+          <mass>0.5</mass>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.25 0.25 0.3</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.25 0.25 0.3</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.9 0.9 0.9 1</ambient>
+            <diffuse>0.9 0.9 0.9 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Camera framing similar to the 2015 internship demo screenshot -->
+    <model name="release_camera">
+      <static>true</static>
+      <pose>0.8 -2.2 1.15 0 0.22 1.57</pose>
+      <link name="link">
+        <sensor name="camera" type="camera">
+          <camera>
+            <horizontal_fov>1.0</horizontal_fov>
+            <image>
+              <width>1280</width>
+              <height>720</height>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>false</visualize>
+          <topic>release_camera</topic>
+          <plugin filename="gz-sim-camera-video-recorder-system"
+                  name="gz::sim::systems::CameraVideoRecorder">
+            <service>camera/record_video</service>
+            <use_sim_time>true</use_sim_time>
+          </plugin>
+        </sensor>
+      </link>
+    </model>
+  </world>
+</sdf>

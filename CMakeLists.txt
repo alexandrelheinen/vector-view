@@ -172,5 +172,7 @@ endif()
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/models/
   DESTINATION ${INSTALL_DATADIR}/models)
-install(FILES ${PROJECT_SOURCE_DIR}/worlds/robot.world
+install(FILES
+  ${PROJECT_SOURCE_DIR}/worlds/robot.world
+  ${PROJECT_SOURCE_DIR}/worlds/release_demo.world
   DESTINATION ${INSTALL_DATADIR}/worlds)
