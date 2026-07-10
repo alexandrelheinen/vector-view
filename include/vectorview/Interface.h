@@ -1,9 +1,7 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
-#define NOISE_THRESHOLD 1E-6
-#define RATE 25
-#define TIME_MAX 120
+#include "vectorview/Constants.h"
 
 // Qt includes
 #include <QtGui>
@@ -20,9 +18,7 @@
 #include <boost/thread/mutex.hpp>
 // local includes
 #include "qcustomplot.h"
-#include "DspFilters/Dsp.h"
-#include "DspFilters/Filter.h"
-#include "DspFilters/ForceFilter.h"
+#include "vectorview/ForceFilter.h"
 
 using namespace gazebo;
 
