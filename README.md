@@ -74,10 +74,16 @@ sudo make install
 Pure logic tests run without Gazebo or Qt:
 
 ```bash
-cd build
+mkdir build && cd build
 cmake .. -DBUILD_TESTS=ON
 make
 ctest --output-on-failure
+```
+
+When Gazebo or Qt4 are not installed, CMake automatically disables `BUILD_VECTORVIEW` and `BUILD_VECTORGUI` and builds the test targets only. To skip the plugin/GUI explicitly:
+
+```bash
+cmake .. -DBUILD_TESTS=ON -DBUILD_VECTORVIEW=OFF -DBUILD_VECTORGUI=OFF
 ```
 
 ## Useful environmental variables ##

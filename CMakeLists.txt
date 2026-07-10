@@ -1,18 +1,15 @@
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.10)
+project(vectorview LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PROJECTNAME vectorview)
 set(GUINAME vectorGUI)
-project(${PROJECTNAME})
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
-
-include(FindPkgConfig)
-find_package(PkgConfig REQUIRED)
-
-option(BUILD_VECTORGUI "Enables VectorGUI interface installation" TRUE)
-option(BUILD_VECTORVIEW "Either VectorView Visual Plugin is built or not" TRUE)
-option(BUILD_TESTS "Build unit tests" TRUE)
+option(BUILD_VECTORGUI "Build the Qt VectorGUI application" ON)
+option(BUILD_VECTORVIEW "Build the Gazebo VectorView visual plugin" ON)
+option(BUILD_TESTS "Build unit tests" ON)
 
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(DSPFILTERS_INCLUDE ${PROJECT_SOURCE_DIR}/third_party/dspfilters/include)
@@ -38,58 +35,70 @@ set(dspfilters_sources
   third_party/dspfilters/src/State.cpp
 )
 
-set(forcefilter_sources
-  src/filters/ForceFilter.cpp
-)
-
-set(common_sources
-  src/common/ContactUtils.cpp
-)
-
-set(plugin_sources
-  src/plugin/VectorView.cpp
-)
-
+set(forcefilter_sources src/filters/ForceFilter.cpp)
+set(common_sources src/common/ContactUtils.cpp)
+set(plugin_sources src/plugin/VectorView.cpp)
 set(gui_sources
   src/gui/VectorGUI.cpp
   src/gui/Interface.cpp
   third_party/qcustomplot/qcustomplot.cpp
 )
 
-if(PKG_CONFIG_FOUND)
-  pkg_check_modules(GAZEBO gazebo)
-  pkg_check_modules(OGRE OGRE)
-  pkg_check_modules(OGRE-Terrain OGRE-Terrain)
+# Optional dependencies for plugin/GUI targets only.
+if(BUILD_VECTORGUI)
+  find_package(Qt4 QUIET QtGui QtXml QtCore)
+  if(NOT Qt4_FOUND)
+    message(WARNING
+      "Qt4 not found — disabling BUILD_VECTORGUI. "
+      "Install Qt4 or pass -DBUILD_VECTORGUI=OFF for a tests-only build.")
+    set(BUILD_VECTORGUI OFF CACHE BOOL "Build the Qt VectorGUI application" FORCE)
+  endif()
 endif()
 
-include(FindProtobuf)
-find_package(Protobuf REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system filesystem)
+if(BUILD_VECTORVIEW OR BUILD_VECTORGUI)
+  find_package(PkgConfig REQUIRED)
+  pkg_check_modules(GAZEBO QUIET gazebo)
+  pkg_check_modules(OGRE QUIET OGRE)
+  pkg_check_modules(OGRE-Terrain QUIET OGRE-Terrain)
 
-foreach(fileName ${GAZEBO_INCLUDE_DIRS})
-  list(APPEND GAZEBO_ROOT_DIRS ${fileName}/gazebo)
-endforeach(fileName)
+  if(NOT GAZEBO_FOUND)
+    message(WARNING
+      "Gazebo not found — disabling BUILD_VECTORVIEW and BUILD_VECTORGUI. "
+      "Install Gazebo or pass -DBUILD_VECTORVIEW=OFF -DBUILD_VECTORGUI=OFF "
+      "for a tests-only build.")
+    set(BUILD_VECTORVIEW OFF CACHE BOOL "Build the Gazebo VectorView visual plugin" FORCE)
+    set(BUILD_VECTORGUI OFF CACHE BOOL "Build the Qt VectorGUI application" FORCE)
+  endif()
+endif()
 
-include_directories(
-  ${GAZEBO_INCLUDE_DIRS}
-  ${GAZEBO_ROOT_DIRS}
-  ${OGRE_INCLUDE_DIRS}
-  ${OGRE-Terrain_INCLUDE_DIRS}
-  ${PROTOBUF_INCLUDE_DIR}
-  ${Boost_INCLUDE_DIRS}
-  ${INCLUDE_DIR}
-  ${DSPFILTERS_INCLUDE}
-  ${QCUSTOMPLOT_INCLUDE})
+if(BUILD_VECTORVIEW OR BUILD_VECTORGUI)
+  include(FindProtobuf)
+  find_package(Protobuf REQUIRED)
+  find_package(Boost REQUIRED COMPONENTS system filesystem)
 
-link_directories(
-  ${GAZEBO_LIBRARY_DIRS}
-  ${OGRE_LIBRARY_DIRS}
-  ${Boost_LIBRARY_DIRS})
+  foreach(fileName ${GAZEBO_INCLUDE_DIRS})
+    list(APPEND GAZEBO_ROOT_DIRS ${fileName}/gazebo)
+  endforeach()
 
-list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
+  include_directories(
+    ${GAZEBO_INCLUDE_DIRS}
+    ${GAZEBO_ROOT_DIRS}
+    ${OGRE_INCLUDE_DIRS}
+    ${OGRE-Terrain_INCLUDE_DIRS}
+    ${PROTOBUF_INCLUDE_DIR}
+    ${Boost_INCLUDE_DIRS})
+
+  link_directories(
+    ${GAZEBO_LIBRARY_DIRS}
+    ${OGRE_LIBRARY_DIRS}
+    ${Boost_LIBRARY_DIRS})
+
+  list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
+endif()
 
 if(BUILD_VECTORGUI)
-  find_package(Qt4 REQUIRED QtGui QtXml QtCore)
+  set(CMAKE_INCLUDE_CURRENT_DIR ON)
+  set(CMAKE_AUTOMOC ON)
   include(${QT_USE_FILE})
   add_definitions(${QT_DEFINITIONS})
   include_directories(${QT_INCLUDE_DIRS})
@@ -97,6 +106,11 @@ if(BUILD_VECTORGUI)
 endif()
 
 if(BUILD_VECTORVIEW OR BUILD_VECTORGUI OR BUILD_TESTS)
+  include_directories(
+    ${INCLUDE_DIR}
+    ${DSPFILTERS_INCLUDE}
+    ${QCUSTOMPLOT_INCLUDE})
+
   add_library(vectorview_common STATIC ${common_sources})
   add_library(dspfilters SHARED ${dspfilters_sources})
   add_library(vectorview_filters SHARED ${forcefilter_sources})
@@ -130,6 +144,12 @@ endif()
 
 if(BUILD_TESTS)
   add_subdirectory(tests)
+endif()
+
+if(NOT BUILD_VECTORVIEW AND NOT BUILD_VECTORGUI AND NOT BUILD_TESTS)
+  message(FATAL_ERROR
+    "Nothing to build. Enable at least one of: "
+    "BUILD_VECTORVIEW, BUILD_VECTORGUI, BUILD_TESTS.")
 endif()
 
 set(INSTALL_LIBDIR lib)
