@@ -6,16 +6,9 @@
       <pose>0.0 0 1.0 0 0 3.14</pose>
     </include>
 
-    <joint name="fixed to ground" type="revolute">
+    <joint name="fixed to ground" type="fixed">
       <parent>world</parent>
       <child>iCub::root_link</child>
-       <axis>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-        </limit>
-        <xyz>0 0 1</xyz>
-        </axis>
     </joint>
 
   </model>
