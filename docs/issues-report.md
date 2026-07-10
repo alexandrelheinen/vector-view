@@ -1,4 +1,4 @@
-# Issues Report — VectorView & VectorGUI (v1.0.0)
+# Issues Report: Vector View and Vector GUI (v1.0.0)
 
 > **Purpose:** A complete technical audit of all defects, anti-patterns, and risks identified in the v1.0.0 codebase.  
 > Issues are grouped by category and assigned a severity: 🔴 **Critical** | 🟠 **High** | 🟡 **Medium** | 🔵 **Low / Style**.

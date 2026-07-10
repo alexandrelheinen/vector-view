@@ -1,10 +1,10 @@
-# VectorView
+# Vector View
 
-Visualize iCub contact forces in **Gazebo Sim (Harmonic)** on Ubuntu 24.04 Noble. This repository contains two programs that work together:
+Visualize iCub contact forces in **Gazebo Sim (Harmonic)** on Ubuntu 24.04 Noble. This repository contains two subprojects that work together:
 
-| Component | Binary | Role |
-|-----------|--------|------|
-| **VectorView** | `libvector-view.so` | Gazebo Sim system plugin that draws a force arrow via marker messages |
+| Subproject | Binary | Role |
+|------------|--------|------|
+| **Vector View** | `libvector-view.so` | Gazebo Sim system plugin that draws a force arrow via marker messages |
 | **Vector GUI** | `vector-gui` | Qt6 desktop app that displays contact data, plots force magnitude, and spawns models |
 
 Both read from Gazebo transport contact topics. The plugin renders in the 3D view; the GUI provides a separate analysis window.
@@ -16,16 +16,16 @@ Bundled assets:
 
 ## A little bit of history
 
-VectorView began in the summer of **2015**, during a second-year engineering internship (*stage de fin de 2A*) at [ISIR](https://www.isir.upmc.fr/) — the Institut des Systèmes Intelligents et de Robotique (Sorbonne Université / CNRS). The work took place in the **SYROCO** team (complex robotic systems) on the CentraleSupélec campus at **Gif-sur-Yvette**, within the broader [CoDyCo](https://www.codyco.eu/) research effort on whole-body contact control for the [iCub](https://icub.iit.it/) humanoid.
+Vector View began in the summer of **2015**, during a second-year engineering internship (*stage de fin de 2A*) at [ISIR](https://www.isir.upmc.fr/): the Institut des Systèmes Intelligents et de Robotique (Sorbonne Université / CNRS). The work took place in the **SYROCO** team (complex robotic systems) on the CentraleSupélec campus at **Gif-sur-Yvette**, within the broader [CoDyCo](https://www.codyco.eu/) research effort on whole-body contact control for the [iCub](https://icub.iit.it/) humanoid.
 
-The goal was straightforward: make **contact forces visible in real time** in **Gazebo**, so researchers could see what the robot's hands—and the control stack—were doing during simulated interaction, instead of digging through log files. Two tools came out of that work:
+The goal was straightforward: make **contact forces visible in real time** in **Gazebo**, so researchers could see what the robot's hands and the control stack were doing during simulated interaction, instead of digging through log files. Two tools came out of that work:
 
-- **VectorView** — a Gazebo plugin that draws a live force arrow on each instrumented link
-- **VectorGUI** — a desktop app that plots force magnitude and spawns test objects into the running world
+- **Vector View**: a Gazebo plugin that draws a live force arrow on each instrumented link
+- **Vector GUI**: a desktop app that plots force magnitude and spawns test objects into the running world
 
 The work is described in a French internship report from October 2015. That document is not distributed with this repository.
 
-The code from that summer shows it. Raw pointers, `using namespace` in headers, CMake 2.8, and architecture decisions best summarized as *"it compiled on my machine in 2015."* Eventually I could not open the tree without wincing—which is why [`docs/issues-report.md`](docs/issues-report.md) exists.
+The code from that summer shows it. Raw pointers, `using namespace` in headers, CMake 2.8, and architecture decisions best summarized as *"it compiled on my machine in 2015."* Eventually I could not open the tree without wincing; which is why [`docs/issues-report.md`](docs/issues-report.md) exists.
 
 In **2026**, the project is being brought up to date for **Ubuntu 24.04 Noble**: **Gazebo Harmonic** instead of Classic, **Qt 6** instead of Qt4, and **C++17** throughout. Same research idea; a stack you can actually install today.
 
@@ -55,7 +55,7 @@ Each contact sensor publishes on an explicit topic (recommended) or on the Harmo
 
 Example: link `l_hand` on model instance `iCub_fixed` uses `/vectorview/iCub_fixed/l_hand`.
 
-The VectorView system plugin is attached at the **model** level (not on a visual). Topic names are resolved from the link name. See [Topic paths](#topic-paths) below.
+The Vector View system plugin is attached at the **model** level (not on a visual). Topic names are resolved from the link name. See [Topic paths](#topic-paths) below.
 
 ## Repository layout
 
@@ -135,8 +135,8 @@ CMake options (all enabled by default):
 
 | Option | Default | Purpose |
 |--------|---------|---------|
-| `BUILD_VECTORVIEW` | ON | Build the Gazebo Sim system plugin |
-| `BUILD_VECTORGUI` | ON | Build the Qt6 application |
+| `BUILD_VECTORVIEW` | ON | Build the Vector View Gazebo Sim system plugin |
+| `BUILD_VECTORGUI` | ON | Build the Vector GUI Qt6 application |
 | `BUILD_TESTS` | ON | Build unit tests |
 
 If Gazebo Harmonic or Qt6 is not found, CMake disables the plugin and GUI targets automatically and prints a warning. Tests still build.
@@ -205,7 +205,7 @@ The script:
 
 1. Sources `.env` when present
 2. Exports Gazebo Sim paths
-3. Opens YARP, `gz sim`, two VectorGUI instances, and (if configured) the ISIR controller in separate terminal tabs
+3. Opens YARP, `gz sim`, two Vector GUI instances, and (if configured) the ISIR controller in separate terminal tabs
 
 If `CODYCO_SUPERBUILD_ROOT` is unset, the controller step is skipped.
 
@@ -230,7 +230,7 @@ Requires the full iCub stack from [Run the full iCub demo](#run-the-full-icub-de
 vector-gui l_hand
 ```
 
-### VectorGUI usage
+### Vector GUI usage
 
 ```bash
 # Short link name (builds the topic from default model context)
@@ -282,14 +282,14 @@ Code under `external/` is excluded.
 
 ### CMake targets
 
-| Target | Output |
-|--------|--------|
-| `vectorview` | `libvector-view.so` (Gazebo Sim system plugin) |
-| `vector-gui` | Qt6 executable |
-| `vectorview_common` | Static library (shared utilities) |
-| `vectorview_filters` | Shared library (force filter) |
-| `dspfilters` | Vendored DSP library |
-| `test_contact_utils`, `test_force_filter` | Unit test executables |
+| Target | Output | Subproject |
+|--------|--------|------------|
+| `vectorview` | `libvector-view.so` | Vector View (Gazebo Sim system plugin) |
+| `vector-gui` | Qt6 executable | Vector GUI |
+| `vectorview_common` | Static library | Shared utilities |
+| `vectorview_filters` | Shared library | Force filter |
+| `dspfilters` | Vendored DSP library | External dependency |
+| `test_contact_utils`, `test_force_filter` | Unit test executables | Tests |
 
 ## Migration from Gazebo Classic
 

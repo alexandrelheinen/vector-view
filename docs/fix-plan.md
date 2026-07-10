@@ -1,4 +1,4 @@
-# Fix Plan — VectorView & VectorGUI
+# Fix Plan: Vector View and Vector GUI
 
 > **Basis:** All issues in this plan are catalogued in [`docs/issues-report.md`](issues-report.md).  
 > Issues are referenced as `§N.M`.  
