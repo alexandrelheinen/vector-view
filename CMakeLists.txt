@@ -118,6 +118,7 @@ endif()
 if(BUILD_VECTORGUI)
   set(CMAKE_AUTOMOC ON)
   add_executable(${GUINAME} ${gui_sources})
+  set_target_properties(${GUINAME} PROPERTIES OUTPUT_NAME "vector-gui")
   target_include_directories(${GUINAME}
     PRIVATE
       ${INCLUDE_DIR}
