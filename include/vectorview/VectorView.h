@@ -7,6 +7,7 @@
 #include <gz/math/Pose3.hh>
 #include <gz/math/Vector3.hh>
 #include <gz/msgs/contacts.pb.h>
+#include <gz/msgs/empty.pb.h>
 #include <gz/msgs/marker.pb.h>
 #include <gz/sim/System.hh>
 #include <gz/transport/Node.hh>
@@ -14,6 +15,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <vector>
 
 namespace vectorview {
 
@@ -40,10 +42,10 @@ class VectorView : public gz::sim::System,
   gz::sim::Entity modelEntity{gz::sim::kNullEntity};
   gz::sim::Entity linkEntity{gz::sim::kNullEntity};
   gz::transport::Node node;
-  gz::transport::Node::Publisher markerPub;
   gz::math::Pose3d linkWorldPose;
   std::string contactTopic;
   std::string collisionScope;
+  std::vector<std::string> markerServices;
   std::string markerNamespace;
   int markerId{0};
   std::unique_ptr<ForceFilter> filter;

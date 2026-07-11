@@ -59,7 +59,15 @@ void VectorView::Configure(const gz::sim::Entity& entity,
   this->markerNamespace = "vectorview/" + link_name;
   this->markerId = static_cast<int>(std::hash<std::string>{}(this->markerNamespace) % 100000);
 
-  this->markerPub = this->node.Advertise<gz::msgs::Marker>("/marker");
+  if (sdf->HasElement("marker_service")) {
+    this->markerServices.push_back(sdf->Get<std::string>("marker_service"));
+  } else {
+    // Headless camera recording uses the sensors render scene; interactive GUI
+    // mode uses the main scene. Try both so arrows appear in either workflow.
+    this->markerServices.push_back("/sensors/marker");
+    this->markerServices.push_back("/marker");
+  }
+
   this->node.Subscribe(this->contactTopic,
                        &VectorView::OnContacts, this);
 
@@ -106,7 +114,12 @@ void VectorView::PublishArrow(const gz::math::Vector3d& force) {
   const gz::math::Vector3d begin = gz::math::Vector3d::Zero;
   const gz::math::Vector3d local_force =
       this->linkWorldPose.Rot().RotateVectorReverse(force);
-  const gz::math::Vector3d end = begin + FORCE_SCALE * local_force;
+  gz::math::Vector3d shaft = FORCE_SCALE * local_force;
+  const double shaft_length = shaft.Length();
+  if (shaft_length > MAX_ARROW_LENGTH && shaft_length > 0.0) {
+    shaft = shaft / shaft_length * MAX_ARROW_LENGTH;
+  }
+  const gz::math::Vector3d end = begin + shaft;
 
   const auto to_world = [this](const gz::math::Vector3d& local_point) {
     return this->linkWorldPose.Pos() + this->linkWorldPose.Rot().RotateVector(local_point);
@@ -140,7 +153,13 @@ void VectorView::PublishArrow(const gz::math::Vector3d& force) {
   set_point(to_world(end));
   set_point(to_world(ArrowPoint(begin, end, -1.0)));
 
-  this->markerPub.Publish(marker);
+  gz::msgs::Empty response;
+  bool result = false;
+  for (const std::string& service : this->markerServices) {
+    if (this->node.Request(service, marker, 100, response, result) && result) {
+      return;
+    }
+  }
 }
 
 }  // namespace vectorview
