@@ -53,15 +53,20 @@ animate_pose() {
 
 hold_pose() {
   local duration="$1"
-  shift
+  local interval="${2:-0.1}"
+  shift 2
   local -a specs=("$@")
   local spec topic value
+  local elapsed=0
 
-  for spec in "${specs[@]}"; do
-    IFS=',' read -r topic value <<<"$spec"
-    publish_joint "$topic" "$value"
+  while awk -v e="$elapsed" -v d="$duration" 'BEGIN { exit !(e < d) }'; do
+    for spec in "${specs[@]}"; do
+      IFS=',' read -r topic value <<<"$spec"
+      publish_joint "$topic" "$value"
+    done
+    sleep "$interval"
+    elapsed="$(awk -v e="$elapsed" -v i="$interval" 'BEGIN { printf "%.4f", e + i }')"
   done
-  sleep "$duration"
 }
 
 # 2015 default arm configuration from icub.sdf initialConfiguration
@@ -75,14 +80,14 @@ WYAW=0.698
 
 # Reach and press targets from the original CoDyCo StageTestTasks grasp sequence.
 REACH_SP=-0.95
-REACH_SR=1.30
+REACH_SR=1.35
 REACH_EL=1.35
 REACH_WY=-0.55
 
-PRESS_SP=-1.38
-PRESS_SR=1.35
-PRESS_EL=0.48
-PRESS_WY=-0.30
+PRESS_SP=-1.25
+PRESS_SR=1.45
+PRESS_EL=0.55
+PRESS_WY=-0.35
 
 echo "Grasp demo: hold standing pose"
 sleep 1.0
@@ -108,10 +113,12 @@ echo "Grasp demo: press the box (contact arrows appear)"
 animate_pose 2.5 \
   "/grasp_demo/l_shoulder_pitch,${REACH_SP},${PRESS_SP}" \
   "/grasp_demo/l_shoulder_roll,${REACH_SR},${PRESS_SR}" \
+  "/grasp_demo/l_shoulder_yaw,${SY},0.12" \
   "/grasp_demo/l_elbow,${REACH_EL},${PRESS_EL}" \
   "/grasp_demo/l_wrist_pitch,${REACH_WY},${PRESS_WY}" \
   "/grasp_demo/r_shoulder_pitch,${REACH_SP},${PRESS_SP}" \
   "/grasp_demo/r_shoulder_roll,${REACH_SR},${PRESS_SR}" \
+  "/grasp_demo/r_shoulder_yaw,${SY},-0.12" \
   "/grasp_demo/r_elbow,${REACH_EL},${PRESS_EL}" \
   "/grasp_demo/r_wrist_pitch,${REACH_WY},${PRESS_WY}"
 
@@ -119,10 +126,12 @@ echo "Grasp demo: hold contact (force arrows visible)"
 hold_pose 5.0 \
   "/grasp_demo/l_shoulder_pitch,${PRESS_SP}" \
   "/grasp_demo/l_shoulder_roll,${PRESS_SR}" \
+  "/grasp_demo/l_shoulder_yaw,0.12" \
   "/grasp_demo/l_elbow,${PRESS_EL}" \
   "/grasp_demo/l_wrist_pitch,${PRESS_WY}" \
   "/grasp_demo/r_shoulder_pitch,${PRESS_SP}" \
   "/grasp_demo/r_shoulder_roll,${PRESS_SR}" \
+  "/grasp_demo/r_shoulder_yaw,-0.12" \
   "/grasp_demo/r_elbow,${PRESS_EL}" \
   "/grasp_demo/r_wrist_pitch,${PRESS_WY}"
 

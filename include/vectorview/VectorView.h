@@ -21,6 +21,7 @@ namespace vectorview {
 
 class VectorView : public gz::sim::System,
                    public gz::sim::ISystemConfigure,
+                   public gz::sim::ISystemPreUpdate,
                    public gz::sim::ISystemPostUpdate {
  public:
   VectorView();
@@ -30,17 +31,25 @@ class VectorView : public gz::sim::System,
                  gz::sim::EntityComponentManager& ecm,
                  gz::sim::EventManager& eventMgr) override;
 
+  void PreUpdate(const gz::sim::UpdateInfo& info,
+                 gz::sim::EntityComponentManager& ecm) override;
+
   void PostUpdate(const gz::sim::UpdateInfo& info,
                   const gz::sim::EntityComponentManager& ecm) override;
 
  private:
   void OnContacts(const gz::msgs::Contacts& message);
   void PublishArrow(const gz::math::Vector3d& force);
+  void UpdateArrowVisuals(gz::sim::EntityComponentManager& ecm,
+                          const gz::math::Vector3d& force) const;
+  void HideArrowVisuals(gz::sim::EntityComponentManager& ecm) const;
   gz::math::Vector3d ArrowPoint(const gz::math::Vector3d& begin, const gz::math::Vector3d& end,
                                 double yaw_sign) const;
 
   gz::sim::Entity modelEntity{gz::sim::kNullEntity};
   gz::sim::Entity linkEntity{gz::sim::kNullEntity};
+  gz::sim::Entity arrowShaftEntity{gz::sim::kNullEntity};
+  gz::sim::Entity arrowHeadEntity{gz::sim::kNullEntity};
   gz::transport::Node node;
   gz::math::Pose3d linkWorldPose;
   std::string contactTopic;
@@ -50,6 +59,8 @@ class VectorView : public gz::sim::System,
   int markerId{0};
   std::unique_ptr<ForceFilter> filter;
   std::mutex mutex;
+  gz::math::Vector3d lastForce{gz::math::Vector3d::Zero};
+  bool hasForce{false};
 };
 
 }  // namespace vectorview
