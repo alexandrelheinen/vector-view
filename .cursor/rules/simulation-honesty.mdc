@@ -1,0 +1,50 @@
+---
+name: simulation-honesty
+description: Never fake simulation behavior with overlays or post-processed assets
+globs: []
+alwaysApply: true
+---
+
+# Simulation honesty
+
+Vector View exists to make **real** contact forces visible in Gazebo. Do not substitute appearance for behavior.
+
+## Non-negotiable
+
+When the user asks to **solve** a simulation, rendering, or demo problem:
+
+1. **Fix the root cause** in the simulation, plugin, world, or capture pipeline, **or**
+2. **Say clearly that you cannot solve it yet**, what blocks you, and what would be required.
+
+Do **not** pretend the problem is solved.
+
+## Forbidden: fake assets and post-processing tricks
+
+Never add or keep anything whose purpose is to make a broken demo **look** working:
+
+- Post-processed overlays on captured frames (e.g. painting arrows onto PNG/MP4 after the fact)
+- Composited or edited comparison images that add visuals not produced by the sim
+- Static/decorative geometry that is not driven by real sensor or physics data, presented as force feedback
+- Scripts that fake contact, forces, plots, or markers when the underlying topics or physics are empty
+- Committing generated demo assets without verifying they came from the actual pipeline
+
+If an arrow, plot, or screenshot is meant to represent contact forces, it must come from **Vector View, the contact sensors, or the real render path** — not from image editing.
+
+## Allowed (and expected)
+
+- Real plugin behavior: markers, link-attached geometry, filters — all driven by contact messages
+- Capture scripts that **record** what the sim produced (`save_camera_frame.py`, video recorder, plot recorder)
+- Clearly labeled placeholders (e.g. "capture pending — headless markers not supported") when work is incomplete
+- Documented limitations and follow-up tasks when Harmonic/Gazebo cannot do something yet
+
+## When capture cannot show what the GUI shows
+
+Do not overlay. Instead:
+
+1. State the limitation (e.g. headless camera does not render marker services)
+2. Implement a **sim-side** fix if possible (e.g. geometry on the link, scene graph update)
+3. Or ship an honest partial result and document what is missing
+
+## Consequences in this project
+
+Fake assets corrupt trust in demos, docs, and regression images. Treat "looks correct in the screenshot" without correct physics or data as **a failed task**, not a workaround.

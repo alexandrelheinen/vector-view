@@ -72,8 +72,11 @@ scripts/                Demo launcher and format helper
 tests/                  Unit tests (no Gazebo required)
 .env.example            Environment variable template
 docs/                   Project documentation and screenshots
+docs/simulation-honesty.md  Required: no fake demo assets or post-processed overlays
 docs/estimate.md        Modernization effort estimate vs. actual time
 ```
+
+See also [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Requirements
 
