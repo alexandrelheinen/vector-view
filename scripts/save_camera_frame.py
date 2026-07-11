@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import time
 from pathlib import Path
 
@@ -49,6 +50,8 @@ def main() -> None:
 
     img.save(output)
     print(f"saved {output} ({frame.width}x{frame.height})")
+    # Avoid transport teardown races when gz sim is stopped concurrently.
+    os._exit(0)
 
 
 if __name__ == "__main__":
