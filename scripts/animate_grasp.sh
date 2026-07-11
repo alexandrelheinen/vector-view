@@ -9,7 +9,7 @@ set -euo pipefail
 publish_joint() {
   local topic="$1"
   local value="$2"
-  gz topic -t "$topic" -m gz.msgs.Double -p "data: ${value}" >/dev/null
+  timeout 2 gz topic -t "$topic" -m gz.msgs.Double -p "data: ${value}" >/dev/null 2>&1 || true
 }
 
 lerp() {
@@ -53,20 +53,15 @@ animate_pose() {
 
 hold_pose() {
   local duration="$1"
-  local interval="${2:-0.1}"
-  shift 2
+  shift
   local -a specs=("$@")
   local spec topic value
-  local elapsed=0
 
-  while awk -v e="$elapsed" -v d="$duration" 'BEGIN { exit !(e < d) }'; do
-    for spec in "${specs[@]}"; do
-      IFS=',' read -r topic value <<<"$spec"
-      publish_joint "$topic" "$value"
-    done
-    sleep "$interval"
-    elapsed="$(awk -v e="$elapsed" -v i="$interval" 'BEGIN { printf "%.4f", e + i }')"
+  for spec in "${specs[@]}"; do
+    IFS=',' read -r topic value <<<"$spec"
+    publish_joint "$topic" "$value"
   done
+  sleep "$duration"
 }
 
 # 2015 default arm configuration from icub.sdf initialConfiguration
@@ -121,7 +116,7 @@ animate_pose 2.5 \
   "/grasp_demo/r_wrist_pitch,${REACH_WY},${PRESS_WY}"
 
 echo "Grasp demo: hold contact (force arrows visible)"
-hold_pose 5.0 0.1 \
+hold_pose 5.0 \
   "/grasp_demo/l_shoulder_pitch,${PRESS_SP}" \
   "/grasp_demo/l_shoulder_roll,${PRESS_SR}" \
   "/grasp_demo/l_elbow,${PRESS_EL}" \
