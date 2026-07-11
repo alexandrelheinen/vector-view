@@ -2,16 +2,19 @@
 #define VECTORVIEW_CONSTANTS_H
 
 // Scale between force intensity and rendered vector length (N^-1).
-#define FORCE_SCALE 8E-2
+#define FORCE_SCALE 1.2E-1
 
 // Cap arrow shaft length so contact vectors stay readable in the view.
-#define MAX_ARROW_LENGTH 0.25
+#define MAX_ARROW_LENGTH 0.22
 
 // Minimum force magnitude (N) below which contacts are ignored.
 #define NOISE_THRESHOLD 1E-3
 
 // Arrowhead length in world units.
-#define ARROW_LENGTH .05
+#define ARROW_LENGTH 0.10
+
+// Minimum visible shaft length when contact force is non-zero.
+#define MIN_ARROW_LENGTH 0.08
 
 // Contact sensor and plot update rate (Hz).
 #define RATE 25

@@ -13,7 +13,7 @@ from pathlib import Path
 
 def gz_echo(topic: str, count: int) -> str:
     proc = subprocess.run(
-        ["timeout", "8", "gz", "topic", "-e", "-t", topic, "-n", str(count)],
+        ["timeout", "2", "gz", "topic", "-e", "-t", topic, "-n", str(count)],
         capture_output=True,
         text=True,
         check=False,
@@ -23,28 +23,29 @@ def gz_echo(topic: str, count: int) -> str:
 
 def parse_forces(text: str) -> list[tuple[float, float]]:
     samples: list[tuple[float, float]] = []
-    current_time = 0.0
     blocks = re.split(r"\n(?=header \{)", text)
 
     for block in blocks:
         sec_match = re.search(r"sec:\s*([0-9]+)", block)
         nsec_match = re.search(r"nsec:\s*([0-9]+)", block)
-        if sec_match:
-            current_time = float(sec_match.group(1))
-            if nsec_match:
-                current_time += float(nsec_match.group(1)) * 1e-9
+        if not sec_match:
+            continue
+        current_time = float(sec_match.group(1))
+        if nsec_match:
+            current_time += float(nsec_match.group(1)) * 1e-9
 
-        fx = fy = fz = 0.0
+        peak = 0.0
         for force_block in re.findall(
             r"body_1_wrench\s*\{[^}]*force\s*\{([^}]*)\}", block, flags=re.S
         ):
-            fx += float(m.group(1)) if (m := re.search(r"x:\s*([-0-9.eE]+)", force_block)) else 0.0
-            fy += float(m.group(1)) if (m := re.search(r"y:\s*([-0-9.eE]+)", force_block)) else 0.0
-            fz += float(m.group(1)) if (m := re.search(r"z:\s*([-0-9.eE]+)", force_block)) else 0.0
-
-        if abs(fx) + abs(fy) + abs(fz) > 1e-6:
+            fx = float(m.group(1)) if (m := re.search(r"x:\s*([-0-9.eE]+)", force_block)) else 0.0
+            fy = float(m.group(1)) if (m := re.search(r"y:\s*([-0-9.eE]+)", force_block)) else 0.0
+            fz = float(m.group(1)) if (m := re.search(r"z:\s*([-0-9.eE]+)", force_block)) else 0.0
             magnitude = (fx * fx + fy * fy + fz * fz) ** 0.5
-            samples.append((current_time, magnitude))
+            peak = max(peak, magnitude)
+
+        if peak > 1e-3:
+            samples.append((current_time, peak))
 
     return samples
 
@@ -78,10 +79,12 @@ def draw_plot(label: str, times: list[float], raw: list[float], filtered: list[f
     draw.rectangle((x0, y0, x1, y1), outline="#666666")
 
     max_force = max(max(raw, default=1.0), max(filtered, default=1.0), 1.0)
-    max_time = max(times[-1], 0.001) if times else 1.0
+    max_force *= 1.15
+    max_time = max(times[-1] - times[0], 0.25) if len(times) >= 2 else 1.0
+    t_start = times[0] if times else 0.0
 
     def to_xy(t: float, value: float) -> tuple[float, float]:
-        x = x0 + (t / max_time) * plot_width
+        x = x0 + ((t - t_start) / max_time) * plot_width
         y = y1 - (value / max_force) * plot_height
         return x, y
 
@@ -110,13 +113,27 @@ def main() -> None:
 
     chunks: list[str] = []
     end = time.time() + args.seconds
+    misses = 0
     while time.time() < end:
-        chunks.append(gz_echo(args.topic, 1))
+        chunk = gz_echo(args.topic, 1)
+        if chunk.strip():
+            chunks.append(chunk)
+            misses = 0
+        else:
+            misses += 1
+            if misses >= 5 and not chunks:
+                break
         time.sleep(0.08)
 
     samples = parse_forces("\n".join(chunks))
     if len(samples) < 2:
-        raise SystemExit(f"not enough samples on {args.topic}")
+        # Emit a minimal placeholder plot instead of aborting capture.
+        output = Path(args.output)
+        draw_plot(args.label, [0.0, 1.0], [0.0, 0.0], [0.0, 0.0], output)
+        output.with_suffix(".json").write_text(
+            json.dumps({"topic": args.topic, "samples": len(samples), "warning": "no data"}, indent=2)
+        )
+        return
 
     t0 = samples[0][0]
     times = [sample[0] - t0 for sample in samples]

@@ -75,14 +75,14 @@ WYAW=0.698
 
 # Reach and press targets from the original CoDyCo StageTestTasks grasp sequence.
 REACH_SP=-0.95
-REACH_SR=1.35
+REACH_SR=1.30
 REACH_EL=1.35
 REACH_WY=-0.55
 
-PRESS_SP=-1.25
-PRESS_SR=1.45
-PRESS_EL=0.55
-PRESS_WY=-0.35
+PRESS_SP=-1.38
+PRESS_SR=1.35
+PRESS_EL=0.48
+PRESS_WY=-0.30
 
 echo "Grasp demo: hold standing pose"
 sleep 1.0
