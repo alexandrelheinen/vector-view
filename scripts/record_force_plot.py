@@ -25,6 +25,11 @@ def parse_forces(text: str) -> list[tuple[float, float]]:
     samples: list[tuple[float, float]] = []
     blocks = re.split(r"\n(?=header \{)", text)
 
+    force_pattern = re.compile(
+        r"body_1_wrench\s*\{.*?force\s*\{([^}]*)\}",
+        flags=re.S,
+    )
+
     for block in blocks:
         sec_match = re.search(r"sec:\s*([0-9]+)", block)
         nsec_match = re.search(r"nsec:\s*([0-9]+)", block)
@@ -35,9 +40,7 @@ def parse_forces(text: str) -> list[tuple[float, float]]:
             current_time += float(nsec_match.group(1)) * 1e-9
 
         peak = 0.0
-        for force_block in re.findall(
-            r"body_1_wrench\s*\{[^}]*force\s*\{([^}]*)\}", block, flags=re.S
-        ):
+        for force_block in force_pattern.findall(block):
             fx = float(m.group(1)) if (m := re.search(r"x:\s*([-0-9.eE]+)", force_block)) else 0.0
             fy = float(m.group(1)) if (m := re.search(r"y:\s*([-0-9.eE]+)", force_block)) else 0.0
             fz = float(m.group(1)) if (m := re.search(r"z:\s*([-0-9.eE]+)", force_block)) else 0.0
@@ -135,6 +138,7 @@ def main() -> None:
         )
         return
 
+    samples.sort(key=lambda sample: sample[0])
     t0 = samples[0][0]
     times = [sample[0] - t0 for sample in samples]
     raw = [sample[1] for sample in samples]
