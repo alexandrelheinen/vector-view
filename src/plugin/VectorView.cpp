@@ -63,7 +63,8 @@ void VectorView::Configure(const gz::sim::Entity& entity,
     this->markerServices.push_back(sdf->Get<std::string>("marker_service"));
   } else {
     // Headless camera recording uses the sensors render scene; interactive GUI
-    // mode uses the main scene. Try both so arrows appear in either workflow.
+    // mode uses the main scene. Camera-specific markers target release_camera.
+    this->markerServices.push_back("/release_camera/marker");
     this->markerServices.push_back("/sensors/marker");
     this->markerServices.push_back("/marker");
   }
@@ -118,6 +119,8 @@ void VectorView::PublishArrow(const gz::math::Vector3d& force) {
   const double shaft_length = shaft.Length();
   if (shaft_length > MAX_ARROW_LENGTH && shaft_length > 0.0) {
     shaft = shaft / shaft_length * MAX_ARROW_LENGTH;
+  } else if (shaft_length > 0.0 && shaft_length < MIN_ARROW_LENGTH) {
+    shaft = shaft / shaft_length * MIN_ARROW_LENGTH;
   }
   const gz::math::Vector3d end = begin + shaft;
 
@@ -130,14 +133,22 @@ void VectorView::PublishArrow(const gz::math::Vector3d& force) {
   marker.set_id(this->markerId);
   marker.set_action(gz::msgs::Marker::ADD_MODIFY);
   marker.set_type(gz::msgs::Marker::LINE_LIST);
-  marker.mutable_material()->mutable_ambient()->set_r(0.0f);
-  marker.mutable_material()->mutable_ambient()->set_g(0.0f);
-  marker.mutable_material()->mutable_ambient()->set_b(1.0f);
+  marker.set_visibility(gz::msgs::Marker::ALL);
+  marker.mutable_scale()->set_x(0.08);
+  marker.mutable_scale()->set_y(0.08);
+  marker.mutable_scale()->set_z(0.08);
+  marker.mutable_material()->mutable_ambient()->set_r(1.0f);
+  marker.mutable_material()->mutable_ambient()->set_g(0.1f);
+  marker.mutable_material()->mutable_ambient()->set_b(0.1f);
   marker.mutable_material()->mutable_ambient()->set_a(1.0f);
-  marker.mutable_material()->mutable_diffuse()->set_r(0.0f);
-  marker.mutable_material()->mutable_diffuse()->set_g(0.0f);
-  marker.mutable_material()->mutable_diffuse()->set_b(1.0f);
+  marker.mutable_material()->mutable_diffuse()->set_r(1.0f);
+  marker.mutable_material()->mutable_diffuse()->set_g(0.15f);
+  marker.mutable_material()->mutable_diffuse()->set_b(0.1f);
   marker.mutable_material()->mutable_diffuse()->set_a(1.0f);
+  marker.mutable_material()->mutable_emissive()->set_r(1.0f);
+  marker.mutable_material()->mutable_emissive()->set_g(0.2f);
+  marker.mutable_material()->mutable_emissive()->set_b(0.1f);
+  marker.mutable_material()->mutable_emissive()->set_a(1.0f);
 
   auto set_point = [&marker](const gz::math::Vector3d& point) {
     gz::msgs::Vector3d* msg_point = marker.add_point();
@@ -156,9 +167,7 @@ void VectorView::PublishArrow(const gz::math::Vector3d& force) {
   gz::msgs::Empty response;
   bool result = false;
   for (const std::string& service : this->markerServices) {
-    if (this->node.Request(service, marker, 100, response, result) && result) {
-      return;
-    }
+    this->node.Request(service, marker, 250, response, result);
   }
 }
 
