@@ -4,16 +4,90 @@
 #include "vectorview/TopicPath.h"
 
 #include <gz/math/Matrix3.hh>
+#include <gz/math/Quaternion.hh>
 #include <gz/plugin/Register.hh>
 #include <gz/sim/Model.hh>
 #include <gz/sim/Util.hh>
 #include <gz/sim/components/Link.hh>
 #include <gz/sim/components/Name.hh>
 #include <gz/sim/components/ParentEntity.hh>
+#include <gz/sim/components/Pose.hh>
+#include <gz/sim/components/Geometry.hh>
+#include <gz/sim/components/Visual.hh>
+
+#include <sdf/Box.hh>
+#include <sdf/Geometry.hh>
 
 #include <iostream>
 
 namespace vectorview {
+
+namespace {
+
+void SetBoxGeometry(gz::sim::EntityComponentManager& ecm, const gz::sim::Entity visual,
+                    double length, double width, double height) {
+  sdf::Geometry geometry;
+  geometry.SetType(sdf::GeometryType::BOX);
+  sdf::Box box;
+  box.SetSize(gz::math::Vector3d(length, width, height));
+  geometry.SetBoxShape(box);
+
+  auto* geometryComp = ecm.Component<gz::sim::components::Geometry>(visual);
+  if (geometryComp != nullptr) {
+    geometryComp->Data() = geometry;
+  } else {
+    ecm.CreateComponent(visual, gz::sim::components::Geometry(geometry));
+  }
+  ecm.SetChanged(visual, gz::sim::components::Geometry::typeId);
+}
+
+gz::sim::Entity FindChildVisual(const gz::sim::EntityComponentManager& ecm,
+                                const gz::sim::Entity parent,
+                                const std::string& name) {
+  const auto matches =
+      ecm.ChildrenByComponents(parent, gz::sim::components::Name(name));
+  for (const gz::sim::Entity child : matches) {
+    if (ecm.EntityHasComponentType(child, gz::sim::components::Visual::typeId)) {
+      return child;
+    }
+  }
+
+  for (const gz::sim::Entity child : ecm.Descendants(parent)) {
+    const auto* childName = ecm.Component<gz::sim::components::Name>(child);
+    if (childName == nullptr || childName->Data() != name) {
+      continue;
+    }
+    if (ecm.EntityHasComponentType(child, gz::sim::components::Visual::typeId)) {
+      return child;
+    }
+  }
+  return gz::sim::kNullEntity;
+}
+
+void SetVisualPose(gz::sim::EntityComponentManager& ecm, const gz::sim::Entity visual,
+                   const gz::math::Pose3d& pose) {
+  auto* poseComp = ecm.Component<gz::sim::components::Pose>(visual);
+  if (poseComp != nullptr) {
+    poseComp->Data() = pose;
+  } else {
+    ecm.CreateComponent(visual, gz::sim::components::Pose(pose));
+  }
+  ecm.SetChanged(visual, gz::sim::components::Pose::typeId);
+}
+
+gz::math::Quaterniond RotationFromXAxis(const gz::math::Vector3d& direction) {
+  const gz::math::Vector3d dir = direction.Normalized();
+  const gz::math::Vector3d axis = gz::math::Vector3d::UnitX.Cross(dir);
+  const double sinAngle = axis.Length();
+  const double cosAngle = gz::math::Vector3d::UnitX.Dot(dir);
+  if (sinAngle < 1e-6) {
+    return cosAngle < 0.0 ? gz::math::Quaterniond(0, 0, 1, 0)
+                          : gz::math::Quaterniond::Identity;
+  }
+  return gz::math::Quaterniond(axis / sinAngle, std::atan2(sinAngle, cosAngle));
+}
+
+}  // namespace
 
 VectorView::VectorView() = default;
 
@@ -49,6 +123,14 @@ void VectorView::Configure(const gz::sim::Entity& entity,
   if (!link_name.empty()) {
     gz::sim::Model model(entity);
     this->linkEntity = model.LinkByName(ecm, link_name);
+    this->arrowShaftEntity =
+        FindChildVisual(ecm, this->linkEntity, "vectorview_arrow_shaft");
+    this->arrowHeadEntity =
+        FindChildVisual(ecm, this->linkEntity, "vectorview_arrow_head");
+    if (this->arrowShaftEntity == gz::sim::kNullEntity) {
+      gzwarn << "[VectorView] Missing vectorview_arrow_shaft visual on link "
+             << link_name << "\n";
+    }
   }
 
   if (this->contactTopic.empty()) {
@@ -62,8 +144,6 @@ void VectorView::Configure(const gz::sim::Entity& entity,
   if (sdf->HasElement("marker_service")) {
     this->markerServices.push_back(sdf->Get<std::string>("marker_service"));
   } else {
-    // Headless camera recording uses the sensors render scene; interactive GUI
-    // mode uses the main scene. Camera-specific markers target release_camera.
     this->markerServices.push_back("/release_camera/marker");
     this->markerServices.push_back("/sensors/marker");
     this->markerServices.push_back("/marker");
@@ -79,14 +159,49 @@ void VectorView::Configure(const gz::sim::Entity& entity,
             << std::endl;
 }
 
-void VectorView::PostUpdate(const gz::sim::UpdateInfo& /*info*/,
-                            const gz::sim::EntityComponentManager& ecm) {
+void VectorView::PreUpdate(const gz::sim::UpdateInfo& /*info*/,
+                           gz::sim::EntityComponentManager& ecm) {
   if (this->linkEntity == gz::sim::kNullEntity) {
     return;
   }
 
-  std::lock_guard<std::mutex> lock(this->mutex);
-  this->linkWorldPose = gz::sim::worldPose(this->linkEntity, ecm);
+  gz::math::Vector3d force;
+  bool show = false;
+  {
+    std::lock_guard<std::mutex> lock(this->mutex);
+    this->linkWorldPose = gz::sim::worldPose(this->linkEntity, ecm);
+    if (this->hasForce) {
+      force = this->lastForce;
+      show = true;
+    }
+  }
+
+  if (show) {
+    this->UpdateArrowVisuals(ecm, force);
+  } else {
+    this->HideArrowVisuals(ecm);
+  }
+}
+
+void VectorView::PostUpdate(const gz::sim::UpdateInfo& /*info*/,
+                            const gz::sim::EntityComponentManager& /*ecm*/) {
+  if (this->linkEntity == gz::sim::kNullEntity) {
+    return;
+  }
+
+  gz::math::Vector3d force;
+  bool publish = false;
+  {
+    std::lock_guard<std::mutex> lock(this->mutex);
+    if (this->hasForce) {
+      force = this->lastForce;
+      publish = true;
+    }
+  }
+
+  if (publish) {
+    this->PublishArrow(force);
+  }
 }
 
 void VectorView::OnContacts(const gz::msgs::Contacts& message) {
@@ -94,12 +209,14 @@ void VectorView::OnContacts(const gz::msgs::Contacts& message) {
   Vec3 aggregated = AggregatePluginForces(contacts, this->collisionScope);
   this->filter->Filter(&aggregated);
 
+  gz::math::Vector3d force(aggregated.x, aggregated.y, aggregated.z);
   if (aggregated.Length() < NOISE_THRESHOLD) {
-    aggregated = Vec3();
+    force = gz::math::Vector3d::Zero;
   }
 
   std::lock_guard<std::mutex> lock(this->mutex);
-  this->PublishArrow(gz::math::Vector3d(aggregated.x, aggregated.y, aggregated.z));
+  this->lastForce = force;
+  this->hasForce = force.Length() >= NOISE_THRESHOLD;
 }
 
 gz::math::Vector3d VectorView::ArrowPoint(const gz::math::Vector3d& begin,
@@ -111,18 +228,50 @@ gz::math::Vector3d VectorView::ArrowPoint(const gz::math::Vector3d& begin,
   return end - ARROW_LENGTH * rotation * direction;
 }
 
+void VectorView::HideArrowVisuals(gz::sim::EntityComponentManager& ecm) const {
+  const gz::math::Pose3d hidden(0, 0, -10, 0, 0, 0);
+  if (this->arrowShaftEntity != gz::sim::kNullEntity) {
+    SetVisualPose(ecm, this->arrowShaftEntity, hidden);
+  }
+  if (this->arrowHeadEntity != gz::sim::kNullEntity) {
+    SetVisualPose(ecm, this->arrowHeadEntity, hidden);
+  }
+}
+
+void VectorView::UpdateArrowVisuals(gz::sim::EntityComponentManager& ecm,
+                                    const gz::math::Vector3d& force) const {
+  if (this->arrowShaftEntity == gz::sim::kNullEntity) {
+    return;
+  }
+
+  const gz::math::Vector3d local_force =
+      this->linkWorldPose.Rot().RotateVectorReverse(force);
+  const double length = (FORCE_SCALE * local_force).Length();
+  if (length < 1e-4) {
+    this->HideArrowVisuals(ecm);
+    return;
+  }
+
+  const gz::math::Vector3d direction = local_force.Normalized();
+  const gz::math::Quaterniond rotation = RotationFromXAxis(direction);
+  const double shaftLength = std::min(std::max(length, 0.05), MAX_GEOMETRY_ARROW_LENGTH);
+  const double headSize = std::max(0.03, 0.2 * shaftLength);
+  const gz::math::Pose3d shaftPose(0.5 * shaftLength * direction, rotation);
+  const gz::math::Pose3d headPose(shaftLength * direction, rotation);
+
+  SetBoxGeometry(ecm, this->arrowShaftEntity, shaftLength, 0.02, 0.02);
+  SetVisualPose(ecm, this->arrowShaftEntity, shaftPose);
+  if (this->arrowHeadEntity != gz::sim::kNullEntity) {
+    SetBoxGeometry(ecm, this->arrowHeadEntity, headSize, headSize, headSize);
+    SetVisualPose(ecm, this->arrowHeadEntity, headPose);
+  }
+}
+
 void VectorView::PublishArrow(const gz::math::Vector3d& force) {
   const gz::math::Vector3d begin = gz::math::Vector3d::Zero;
   const gz::math::Vector3d local_force =
       this->linkWorldPose.Rot().RotateVectorReverse(force);
-  gz::math::Vector3d shaft = FORCE_SCALE * local_force;
-  const double shaft_length = shaft.Length();
-  if (shaft_length > MAX_ARROW_LENGTH && shaft_length > 0.0) {
-    shaft = shaft / shaft_length * MAX_ARROW_LENGTH;
-  } else if (shaft_length > 0.0 && shaft_length < MIN_ARROW_LENGTH) {
-    shaft = shaft / shaft_length * MIN_ARROW_LENGTH;
-  }
-  const gz::math::Vector3d end = begin + shaft;
+  const gz::math::Vector3d end = begin + FORCE_SCALE * local_force;
 
   const auto to_world = [this](const gz::math::Vector3d& local_point) {
     return this->linkWorldPose.Pos() + this->linkWorldPose.Rot().RotateVector(local_point);
@@ -134,20 +283,20 @@ void VectorView::PublishArrow(const gz::math::Vector3d& force) {
   marker.set_action(gz::msgs::Marker::ADD_MODIFY);
   marker.set_type(gz::msgs::Marker::LINE_LIST);
   marker.set_visibility(gz::msgs::Marker::ALL);
-  marker.mutable_scale()->set_x(0.08);
-  marker.mutable_scale()->set_y(0.08);
-  marker.mutable_scale()->set_z(0.08);
-  marker.mutable_material()->mutable_ambient()->set_r(1.0f);
-  marker.mutable_material()->mutable_ambient()->set_g(0.1f);
-  marker.mutable_material()->mutable_ambient()->set_b(0.1f);
+  marker.mutable_scale()->set_x(0.04);
+  marker.mutable_scale()->set_y(0.04);
+  marker.mutable_scale()->set_z(0.04);
+  marker.mutable_material()->mutable_ambient()->set_r(0.0f);
+  marker.mutable_material()->mutable_ambient()->set_g(0.0f);
+  marker.mutable_material()->mutable_ambient()->set_b(1.0f);
   marker.mutable_material()->mutable_ambient()->set_a(1.0f);
-  marker.mutable_material()->mutable_diffuse()->set_r(1.0f);
-  marker.mutable_material()->mutable_diffuse()->set_g(0.15f);
-  marker.mutable_material()->mutable_diffuse()->set_b(0.1f);
+  marker.mutable_material()->mutable_diffuse()->set_r(0.0f);
+  marker.mutable_material()->mutable_diffuse()->set_g(0.0f);
+  marker.mutable_material()->mutable_diffuse()->set_b(1.0f);
   marker.mutable_material()->mutable_diffuse()->set_a(1.0f);
-  marker.mutable_material()->mutable_emissive()->set_r(1.0f);
+  marker.mutable_material()->mutable_emissive()->set_r(0.0f);
   marker.mutable_material()->mutable_emissive()->set_g(0.2f);
-  marker.mutable_material()->mutable_emissive()->set_b(0.1f);
+  marker.mutable_material()->mutable_emissive()->set_b(1.0f);
   marker.mutable_material()->mutable_emissive()->set_a(1.0f);
 
   auto set_point = [&marker](const gz::math::Vector3d& point) {
@@ -174,6 +323,7 @@ void VectorView::PublishArrow(const gz::math::Vector3d& force) {
 }  // namespace vectorview
 
 GZ_ADD_PLUGIN(vectorview::VectorView, gz::sim::System, vectorview::VectorView::ISystemConfigure,
+              vectorview::VectorView::ISystemPreUpdate,
               vectorview::VectorView::ISystemPostUpdate)
 
 GZ_ADD_PLUGIN_ALIAS(vectorview::VectorView, "vectorview::VectorView")

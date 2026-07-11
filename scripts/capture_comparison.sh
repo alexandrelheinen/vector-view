@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
-# Capture side-by-side comparison during the grasp hold phase (contact + arrows).
+# Capture an honest side-by-side comparison during the grasp hold phase.
+# Uses the headless release camera and real VectorView geometry (blue arrows on hands).
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUTPUT="${1:-$ROOT/docs/images/execution_comparison.png}"
 LEGACY="$ROOT/docs/images/execution_example.png"
 WORKDIR="$(mktemp -d)"
-CAPTURE_AT_SEC=9.5
-PLOT_START_SEC=8.0
+SIM_WARMUP_SEC=12
+CAPTURE_AT_SEC=10
+PLOT_START_SEC=8
 
 export VECTOR_VIEW="$ROOT"
 export GZ_SIM_SYSTEM_PLUGIN_PATH="$ROOT/build:${GZ_SIM_SYSTEM_PLUGIN_PATH:-}"
@@ -19,43 +21,32 @@ cleanup() {
 }
 trap cleanup EXIT
 
-cleanup
-sleep 2
+killall -9 gz 2>/dev/null || true
+sleep 1
 
 DISPLAY= gz sim -s -r --headless-rendering "$ROOT/assets/worlds/release_demo.world" >/tmp/gz_capture.log 2>&1 &
-sleep 16
+SIM_PID=$!
+sleep "$SIM_WARMUP_SEC"
 
-"$ROOT/scripts/animate_grasp.sh" >"$WORKDIR/animate.log" 2>&1 &
-animate_pid=$!
+"$ROOT/scripts/animate_grasp.sh" >/tmp/capture_anim.log 2>&1 &
+ANIM_PID=$!
 
 sleep "$PLOT_START_SEC"
 python3 "$ROOT/scripts/record_force_plot.py" \
   --topic /vectorview/iCub_fixed/r_hand --label r_hand_contact \
-  --output "$WORKDIR/r_hand_plot.png" --seconds 3 &
-plot_r=$!
+  --output "$WORKDIR/r_hand_plot.png" --seconds 4 &
+PLOT_R=$!
 python3 "$ROOT/scripts/record_force_plot.py" \
   --topic /vectorview/iCub_fixed/l_hand --label l_hand_contact \
-  --output "$WORKDIR/l_hand_plot.png" --seconds 3 &
-plot_l=$!
+  --output "$WORKDIR/l_hand_plot.png" --seconds 4 &
+PLOT_L=$!
 
-sleep "$(awk -v cap="$CAPTURE_AT_SEC" -v plot="$PLOT_START_SEC" 'BEGIN { printf "%.2f", cap - plot }')"
+sleep "$(awk -v c="$CAPTURE_AT_SEC" -v p="$PLOT_START_SEC" 'BEGIN { printf "%.2f", c - p }')"
+python3 "$ROOT/scripts/save_camera_frame.py" --output "$WORKDIR/gazebo.png" --timeout 15
 
-python3 "$ROOT/scripts/save_camera_frame.py" --output "$WORKDIR/gazebo_raw.png" &
-frame_pid=$!
-python3 "$ROOT/scripts/record_force_plot.py" \
-  --topic /vectorview/iCub_fixed/r_hand --label r_hand_contact \
-  --output "$WORKDIR/r_hand_plot.png" --seconds 3 &
-plot_r=$!
-python3 "$ROOT/scripts/record_force_plot.py" \
-  --topic /vectorview/iCub_fixed/l_hand --label l_hand_contact \
-  --output "$WORKDIR/l_hand_plot.png" --seconds 3 &
-plot_l=$!
-wait "$frame_pid"
-wait "$plot_r" || true
-wait "$plot_l" || true
-python3 "$ROOT/scripts/overlay_force_arrows.py" \
-  --image "$WORKDIR/gazebo_raw.png" --output "$WORKDIR/gazebo.png"
-wait "$animate_pid" || true
+wait "$PLOT_R" "$PLOT_L" "$ANIM_PID" 2>/dev/null || true
+kill "$SIM_PID" 2>/dev/null || true
+killall -9 gz 2>/dev/null || true
 
 convert "$WORKDIR/r_hand_plot.png" "$WORKDIR/l_hand_plot.png" +append "$WORKDIR/gui_row.png"
 convert "$WORKDIR/gui_row.png" "$WORKDIR/gazebo.png" -gravity center -append \

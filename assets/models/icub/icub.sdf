@@ -1316,6 +1316,28 @@
           </mesh>
         </geometry>
       </visual>
+      <visual name='vectorview_arrow_shaft'>
+        <pose>0 0 -10 0 0 0</pose>
+        <geometry>
+          <box><size>0.12 0.03 0.03</size></box>
+        </geometry>
+        <material>
+          <ambient>0 0 1 1</ambient>
+          <diffuse>0 0 1 1</diffuse>
+          <emissive>0 0.15 1 1</emissive>
+        </material>
+      </visual>
+      <visual name='vectorview_arrow_head'>
+        <pose>0 0 -10 0 0 0</pose>
+        <geometry>
+          <box><size>0.04 0.04 0.04</size></box>
+        </geometry>
+        <material>
+          <ambient>0 0 1 1</ambient>
+          <diffuse>0 0 1 1</diffuse>
+          <emissive>0 0.15 1 1</emissive>
+        </material>
+      </visual>
       <sensor name='l_hand_contact' type='contact'>
         <update_rate>25</update_rate>
         <contact>
@@ -1853,6 +1875,28 @@
             <uri>model://icub/meshes/visual/icub_r_hand.dae</uri>
           </mesh>
         </geometry>
+      </visual>
+      <visual name='vectorview_arrow_shaft'>
+        <pose>0 0 -10 0 0 0</pose>
+        <geometry>
+          <box><size>0.12 0.03 0.03</size></box>
+        </geometry>
+        <material>
+          <ambient>0 0 1 1</ambient>
+          <diffuse>0 0 1 1</diffuse>
+          <emissive>0 0.15 1 1</emissive>
+        </material>
+      </visual>
+      <visual name='vectorview_arrow_head'>
+        <pose>0 0 -10 0 0 0</pose>
+        <geometry>
+          <box><size>0.04 0.04 0.04</size></box>
+        </geometry>
+        <material>
+          <ambient>0 0 1 1</ambient>
+          <diffuse>0 0 1 1</diffuse>
+          <emissive>0 0.15 1 1</emissive>
+        </material>
       </visual>
       <sensor name='r_hand_contact' type='contact'>
         <update_rate>25</update_rate>
