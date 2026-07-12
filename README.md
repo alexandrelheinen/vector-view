@@ -262,19 +262,23 @@ scripts/capture_comparison.sh
 The command fails unless all of these are true in the same live run:
 
 - both hand contact topics name `object::main::collision`;
-- the unmodified `/release_camera` frame contains two separated blue arrows;
-- the full robot and both boxes fit inside the camera frame;
+- the unmodified side `/release_camera` frame contains the full robot and boxes;
+- the unmodified `/arrow_camera` frame contains two separated blue arrows;
 - both plots contain sustained, non-zero force samples;
 - the raw frame contains no red overlay pixels.
 
 Successful runs update:
 
 - `docs/images/execution_comparison.png` — reference and current output;
-- `docs/images/execution_current_raw.png` — unmodified camera frame;
+- `docs/images/execution_current_raw.png` — unmodified side camera frame;
+- `docs/images/execution_arrows_raw.png` — unmodified two-arrow camera frame;
 - `docs/no-regression-report.json` — machine-readable assertions and measurements.
 
 `scripts/verify_no_regression.py` performs the checks before the comparison
 layout is generated. The capture script does not add arrows to images.
+
+See [the acceptance requirements](docs/execution-comparison-requirements.md)
+and [the validation report](docs/execution-comparison-validation-report.md).
 
 ## Topic paths
 

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 
 import numpy as np
@@ -41,10 +42,13 @@ def blue_clusters(image: np.ndarray) -> tuple[int, list[dict[str, int]]]:
     for cluster in clusters:
         pixels = int(blue[:, cluster].sum())
         if pixels >= 200:
+            y_coordinates = np.where(blue[:, cluster])[0]
             regions.append(
                 {
                     "x_min": cluster[0],
                     "x_max": cluster[-1],
+                    "y_min": int(y_coordinates.min()),
+                    "y_max": int(y_coordinates.max()),
                     "pixels": pixels,
                 }
             )
@@ -70,9 +74,64 @@ def plot_evidence(path: Path, hand: str) -> dict:
     return data
 
 
+def frame_evidence(path: Path, *, require_two_arrows: bool) -> dict:
+    frame = np.array(Image.open(path).convert("RGB"))
+    require(frame.shape == (720, 1280, 3), f"unexpected frame dimensions: {frame.shape}")
+
+    gray = frame.mean(axis=2)
+    foreground = gray < 170
+    y, x = np.where(foreground)
+    require(len(x) > 10_000, f"{path.name} has too little robot / box foreground")
+    bounds = {
+        "x_min": int(x.min()),
+        "x_max": int(x.max()),
+        "y_min": int(y.min()),
+        "y_max": int(y.max()),
+    }
+    require(bounds["x_min"] > 10, f"{path.name} is cropped on left edge: {bounds}")
+    require(bounds["x_max"] < 1270, f"{path.name} is cropped on right edge: {bounds}")
+    require(bounds["y_min"] > 10, f"{path.name} is cropped on top edge: {bounds}")
+    require(bounds["y_max"] < 718, f"{path.name} is cropped on bottom edge: {bounds}")
+    require(
+        bounds["y_max"] - bounds["y_min"] >= 300,
+        f"full robot and boxes are not visible in {path.name}: {bounds}",
+    )
+
+    color = frame.astype(np.int16)
+    red = (
+        (color[:, :, 0] > 180)
+        & (color[:, :, 0] > color[:, :, 1] + 50)
+        & (color[:, :, 0] > color[:, :, 2] + 50)
+    )
+    require(int(red.sum()) < 50, f"{path.name} contains suspicious red overlay pixels")
+
+    evidence = {
+        "width": 1280,
+        "height": 720,
+        "sha256": sha256(path),
+        "foreground_bounds": bounds,
+        "red_overlay_pixels": int(red.sum()),
+    }
+    if require_two_arrows:
+        blue_pixels, arrow_regions = blue_clusters(frame)
+        require(blue_pixels >= 800, f"only {blue_pixels} blue pixels in arrow frame")
+        require(
+            len(arrow_regions) >= 2,
+            f"expected two separated blue arrow regions, found {arrow_regions}",
+        )
+        require(
+            all(300 <= region["y_min"] and region["y_max"] <= 450 for region in arrow_regions),
+            f"blue regions are not anchored in the fixed hand-height zone: {arrow_regions}",
+        )
+        evidence["blue_pixels"] = blue_pixels
+        evidence["separated_arrow_regions"] = arrow_regions
+    return evidence
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--frame", type=Path, required=True)
+    parser.add_argument("--comparison-frame", type=Path, required=True)
+    parser.add_argument("--arrow-frame", type=Path, required=True)
     parser.add_argument("--left-contact", type=Path, required=True)
     parser.add_argument("--right-contact", type=Path, required=True)
     parser.add_argument("--left-plot", type=Path, required=True)
@@ -81,9 +140,9 @@ def main() -> None:
     args = parser.parse_args()
 
     contacts = {}
-    for hand, path in (
-        ("left_hand", args.left_contact),
-        ("right_hand", args.right_contact),
+    for hand, expected_y_sign, path in (
+        ("left_hand", 1, args.left_contact),
+        ("right_hand", -1, args.right_contact),
     ):
         text = path.read_text()
         require(
@@ -94,48 +153,28 @@ def main() -> None:
             f"::{hand.removesuffix('_hand')[0]}_hand::" in text,
             f"{hand} contact message does not name its hand collision",
         )
+        position_match = re.search(
+            r"position\s*\{\s*x:\s*([-0-9.eE]+)\s*"
+            r"y:\s*([-0-9.eE]+)\s*z:\s*([-0-9.eE]+)",
+            text,
+        )
+        require(position_match is not None, f"{hand} has no contact position")
+        position = tuple(float(value) for value in position_match.groups())
+        require(0.18 < position[0] < 0.22, f"{hand} contact x is not on upper box face: {position}")
+        require(0.44 < position[2] < 0.50, f"{hand} contact z is not at hand height: {position}")
+        require(
+            expected_y_sign * position[1] > 0.15,
+            f"{hand} is not on its expected side of upper box: {position}",
+        )
         contacts[hand] = {
             "upper_box_contact": True,
+            "position_m": {"x": position[0], "y": position[1], "z": position[2]},
             "message_bytes": len(text.encode()),
             "sha256": sha256(path),
         }
 
-    frame = np.array(Image.open(args.frame).convert("RGB"))
-    require(frame.shape == (720, 1280, 3), f"unexpected frame dimensions: {frame.shape}")
-
-    blue_pixels, arrow_regions = blue_clusters(frame)
-    require(blue_pixels >= 800, f"only {blue_pixels} blue pixels in raw camera frame")
-    require(
-        len(arrow_regions) >= 2,
-        f"expected two separated blue arrow regions, found {arrow_regions}",
-    )
-
-    gray = frame.mean(axis=2)
-    foreground = gray < 170
-    y, x = np.where(foreground)
-    require(len(x) > 10_000, "camera frame has too little robot / box foreground")
-    bounds = {
-        "x_min": int(x.min()),
-        "x_max": int(x.max()),
-        "y_min": int(y.min()),
-        "y_max": int(y.max()),
-    }
-    require(bounds["x_min"] > 10, f"scene is cropped on left edge: {bounds}")
-    require(bounds["x_max"] < 1270, f"scene is cropped on right edge: {bounds}")
-    require(bounds["y_min"] > 10, f"scene is cropped on top edge: {bounds}")
-    require(bounds["y_max"] < 718, f"scene is cropped on bottom edge: {bounds}")
-    require(
-        bounds["y_max"] - bounds["y_min"] >= 300,
-        f"full robot and boxes are not visible: {bounds}",
-    )
-
-    color = frame.astype(np.int16)
-    red = (
-        (color[:, :, 0] > 180)
-        & (color[:, :, 0] > color[:, :, 1] + 50)
-        & (color[:, :, 0] > color[:, :, 2] + 50)
-    )
-    require(int(red.sum()) < 50, "raw camera frame contains suspicious red overlay pixels")
+    comparison_frame = frame_evidence(args.comparison_frame, require_two_arrows=False)
+    arrow_frame = frame_evidence(args.arrow_frame, require_two_arrows=True)
 
     plots = {
         "left_hand": plot_evidence(args.left_plot, "left hand"),
@@ -150,17 +189,29 @@ def main() -> None:
 
     report = {
         "passed": True,
-        "source": "unmodified /release_camera frame and /vectorview contact topics",
-        "contacts": contacts,
-        "raw_frame": {
-            "width": 1280,
-            "height": 720,
-            "sha256": sha256(args.frame),
-            "foreground_bounds": bounds,
-            "blue_pixels": blue_pixels,
-            "separated_arrow_regions": arrow_regions,
-            "red_overlay_pixels": int(red.sum()),
+        "source": "unmodified /release_camera + /arrow_camera frames and /vectorview contact topics",
+        "requirements": {
+            requirement: True
+            for requirement in (
+                "V1",
+                "V2",
+                "V3",
+                "V4",
+                "V5",
+                "S1",
+                "S2",
+                "S3",
+                "D1",
+                "D2",
+                "D3",
+                "I1",
+                "I2",
+                "I3",
+            )
         },
+        "contacts": contacts,
+        "comparison_frame": comparison_frame,
+        "arrow_frame": arrow_frame,
         "plots": plots,
         "capture_pipeline": {
             "overlay_script_referenced": False,

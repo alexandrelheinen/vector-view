@@ -1,58 +1,100 @@
 {
   "passed": true,
-  "source": "unmodified /release_camera frame and /vectorview contact topics",
+  "source": "unmodified /release_camera + /arrow_camera frames and /vectorview contact topics",
+  "requirements": {
+    "V1": true,
+    "V2": true,
+    "V3": true,
+    "V4": true,
+    "V5": true,
+    "S1": true,
+    "S2": true,
+    "S3": true,
+    "D1": true,
+    "D2": true,
+    "D3": true,
+    "I1": true,
+    "I2": true,
+    "I3": true
+  },
   "contacts": {
     "left_hand": {
       "upper_box_contact": true,
-      "message_bytes": 1900,
-      "sha256": "f79340bcc4f8f0d9454374d7f258ba352a71d66475631ef727320a20a6d18981"
+      "position_m": {
+        "x": 0.2,
+        "y": 0.18977564914174938,
+        "z": 0.47359961883589596
+      },
+      "message_bytes": 1897,
+      "sha256": "0edd751949925b8a1c73ae06b6e4c03df7c8b165ad329ebab7674fc1dd537ee3"
     },
     "right_hand": {
       "upper_box_contact": true,
-      "message_bytes": 1904,
-      "sha256": "6f8823bd30105afd3365958b5d1f2b75594c3362050f530fd950dac480537077"
+      "position_m": {
+        "x": 0.2,
+        "y": -0.190453988395746,
+        "z": 0.473710064974616
+      },
+      "message_bytes": 1903,
+      "sha256": "68464d1f714f7c11ca7387ae815579f45be1c7f1a3955d2df13e5ed182120dcf"
     }
   },
-  "raw_frame": {
+  "comparison_frame": {
     "width": 1280,
     "height": 720,
-    "sha256": "e76d5337aca7ce6e560d00d1b4fb54f7d40572a7ab0e689a00710576d71bf372",
+    "sha256": "fe2af7fb3aa58d1c968ab1793251b2bd7ffc4e5084e462aba9d8bf308b212a49",
+    "foreground_bounds": {
+      "x_min": 242,
+      "x_max": 878,
+      "y_min": 115,
+      "y_max": 693
+    },
+    "red_overlay_pixels": 0
+  },
+  "arrow_frame": {
+    "width": 1280,
+    "height": 720,
+    "sha256": "15587f1cffa7fbf656afff9118683fc0aca56ae526486b540878cb9615630e12",
     "foreground_bounds": {
       "x_min": 487,
       "x_max": 749,
       "y_min": 177,
       "y_max": 710
     },
-    "blue_pixels": 1397,
+    "red_overlay_pixels": 0,
+    "blue_pixels": 1374,
     "separated_arrow_regions": [
       {
         "x_min": 610,
-        "x_max": 636,
-        "pixels": 484
+        "x_max": 637,
+        "y_min": 367,
+        "y_max": 413,
+        "pixels": 476
       },
       {
         "x_min": 664,
         "x_max": 726,
-        "pixels": 871
+        "y_min": 346,
+        "y_max": 386,
+        "pixels": 859
       }
-    ],
-    "red_overlay_pixels": 0
+    ]
   },
   "plots": {
     "left_hand": {
       "topic": "/vectorview/iCub_fixed/l_hand",
       "samples": 299,
-      "messages": 47,
-      "nonzero_samples": 298,
-      "duration_seconds": 11.988325061000069,
+      "messages": 46,
+      "nonzero_samples": 293,
+      "duration_seconds": 11.982625853997888,
       "max_force_newtons": 353.04434957353016
     },
     "right_hand": {
       "topic": "/vectorview/iCub_fixed/r_hand",
       "samples": 299,
-      "messages": 48,
-      "nonzero_samples": 298,
-      "duration_seconds": 11.980361366993748,
+      "messages": 47,
+      "nonzero_samples": 293,
+      "duration_seconds": 11.97780448399135,
       "max_force_newtons": 321.5875290928798
     }
   },
