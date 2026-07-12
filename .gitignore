@@ -3,4 +3,5 @@
 /history_*
 /.env
 CMakeFiles/
+__pycache__/
 grasp_demo.mp4

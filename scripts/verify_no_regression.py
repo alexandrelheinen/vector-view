@@ -7,10 +7,22 @@ import argparse
 import hashlib
 import json
 import re
+import sys
 from pathlib import Path
 
 import numpy as np
 from PIL import Image
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(SCRIPT_DIR))
+
+from trajectory_lib import (  # noqa: E402
+    ARM_JOINTS,
+    compare_joint_sets,
+    joints_at_time,
+    load_golden,
+    sha256_document,
+)
 
 
 def require(condition: bool, message: str) -> None:
@@ -137,6 +149,15 @@ def main() -> None:
     parser.add_argument("--left-plot", type=Path, required=True)
     parser.add_argument("--right-plot", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--golden-trajectory", type=Path, required=True)
+    parser.add_argument("--motion-snapshot", type=Path, required=True)
+    parser.add_argument("--capture-time", type=float, required=True)
+    parser.add_argument(
+        "--joint-tolerance-rad",
+        type=float,
+        default=0.02,
+        help="max allowed deviation between golden and replayed joint commands",
+    )
     args = parser.parse_args()
 
     contacts = {}
@@ -186,6 +207,34 @@ def main() -> None:
         "overlay_force_arrows" not in capture_script,
         "capture pipeline still references the fake overlay script",
     )
+    require(
+        "replay_golden_trajectory.py" in capture_script,
+        "capture pipeline must replay the golden trajectory",
+    )
+
+    golden = load_golden(args.golden_trajectory)
+    golden_digest = sha256_document(golden)
+    expected_joints = joints_at_time(golden, args.capture_time)
+    snapshot = json.loads(args.motion_snapshot.read_text())
+    require(
+        abs(float(snapshot["capture_time_seconds"]) - args.capture_time) < 0.15,
+        f"motion snapshot time mismatch: {snapshot}",
+    )
+    joint_deltas = compare_joint_sets(
+        expected_joints,
+        snapshot["joints"],
+        tolerance_rad=args.joint_tolerance_rad,
+        joints=ARM_JOINTS,
+    )
+    motion = {
+        "golden_trajectory": str(args.golden_trajectory),
+        "golden_sha256": golden_digest,
+        "source": golden.get("source"),
+        "capture_time_seconds": args.capture_time,
+        "joint_tolerance_rad": args.joint_tolerance_rad,
+        "joint_checks": joint_deltas,
+        "motion_snapshot_sha256": sha256(args.motion_snapshot),
+    }
 
     report = {
         "passed": True,
@@ -204,11 +253,15 @@ def main() -> None:
                 "D1",
                 "D2",
                 "D3",
+                "M1",
+                "M2",
+                "M3",
                 "I1",
                 "I2",
                 "I3",
             )
         },
+        "motion": motion,
         "contacts": contacts,
         "comparison_frame": comparison_frame,
         "arrow_frame": arrow_frame,

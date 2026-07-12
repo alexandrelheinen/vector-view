@@ -1,0 +1,5918 @@
+{
+  "schema_version": 1,
+  "name": "stage_test_tasks",
+  "source": "animate-grasp-keyframes",
+  "source_detail": "Keyframe port of scripts/animate_grasp.sh until CoDyCo StageTestTasks is recorded",
+  "topic_prefix": "/grasp_demo",
+  "joints": [
+    "l_shoulder_pitch",
+    "l_shoulder_roll",
+    "l_shoulder_yaw",
+    "l_elbow",
+    "l_wrist_prosup",
+    "l_wrist_pitch",
+    "l_wrist_yaw",
+    "r_shoulder_pitch",
+    "r_shoulder_roll",
+    "r_shoulder_yaw",
+    "r_elbow",
+    "r_wrist_prosup",
+    "r_wrist_pitch",
+    "r_wrist_yaw"
+  ],
+  "rate_hz": 20.0,
+  "duration_seconds": 15.45,
+  "notes": "Replace this file by re-running record_golden_trajectory.py --source codyco-log once a canonical CoDyCo StageTestTasks recording exists.",
+  "frames": [
+    {
+      "t": 0.0,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.05,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.1,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.15,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.2,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.25,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.3,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.35,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.4,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.45,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.5,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.55,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.6,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.65,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.7,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.75,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.8,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.85,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.9,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 0.95,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 1.0,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.785,
+        "r_wrist_pitch": 0.0,
+        "l_shoulder_roll": 0.52,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.785,
+        "r_shoulder_roll": 0.52,
+        "l_shoulder_pitch": -0.52,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.05,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7944166666666667,
+        "r_wrist_pitch": -0.009166666666666667,
+        "l_shoulder_roll": 0.5338333333333334,
+        "l_wrist_pitch": -0.009166666666666667,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7944166666666667,
+        "r_shoulder_roll": 0.5338333333333334,
+        "l_shoulder_pitch": -0.5271666666666667,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.5271666666666667,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.1,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8038333333333334,
+        "r_wrist_pitch": -0.018333333333333333,
+        "l_shoulder_roll": 0.5476666666666666,
+        "l_wrist_pitch": -0.018333333333333333,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8038333333333334,
+        "r_shoulder_roll": 0.5476666666666666,
+        "l_shoulder_pitch": -0.5343333333333333,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.5343333333333333,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.15,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.81325,
+        "r_wrist_pitch": -0.027500000000000007,
+        "l_shoulder_roll": 0.5615,
+        "l_wrist_pitch": -0.027500000000000007,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.81325,
+        "r_shoulder_roll": 0.5615,
+        "l_shoulder_pitch": -0.5415,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.5415,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.2,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8226666666666667,
+        "r_wrist_pitch": -0.03666666666666667,
+        "l_shoulder_roll": 0.5753333333333334,
+        "l_wrist_pitch": -0.03666666666666667,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8226666666666667,
+        "r_shoulder_roll": 0.5753333333333334,
+        "l_shoulder_pitch": -0.5486666666666666,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.5486666666666666,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.25,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8320833333333334,
+        "r_wrist_pitch": -0.04583333333333334,
+        "l_shoulder_roll": 0.5891666666666667,
+        "l_wrist_pitch": -0.04583333333333334,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8320833333333334,
+        "r_shoulder_roll": 0.5891666666666667,
+        "l_shoulder_pitch": -0.5558333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.5558333333333334,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.3,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8415,
+        "r_wrist_pitch": -0.055,
+        "l_shoulder_roll": 0.603,
+        "l_wrist_pitch": -0.055,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8415,
+        "r_shoulder_roll": 0.603,
+        "l_shoulder_pitch": -0.5630000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.5630000000000001,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.35,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8509166666666667,
+        "r_wrist_pitch": -0.06416666666666666,
+        "l_shoulder_roll": 0.6168333333333333,
+        "l_wrist_pitch": -0.06416666666666666,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8509166666666667,
+        "r_shoulder_roll": 0.6168333333333333,
+        "l_shoulder_pitch": -0.5701666666666667,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.5701666666666667,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.4,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8603333333333334,
+        "r_wrist_pitch": -0.07333333333333333,
+        "l_shoulder_roll": 0.6306666666666667,
+        "l_wrist_pitch": -0.07333333333333333,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8603333333333334,
+        "r_shoulder_roll": 0.6306666666666667,
+        "l_shoulder_pitch": -0.5773333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.5773333333333334,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.45,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.86975,
+        "r_wrist_pitch": -0.0825,
+        "l_shoulder_roll": 0.6445000000000001,
+        "l_wrist_pitch": -0.0825,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.86975,
+        "r_shoulder_roll": 0.6445000000000001,
+        "l_shoulder_pitch": -0.5845,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.5845,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.5,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8791666666666667,
+        "r_wrist_pitch": -0.09166666666666667,
+        "l_shoulder_roll": 0.6583333333333333,
+        "l_wrist_pitch": -0.09166666666666667,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8791666666666667,
+        "r_shoulder_roll": 0.6583333333333333,
+        "l_shoulder_pitch": -0.5916666666666667,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.5916666666666667,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.55,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8885833333333334,
+        "r_wrist_pitch": -0.10083333333333333,
+        "l_shoulder_roll": 0.6721666666666667,
+        "l_wrist_pitch": -0.10083333333333333,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8885833333333334,
+        "r_shoulder_roll": 0.6721666666666667,
+        "l_shoulder_pitch": -0.5988333333333333,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.5988333333333333,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.6,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.898,
+        "r_wrist_pitch": -0.11,
+        "l_shoulder_roll": 0.686,
+        "l_wrist_pitch": -0.11,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.898,
+        "r_shoulder_roll": 0.686,
+        "l_shoulder_pitch": -0.606,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.606,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.65,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.9074166666666668,
+        "r_wrist_pitch": -0.11916666666666668,
+        "l_shoulder_roll": 0.6998333333333333,
+        "l_wrist_pitch": -0.11916666666666668,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.9074166666666668,
+        "r_shoulder_roll": 0.6998333333333333,
+        "l_shoulder_pitch": -0.6131666666666666,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.6131666666666666,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.7,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.9168333333333334,
+        "r_wrist_pitch": -0.12833333333333335,
+        "l_shoulder_roll": 0.7136666666666667,
+        "l_wrist_pitch": -0.12833333333333335,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.9168333333333334,
+        "r_shoulder_roll": 0.7136666666666667,
+        "l_shoulder_pitch": -0.6203333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.6203333333333334,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.75,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.92625,
+        "r_wrist_pitch": -0.13750000000000004,
+        "l_shoulder_roll": 0.7275,
+        "l_wrist_pitch": -0.13750000000000004,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.92625,
+        "r_shoulder_roll": 0.7275,
+        "l_shoulder_pitch": -0.6275000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.6275000000000001,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.8,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.9356666666666668,
+        "r_wrist_pitch": -0.1466666666666667,
+        "l_shoulder_roll": 0.7413333333333334,
+        "l_wrist_pitch": -0.1466666666666667,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.9356666666666668,
+        "r_shoulder_roll": 0.7413333333333334,
+        "l_shoulder_pitch": -0.6346666666666667,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.6346666666666667,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.85,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.9450833333333334,
+        "r_wrist_pitch": -0.15583333333333338,
+        "l_shoulder_roll": 0.7551666666666668,
+        "l_wrist_pitch": -0.15583333333333338,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.9450833333333334,
+        "r_shoulder_roll": 0.7551666666666668,
+        "l_shoulder_pitch": -0.6418333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.6418333333333334,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.9,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.9545000000000001,
+        "r_wrist_pitch": -0.16500000000000006,
+        "l_shoulder_roll": 0.7690000000000001,
+        "l_wrist_pitch": -0.16500000000000006,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.9545000000000001,
+        "r_shoulder_roll": 0.7690000000000001,
+        "l_shoulder_pitch": -0.649,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.649,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 1.95,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.9639166666666668,
+        "r_wrist_pitch": -0.17416666666666675,
+        "l_shoulder_roll": 0.7828333333333335,
+        "l_wrist_pitch": -0.17416666666666675,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.9639166666666668,
+        "r_shoulder_roll": 0.7828333333333335,
+        "l_shoulder_pitch": -0.6561666666666667,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.6561666666666667,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.0,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.9733333333333334,
+        "r_wrist_pitch": -0.1833333333333334,
+        "l_shoulder_roll": 0.7966666666666669,
+        "l_wrist_pitch": -0.1833333333333334,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.9733333333333334,
+        "r_shoulder_roll": 0.7966666666666669,
+        "l_shoulder_pitch": -0.6633333333333333,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.6633333333333333,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.05,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.9827500000000001,
+        "r_wrist_pitch": -0.19250000000000006,
+        "l_shoulder_roll": 0.8105000000000001,
+        "l_wrist_pitch": -0.19250000000000006,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.9827500000000001,
+        "r_shoulder_roll": 0.8105000000000001,
+        "l_shoulder_pitch": -0.6705000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.6705000000000001,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.1,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.9921666666666668,
+        "r_wrist_pitch": -0.20166666666666672,
+        "l_shoulder_roll": 0.8243333333333335,
+        "l_wrist_pitch": -0.20166666666666672,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.9921666666666668,
+        "r_shoulder_roll": 0.8243333333333335,
+        "l_shoulder_pitch": -0.6776666666666666,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.6776666666666666,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.15,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.0015833333333335,
+        "r_wrist_pitch": -0.21083333333333343,
+        "l_shoulder_roll": 0.8381666666666668,
+        "l_wrist_pitch": -0.21083333333333343,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.0015833333333335,
+        "r_shoulder_roll": 0.8381666666666668,
+        "l_shoulder_pitch": -0.6848333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.6848333333333334,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.2,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.0110000000000001,
+        "r_wrist_pitch": -0.22000000000000008,
+        "l_shoulder_roll": 0.8520000000000001,
+        "l_wrist_pitch": -0.22000000000000008,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.0110000000000001,
+        "r_shoulder_roll": 0.8520000000000001,
+        "l_shoulder_pitch": -0.6920000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.6920000000000001,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.25,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.0204166666666667,
+        "r_wrist_pitch": -0.22916666666666677,
+        "l_shoulder_roll": 0.8658333333333335,
+        "l_wrist_pitch": -0.22916666666666677,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.0204166666666667,
+        "r_shoulder_roll": 0.8658333333333335,
+        "l_shoulder_pitch": -0.6991666666666667,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.6991666666666667,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.3,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.0298333333333334,
+        "r_wrist_pitch": -0.23833333333333345,
+        "l_shoulder_roll": 0.8796666666666668,
+        "l_wrist_pitch": -0.23833333333333345,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.0298333333333334,
+        "r_shoulder_roll": 0.8796666666666668,
+        "l_shoulder_pitch": -0.7063333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7063333333333334,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.35,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.0392500000000002,
+        "r_wrist_pitch": -0.2475000000000001,
+        "l_shoulder_roll": 0.8935000000000002,
+        "l_wrist_pitch": -0.2475000000000001,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.0392500000000002,
+        "r_shoulder_roll": 0.8935000000000002,
+        "l_shoulder_pitch": -0.7135,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7135,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.4,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.0486666666666669,
+        "r_wrist_pitch": -0.25666666666666677,
+        "l_shoulder_roll": 0.9073333333333335,
+        "l_wrist_pitch": -0.25666666666666677,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.0486666666666669,
+        "r_shoulder_roll": 0.9073333333333335,
+        "l_shoulder_pitch": -0.7206666666666668,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7206666666666668,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.45,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.0580833333333335,
+        "r_wrist_pitch": -0.2658333333333335,
+        "l_shoulder_roll": 0.9211666666666669,
+        "l_wrist_pitch": -0.2658333333333335,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.0580833333333335,
+        "r_shoulder_roll": 0.9211666666666669,
+        "l_shoulder_pitch": -0.7278333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7278333333333334,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.5,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.0675000000000001,
+        "r_wrist_pitch": -0.27500000000000013,
+        "l_shoulder_roll": 0.9350000000000003,
+        "l_wrist_pitch": -0.27500000000000013,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.0675000000000001,
+        "r_shoulder_roll": 0.9350000000000003,
+        "l_shoulder_pitch": -0.7350000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7350000000000001,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.55,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.076916666666667,
+        "r_wrist_pitch": -0.28416666666666685,
+        "l_shoulder_roll": 0.9488333333333336,
+        "l_wrist_pitch": -0.28416666666666685,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.076916666666667,
+        "r_shoulder_roll": 0.9488333333333336,
+        "l_shoulder_pitch": -0.7421666666666668,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7421666666666668,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.6,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.0863333333333336,
+        "r_wrist_pitch": -0.2933333333333335,
+        "l_shoulder_roll": 0.9626666666666669,
+        "l_wrist_pitch": -0.2933333333333335,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.0863333333333336,
+        "r_shoulder_roll": 0.9626666666666669,
+        "l_shoulder_pitch": -0.7493333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7493333333333334,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.65,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.0957500000000002,
+        "r_wrist_pitch": -0.30250000000000016,
+        "l_shoulder_roll": 0.9765000000000003,
+        "l_wrist_pitch": -0.30250000000000016,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.0957500000000002,
+        "r_shoulder_roll": 0.9765000000000003,
+        "l_shoulder_pitch": -0.7565000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7565000000000001,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.7,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1051666666666669,
+        "r_wrist_pitch": -0.31166666666666687,
+        "l_shoulder_roll": 0.9903333333333337,
+        "l_wrist_pitch": -0.31166666666666687,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1051666666666669,
+        "r_shoulder_roll": 0.9903333333333337,
+        "l_shoulder_pitch": -0.7636666666666668,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7636666666666668,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.75,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1145833333333335,
+        "r_wrist_pitch": -0.3208333333333335,
+        "l_shoulder_roll": 1.0041666666666669,
+        "l_wrist_pitch": -0.3208333333333335,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1145833333333335,
+        "r_shoulder_roll": 1.0041666666666669,
+        "l_shoulder_pitch": -0.7708333333333335,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7708333333333335,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.8,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.124,
+        "r_wrist_pitch": -0.3300000000000002,
+        "l_shoulder_roll": 1.0180000000000002,
+        "l_wrist_pitch": -0.3300000000000002,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.124,
+        "r_shoulder_roll": 1.0180000000000002,
+        "l_shoulder_pitch": -0.7780000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7780000000000001,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.85,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.133416666666667,
+        "r_wrist_pitch": -0.3391666666666669,
+        "l_shoulder_roll": 1.0318333333333336,
+        "l_wrist_pitch": -0.3391666666666669,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.133416666666667,
+        "r_shoulder_roll": 1.0318333333333336,
+        "l_shoulder_pitch": -0.7851666666666668,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7851666666666668,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.9,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1428333333333336,
+        "r_wrist_pitch": -0.34833333333333355,
+        "l_shoulder_roll": 1.045666666666667,
+        "l_wrist_pitch": -0.34833333333333355,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1428333333333336,
+        "r_shoulder_roll": 1.045666666666667,
+        "l_shoulder_pitch": -0.7923333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7923333333333334,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 2.95,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1522500000000002,
+        "r_wrist_pitch": -0.3575000000000002,
+        "l_shoulder_roll": 1.0595000000000003,
+        "l_wrist_pitch": -0.3575000000000002,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1522500000000002,
+        "r_shoulder_roll": 1.0595000000000003,
+        "l_shoulder_pitch": -0.7995000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.7995000000000001,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.0,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1616666666666668,
+        "r_wrist_pitch": -0.36666666666666686,
+        "l_shoulder_roll": 1.0733333333333337,
+        "l_wrist_pitch": -0.36666666666666686,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1616666666666668,
+        "r_shoulder_roll": 1.0733333333333337,
+        "l_shoulder_pitch": -0.8066666666666668,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8066666666666668,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.05,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1710833333333335,
+        "r_wrist_pitch": -0.3758333333333335,
+        "l_shoulder_roll": 1.087166666666667,
+        "l_wrist_pitch": -0.3758333333333335,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1710833333333335,
+        "r_shoulder_roll": 1.087166666666667,
+        "l_shoulder_pitch": -0.8138333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8138333333333334,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.1,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1805,
+        "r_wrist_pitch": -0.3850000000000001,
+        "l_shoulder_roll": 1.1010000000000002,
+        "l_wrist_pitch": -0.3850000000000001,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1805,
+        "r_shoulder_roll": 1.1010000000000002,
+        "l_shoulder_pitch": -0.8210000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8210000000000001,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.15,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1899166666666667,
+        "r_wrist_pitch": -0.3941666666666668,
+        "l_shoulder_roll": 1.1148333333333333,
+        "l_wrist_pitch": -0.3941666666666668,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1899166666666667,
+        "r_shoulder_roll": 1.1148333333333333,
+        "l_shoulder_pitch": -0.8281666666666667,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8281666666666667,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.2,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1993333333333334,
+        "r_wrist_pitch": -0.4033333333333334,
+        "l_shoulder_roll": 1.1286666666666667,
+        "l_wrist_pitch": -0.4033333333333334,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1993333333333334,
+        "r_shoulder_roll": 1.1286666666666667,
+        "l_shoulder_pitch": -0.8353333333333333,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8353333333333333,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.25,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.2087500000000002,
+        "r_wrist_pitch": -0.41250000000000003,
+        "l_shoulder_roll": 1.1425,
+        "l_wrist_pitch": -0.41250000000000003,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.2087500000000002,
+        "r_shoulder_roll": 1.1425,
+        "l_shoulder_pitch": -0.8425,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8425,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.3,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.2181666666666668,
+        "r_wrist_pitch": -0.4216666666666667,
+        "l_shoulder_roll": 1.1563333333333334,
+        "l_wrist_pitch": -0.4216666666666667,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.2181666666666668,
+        "r_shoulder_roll": 1.1563333333333334,
+        "l_shoulder_pitch": -0.8496666666666666,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8496666666666666,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.35,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.2275833333333335,
+        "r_wrist_pitch": -0.4308333333333333,
+        "l_shoulder_roll": 1.1701666666666668,
+        "l_wrist_pitch": -0.4308333333333333,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.2275833333333335,
+        "r_shoulder_roll": 1.1701666666666668,
+        "l_shoulder_pitch": -0.8568333333333332,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8568333333333332,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.4,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.237,
+        "r_wrist_pitch": -0.43999999999999995,
+        "l_shoulder_roll": 1.184,
+        "l_wrist_pitch": -0.43999999999999995,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.237,
+        "r_shoulder_roll": 1.184,
+        "l_shoulder_pitch": -0.8639999999999999,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8639999999999999,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.45,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.2464166666666667,
+        "r_wrist_pitch": -0.44916666666666655,
+        "l_shoulder_roll": 1.197833333333333,
+        "l_wrist_pitch": -0.44916666666666655,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.2464166666666667,
+        "r_shoulder_roll": 1.197833333333333,
+        "l_shoulder_pitch": -0.8711666666666665,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8711666666666665,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.5,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.2558333333333334,
+        "r_wrist_pitch": -0.4583333333333332,
+        "l_shoulder_roll": 1.2116666666666664,
+        "l_wrist_pitch": -0.4583333333333332,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.2558333333333334,
+        "r_shoulder_roll": 1.2116666666666664,
+        "l_shoulder_pitch": -0.8783333333333332,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8783333333333332,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.55,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.26525,
+        "r_wrist_pitch": -0.46749999999999986,
+        "l_shoulder_roll": 1.2254999999999998,
+        "l_wrist_pitch": -0.46749999999999986,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.26525,
+        "r_shoulder_roll": 1.2254999999999998,
+        "l_shoulder_pitch": -0.8854999999999997,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8854999999999997,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.6,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.2746666666666666,
+        "r_wrist_pitch": -0.47666666666666646,
+        "l_shoulder_roll": 1.2393333333333332,
+        "l_wrist_pitch": -0.47666666666666646,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.2746666666666666,
+        "r_shoulder_roll": 1.2393333333333332,
+        "l_shoulder_pitch": -0.8926666666666665,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.8926666666666665,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.65,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.2840833333333332,
+        "r_wrist_pitch": -0.4858333333333331,
+        "l_shoulder_roll": 1.2531666666666663,
+        "l_wrist_pitch": -0.4858333333333331,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.2840833333333332,
+        "r_shoulder_roll": 1.2531666666666663,
+        "l_shoulder_pitch": -0.899833333333333,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.899833333333333,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.7,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.2934999999999999,
+        "r_wrist_pitch": -0.4949999999999998,
+        "l_shoulder_roll": 1.2669999999999997,
+        "l_wrist_pitch": -0.4949999999999998,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.2934999999999999,
+        "r_shoulder_roll": 1.2669999999999997,
+        "l_shoulder_pitch": -0.9069999999999998,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.9069999999999998,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.75,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.3029166666666665,
+        "r_wrist_pitch": -0.5041666666666664,
+        "l_shoulder_roll": 1.2808333333333328,
+        "l_wrist_pitch": -0.5041666666666664,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.3029166666666665,
+        "r_shoulder_roll": 1.2808333333333328,
+        "l_shoulder_pitch": -0.9141666666666663,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.9141666666666663,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.8,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.3123333333333331,
+        "r_wrist_pitch": -0.513333333333333,
+        "l_shoulder_roll": 1.2946666666666662,
+        "l_wrist_pitch": -0.513333333333333,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.3123333333333331,
+        "r_shoulder_roll": 1.2946666666666662,
+        "l_shoulder_pitch": -0.921333333333333,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.921333333333333,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.85,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.3217499999999998,
+        "r_wrist_pitch": -0.5224999999999996,
+        "l_shoulder_roll": 1.3084999999999996,
+        "l_wrist_pitch": -0.5224999999999996,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.3217499999999998,
+        "r_shoulder_roll": 1.3084999999999996,
+        "l_shoulder_pitch": -0.9284999999999997,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.9284999999999997,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.9,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.3311666666666664,
+        "r_wrist_pitch": -0.5316666666666663,
+        "l_shoulder_roll": 1.322333333333333,
+        "l_wrist_pitch": -0.5316666666666663,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.3311666666666664,
+        "r_shoulder_roll": 1.322333333333333,
+        "l_shoulder_pitch": -0.9356666666666663,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.9356666666666663,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 3.95,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.340583333333333,
+        "r_wrist_pitch": -0.5408333333333329,
+        "l_shoulder_roll": 1.336166666666666,
+        "l_wrist_pitch": -0.5408333333333329,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.340583333333333,
+        "r_shoulder_roll": 1.336166666666666,
+        "l_shoulder_pitch": -0.942833333333333,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.942833333333333,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 4.0,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.35,
+        "r_wrist_pitch": -0.55,
+        "l_shoulder_roll": 1.35,
+        "l_wrist_pitch": -0.55,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.35,
+        "r_shoulder_roll": 1.35,
+        "l_shoulder_pitch": -0.95,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0,
+        "r_shoulder_pitch": -0.95,
+        "r_shoulder_yaw": 0.0
+      }
+    },
+    {
+      "t": 4.05,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.334,
+        "r_wrist_pitch": -0.546,
+        "l_shoulder_roll": 1.352,
+        "l_wrist_pitch": -0.546,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.334,
+        "r_shoulder_roll": 1.352,
+        "l_shoulder_pitch": -0.956,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0024,
+        "r_shoulder_pitch": -0.956,
+        "r_shoulder_yaw": -0.0024
+      }
+    },
+    {
+      "t": 4.1,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.318,
+        "r_wrist_pitch": -0.542,
+        "l_shoulder_roll": 1.354,
+        "l_wrist_pitch": -0.542,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.318,
+        "r_shoulder_roll": 1.354,
+        "l_shoulder_pitch": -0.962,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0048,
+        "r_shoulder_pitch": -0.962,
+        "r_shoulder_yaw": -0.0048
+      }
+    },
+    {
+      "t": 4.15,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.302,
+        "r_wrist_pitch": -0.538,
+        "l_shoulder_roll": 1.356,
+        "l_wrist_pitch": -0.538,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.302,
+        "r_shoulder_roll": 1.356,
+        "l_shoulder_pitch": -0.968,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0072000000000000015,
+        "r_shoulder_pitch": -0.968,
+        "r_shoulder_yaw": -0.0072000000000000015
+      }
+    },
+    {
+      "t": 4.2,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.286,
+        "r_wrist_pitch": -0.534,
+        "l_shoulder_roll": 1.358,
+        "l_wrist_pitch": -0.534,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.286,
+        "r_shoulder_roll": 1.358,
+        "l_shoulder_pitch": -0.974,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0096,
+        "r_shoulder_pitch": -0.974,
+        "r_shoulder_yaw": -0.0096
+      }
+    },
+    {
+      "t": 4.25,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.27,
+        "r_wrist_pitch": -0.53,
+        "l_shoulder_roll": 1.36,
+        "l_wrist_pitch": -0.53,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.27,
+        "r_shoulder_roll": 1.36,
+        "l_shoulder_pitch": -0.98,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.012,
+        "r_shoulder_pitch": -0.98,
+        "r_shoulder_yaw": -0.012
+      }
+    },
+    {
+      "t": 4.3,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.254,
+        "r_wrist_pitch": -0.526,
+        "l_shoulder_roll": 1.362,
+        "l_wrist_pitch": -0.526,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.254,
+        "r_shoulder_roll": 1.362,
+        "l_shoulder_pitch": -0.986,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0144,
+        "r_shoulder_pitch": -0.986,
+        "r_shoulder_yaw": -0.0144
+      }
+    },
+    {
+      "t": 4.35,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.238,
+        "r_wrist_pitch": -0.522,
+        "l_shoulder_roll": 1.364,
+        "l_wrist_pitch": -0.522,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.238,
+        "r_shoulder_roll": 1.364,
+        "l_shoulder_pitch": -0.992,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0168,
+        "r_shoulder_pitch": -0.992,
+        "r_shoulder_yaw": -0.0168
+      }
+    },
+    {
+      "t": 4.4,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.2220000000000002,
+        "r_wrist_pitch": -0.518,
+        "l_shoulder_roll": 1.366,
+        "l_wrist_pitch": -0.518,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.2220000000000002,
+        "r_shoulder_roll": 1.366,
+        "l_shoulder_pitch": -0.998,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.019199999999999995,
+        "r_shoulder_pitch": -0.998,
+        "r_shoulder_yaw": -0.019199999999999995
+      }
+    },
+    {
+      "t": 4.45,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.2060000000000002,
+        "r_wrist_pitch": -0.514,
+        "l_shoulder_roll": 1.368,
+        "l_wrist_pitch": -0.514,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.2060000000000002,
+        "r_shoulder_roll": 1.368,
+        "l_shoulder_pitch": -1.004,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.021599999999999998,
+        "r_shoulder_pitch": -1.004,
+        "r_shoulder_yaw": -0.021599999999999998
+      }
+    },
+    {
+      "t": 4.5,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1900000000000002,
+        "r_wrist_pitch": -0.51,
+        "l_shoulder_roll": 1.37,
+        "l_wrist_pitch": -0.51,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1900000000000002,
+        "r_shoulder_roll": 1.37,
+        "l_shoulder_pitch": -1.01,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.023999999999999997,
+        "r_shoulder_pitch": -1.01,
+        "r_shoulder_yaw": -0.023999999999999997
+      }
+    },
+    {
+      "t": 4.55,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1740000000000002,
+        "r_wrist_pitch": -0.506,
+        "l_shoulder_roll": 1.372,
+        "l_wrist_pitch": -0.506,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1740000000000002,
+        "r_shoulder_roll": 1.372,
+        "l_shoulder_pitch": -1.016,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.026399999999999996,
+        "r_shoulder_pitch": -1.016,
+        "r_shoulder_yaw": -0.026399999999999996
+      }
+    },
+    {
+      "t": 4.6,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1580000000000001,
+        "r_wrist_pitch": -0.502,
+        "l_shoulder_roll": 1.374,
+        "l_wrist_pitch": -0.502,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1580000000000001,
+        "r_shoulder_roll": 1.374,
+        "l_shoulder_pitch": -1.022,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0288,
+        "r_shoulder_pitch": -1.022,
+        "r_shoulder_yaw": -0.0288
+      }
+    },
+    {
+      "t": 4.65,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1420000000000001,
+        "r_wrist_pitch": -0.498,
+        "l_shoulder_roll": 1.3760000000000001,
+        "l_wrist_pitch": -0.498,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1420000000000001,
+        "r_shoulder_roll": 1.3760000000000001,
+        "l_shoulder_pitch": -1.028,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.0312,
+        "r_shoulder_pitch": -1.028,
+        "r_shoulder_yaw": -0.0312
+      }
+    },
+    {
+      "t": 4.7,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.1260000000000001,
+        "r_wrist_pitch": -0.494,
+        "l_shoulder_roll": 1.3780000000000001,
+        "l_wrist_pitch": -0.494,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.1260000000000001,
+        "r_shoulder_roll": 1.3780000000000001,
+        "l_shoulder_pitch": -1.034,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.033600000000000005,
+        "r_shoulder_pitch": -1.034,
+        "r_shoulder_yaw": -0.033600000000000005
+      }
+    },
+    {
+      "t": 4.75,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.11,
+        "r_wrist_pitch": -0.49,
+        "l_shoulder_roll": 1.3800000000000001,
+        "l_wrist_pitch": -0.49,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.11,
+        "r_shoulder_roll": 1.3800000000000001,
+        "l_shoulder_pitch": -1.04,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.036000000000000004,
+        "r_shoulder_pitch": -1.04,
+        "r_shoulder_yaw": -0.036000000000000004
+      }
+    },
+    {
+      "t": 4.8,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.094,
+        "r_wrist_pitch": -0.486,
+        "l_shoulder_roll": 1.3820000000000001,
+        "l_wrist_pitch": -0.486,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.094,
+        "r_shoulder_roll": 1.3820000000000001,
+        "l_shoulder_pitch": -1.046,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.038400000000000004,
+        "r_shoulder_pitch": -1.046,
+        "r_shoulder_yaw": -0.038400000000000004
+      }
+    },
+    {
+      "t": 4.85,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.078,
+        "r_wrist_pitch": -0.482,
+        "l_shoulder_roll": 1.3840000000000001,
+        "l_wrist_pitch": -0.482,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.078,
+        "r_shoulder_roll": 1.3840000000000001,
+        "l_shoulder_pitch": -1.052,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.04080000000000001,
+        "r_shoulder_pitch": -1.052,
+        "r_shoulder_yaw": -0.04080000000000001
+      }
+    },
+    {
+      "t": 4.9,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.062,
+        "r_wrist_pitch": -0.478,
+        "l_shoulder_roll": 1.3860000000000001,
+        "l_wrist_pitch": -0.478,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.062,
+        "r_shoulder_roll": 1.3860000000000001,
+        "l_shoulder_pitch": -1.058,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.04320000000000001,
+        "r_shoulder_pitch": -1.058,
+        "r_shoulder_yaw": -0.04320000000000001
+      }
+    },
+    {
+      "t": 4.95,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.046,
+        "r_wrist_pitch": -0.474,
+        "l_shoulder_roll": 1.3880000000000001,
+        "l_wrist_pitch": -0.474,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.046,
+        "r_shoulder_roll": 1.3880000000000001,
+        "l_shoulder_pitch": -1.064,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.045600000000000016,
+        "r_shoulder_pitch": -1.064,
+        "r_shoulder_yaw": -0.045600000000000016
+      }
+    },
+    {
+      "t": 5.0,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.03,
+        "r_wrist_pitch": -0.47,
+        "l_shoulder_roll": 1.3900000000000001,
+        "l_wrist_pitch": -0.47,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.03,
+        "r_shoulder_roll": 1.3900000000000001,
+        "l_shoulder_pitch": -1.07,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.04800000000000001,
+        "r_shoulder_pitch": -1.07,
+        "r_shoulder_yaw": -0.04800000000000001
+      }
+    },
+    {
+      "t": 5.05,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 1.014,
+        "r_wrist_pitch": -0.46599999999999997,
+        "l_shoulder_roll": 1.3920000000000001,
+        "l_wrist_pitch": -0.46599999999999997,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 1.014,
+        "r_shoulder_roll": 1.3920000000000001,
+        "l_shoulder_pitch": -1.076,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.05040000000000001,
+        "r_shoulder_pitch": -1.076,
+        "r_shoulder_yaw": -0.05040000000000001
+      }
+    },
+    {
+      "t": 5.1,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.998,
+        "r_wrist_pitch": -0.46199999999999997,
+        "l_shoulder_roll": 1.3940000000000001,
+        "l_wrist_pitch": -0.46199999999999997,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.998,
+        "r_shoulder_roll": 1.3940000000000001,
+        "l_shoulder_pitch": -1.082,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.052800000000000014,
+        "r_shoulder_pitch": -1.082,
+        "r_shoulder_yaw": -0.052800000000000014
+      }
+    },
+    {
+      "t": 5.15,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.982,
+        "r_wrist_pitch": -0.45799999999999996,
+        "l_shoulder_roll": 1.3960000000000001,
+        "l_wrist_pitch": -0.45799999999999996,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.982,
+        "r_shoulder_roll": 1.3960000000000001,
+        "l_shoulder_pitch": -1.088,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.05520000000000001,
+        "r_shoulder_pitch": -1.088,
+        "r_shoulder_yaw": -0.05520000000000001
+      }
+    },
+    {
+      "t": 5.2,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.966,
+        "r_wrist_pitch": -0.45399999999999996,
+        "l_shoulder_roll": 1.3980000000000001,
+        "l_wrist_pitch": -0.45399999999999996,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.966,
+        "r_shoulder_roll": 1.3980000000000001,
+        "l_shoulder_pitch": -1.094,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.05760000000000001,
+        "r_shoulder_pitch": -1.094,
+        "r_shoulder_yaw": -0.05760000000000001
+      }
+    },
+    {
+      "t": 5.25,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.95,
+        "r_wrist_pitch": -0.44999999999999996,
+        "l_shoulder_roll": 1.4000000000000001,
+        "l_wrist_pitch": -0.44999999999999996,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.95,
+        "r_shoulder_roll": 1.4000000000000001,
+        "l_shoulder_pitch": -1.1,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.060000000000000026,
+        "r_shoulder_pitch": -1.1,
+        "r_shoulder_yaw": -0.060000000000000026
+      }
+    },
+    {
+      "t": 5.3,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.9339999999999999,
+        "r_wrist_pitch": -0.44599999999999995,
+        "l_shoulder_roll": 1.4020000000000001,
+        "l_wrist_pitch": -0.44599999999999995,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.9339999999999999,
+        "r_shoulder_roll": 1.4020000000000001,
+        "l_shoulder_pitch": -1.106,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.062400000000000025,
+        "r_shoulder_pitch": -1.106,
+        "r_shoulder_yaw": -0.062400000000000025
+      }
+    },
+    {
+      "t": 5.35,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.9179999999999999,
+        "r_wrist_pitch": -0.44199999999999995,
+        "l_shoulder_roll": 1.4040000000000001,
+        "l_wrist_pitch": -0.44199999999999995,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.9179999999999999,
+        "r_shoulder_roll": 1.4040000000000001,
+        "l_shoulder_pitch": -1.112,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.06480000000000002,
+        "r_shoulder_pitch": -1.112,
+        "r_shoulder_yaw": -0.06480000000000002
+      }
+    },
+    {
+      "t": 5.4,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.9019999999999999,
+        "r_wrist_pitch": -0.43799999999999994,
+        "l_shoulder_roll": 1.4060000000000001,
+        "l_wrist_pitch": -0.43799999999999994,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.9019999999999999,
+        "r_shoulder_roll": 1.4060000000000001,
+        "l_shoulder_pitch": -1.118,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.06720000000000004,
+        "r_shoulder_pitch": -1.118,
+        "r_shoulder_yaw": -0.06720000000000004
+      }
+    },
+    {
+      "t": 5.45,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8859999999999999,
+        "r_wrist_pitch": -0.43399999999999994,
+        "l_shoulder_roll": 1.4080000000000001,
+        "l_wrist_pitch": -0.43399999999999994,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8859999999999999,
+        "r_shoulder_roll": 1.4080000000000001,
+        "l_shoulder_pitch": -1.124,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.06960000000000004,
+        "r_shoulder_pitch": -1.124,
+        "r_shoulder_yaw": -0.06960000000000004
+      }
+    },
+    {
+      "t": 5.5,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8699999999999999,
+        "r_wrist_pitch": -0.42999999999999994,
+        "l_shoulder_roll": 1.4100000000000001,
+        "l_wrist_pitch": -0.42999999999999994,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8699999999999999,
+        "r_shoulder_roll": 1.4100000000000001,
+        "l_shoulder_pitch": -1.1300000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.07200000000000004,
+        "r_shoulder_pitch": -1.1300000000000001,
+        "r_shoulder_yaw": -0.07200000000000004
+      }
+    },
+    {
+      "t": 5.55,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8539999999999999,
+        "r_wrist_pitch": -0.42599999999999993,
+        "l_shoulder_roll": 1.4120000000000001,
+        "l_wrist_pitch": -0.42599999999999993,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8539999999999999,
+        "r_shoulder_roll": 1.4120000000000001,
+        "l_shoulder_pitch": -1.1360000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.07440000000000004,
+        "r_shoulder_pitch": -1.1360000000000001,
+        "r_shoulder_yaw": -0.07440000000000004
+      }
+    },
+    {
+      "t": 5.6,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8379999999999997,
+        "r_wrist_pitch": -0.42199999999999993,
+        "l_shoulder_roll": 1.4140000000000001,
+        "l_wrist_pitch": -0.42199999999999993,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8379999999999997,
+        "r_shoulder_roll": 1.4140000000000001,
+        "l_shoulder_pitch": -1.1420000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.07680000000000003,
+        "r_shoulder_pitch": -1.1420000000000001,
+        "r_shoulder_yaw": -0.07680000000000003
+      }
+    },
+    {
+      "t": 5.65,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8219999999999997,
+        "r_wrist_pitch": -0.4179999999999999,
+        "l_shoulder_roll": 1.416,
+        "l_wrist_pitch": -0.4179999999999999,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8219999999999997,
+        "r_shoulder_roll": 1.416,
+        "l_shoulder_pitch": -1.1480000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.07920000000000003,
+        "r_shoulder_pitch": -1.1480000000000001,
+        "r_shoulder_yaw": -0.07920000000000003
+      }
+    },
+    {
+      "t": 5.7,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.8059999999999997,
+        "r_wrist_pitch": -0.4139999999999999,
+        "l_shoulder_roll": 1.4180000000000001,
+        "l_wrist_pitch": -0.4139999999999999,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.8059999999999997,
+        "r_shoulder_roll": 1.4180000000000001,
+        "l_shoulder_pitch": -1.1540000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.08160000000000005,
+        "r_shoulder_pitch": -1.1540000000000001,
+        "r_shoulder_yaw": -0.08160000000000005
+      }
+    },
+    {
+      "t": 5.75,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7899999999999997,
+        "r_wrist_pitch": -0.4099999999999999,
+        "l_shoulder_roll": 1.42,
+        "l_wrist_pitch": -0.4099999999999999,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7899999999999997,
+        "r_shoulder_roll": 1.42,
+        "l_shoulder_pitch": -1.1600000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.08400000000000005,
+        "r_shoulder_pitch": -1.1600000000000001,
+        "r_shoulder_yaw": -0.08400000000000005
+      }
+    },
+    {
+      "t": 5.8,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7739999999999997,
+        "r_wrist_pitch": -0.4059999999999999,
+        "l_shoulder_roll": 1.422,
+        "l_wrist_pitch": -0.4059999999999999,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7739999999999997,
+        "r_shoulder_roll": 1.422,
+        "l_shoulder_pitch": -1.1660000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.08640000000000005,
+        "r_shoulder_pitch": -1.1660000000000001,
+        "r_shoulder_yaw": -0.08640000000000005
+      }
+    },
+    {
+      "t": 5.85,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7579999999999997,
+        "r_wrist_pitch": -0.4019999999999999,
+        "l_shoulder_roll": 1.424,
+        "l_wrist_pitch": -0.4019999999999999,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7579999999999997,
+        "r_shoulder_roll": 1.424,
+        "l_shoulder_pitch": -1.1720000000000002,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.08880000000000005,
+        "r_shoulder_pitch": -1.1720000000000002,
+        "r_shoulder_yaw": -0.08880000000000005
+      }
+    },
+    {
+      "t": 5.9,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7419999999999997,
+        "r_wrist_pitch": -0.3979999999999999,
+        "l_shoulder_roll": 1.426,
+        "l_wrist_pitch": -0.3979999999999999,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7419999999999997,
+        "r_shoulder_roll": 1.426,
+        "l_shoulder_pitch": -1.1780000000000002,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.09120000000000004,
+        "r_shoulder_pitch": -1.1780000000000002,
+        "r_shoulder_yaw": -0.09120000000000004
+      }
+    },
+    {
+      "t": 5.95,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7259999999999996,
+        "r_wrist_pitch": -0.3939999999999999,
+        "l_shoulder_roll": 1.428,
+        "l_wrist_pitch": -0.3939999999999999,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7259999999999996,
+        "r_shoulder_roll": 1.428,
+        "l_shoulder_pitch": -1.1840000000000002,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.09360000000000006,
+        "r_shoulder_pitch": -1.1840000000000002,
+        "r_shoulder_yaw": -0.09360000000000006
+      }
+    },
+    {
+      "t": 6.0,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7099999999999997,
+        "r_wrist_pitch": -0.3899999999999999,
+        "l_shoulder_roll": 1.43,
+        "l_wrist_pitch": -0.3899999999999999,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7099999999999997,
+        "r_shoulder_roll": 1.43,
+        "l_shoulder_pitch": -1.1900000000000002,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.09600000000000004,
+        "r_shoulder_pitch": -1.1900000000000002,
+        "r_shoulder_yaw": -0.09600000000000004
+      }
+    },
+    {
+      "t": 6.05,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6939999999999998,
+        "r_wrist_pitch": -0.3859999999999999,
+        "l_shoulder_roll": 1.432,
+        "l_wrist_pitch": -0.3859999999999999,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6939999999999998,
+        "r_shoulder_roll": 1.432,
+        "l_shoulder_pitch": -1.1960000000000002,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.09840000000000003,
+        "r_shoulder_pitch": -1.1960000000000002,
+        "r_shoulder_yaw": -0.09840000000000003
+      }
+    },
+    {
+      "t": 6.1,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6779999999999999,
+        "r_wrist_pitch": -0.38199999999999995,
+        "l_shoulder_roll": 1.434,
+        "l_wrist_pitch": -0.38199999999999995,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6779999999999999,
+        "r_shoulder_roll": 1.434,
+        "l_shoulder_pitch": -1.202,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.10080000000000001,
+        "r_shoulder_pitch": -1.202,
+        "r_shoulder_yaw": -0.10080000000000001
+      }
+    },
+    {
+      "t": 6.15,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6619999999999999,
+        "r_wrist_pitch": -0.378,
+        "l_shoulder_roll": 1.436,
+        "l_wrist_pitch": -0.378,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6619999999999999,
+        "r_shoulder_roll": 1.436,
+        "l_shoulder_pitch": -1.208,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.10320000000000001,
+        "r_shoulder_pitch": -1.208,
+        "r_shoulder_yaw": -0.10320000000000001
+      }
+    },
+    {
+      "t": 6.2,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6459999999999999,
+        "r_wrist_pitch": -0.374,
+        "l_shoulder_roll": 1.438,
+        "l_wrist_pitch": -0.374,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6459999999999999,
+        "r_shoulder_roll": 1.438,
+        "l_shoulder_pitch": -1.214,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.10560000000000001,
+        "r_shoulder_pitch": -1.214,
+        "r_shoulder_yaw": -0.10560000000000001
+      }
+    },
+    {
+      "t": 6.25,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.63,
+        "r_wrist_pitch": -0.37,
+        "l_shoulder_roll": 1.44,
+        "l_wrist_pitch": -0.37,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.63,
+        "r_shoulder_roll": 1.44,
+        "l_shoulder_pitch": -1.22,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.108,
+        "r_shoulder_pitch": -1.22,
+        "r_shoulder_yaw": -0.108
+      }
+    },
+    {
+      "t": 6.3,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6140000000000001,
+        "r_wrist_pitch": -0.366,
+        "l_shoulder_roll": 1.442,
+        "l_wrist_pitch": -0.366,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6140000000000001,
+        "r_shoulder_roll": 1.442,
+        "l_shoulder_pitch": -1.226,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.11039999999999998,
+        "r_shoulder_pitch": -1.226,
+        "r_shoulder_yaw": -0.11039999999999998
+      }
+    },
+    {
+      "t": 6.35,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5980000000000002,
+        "r_wrist_pitch": -0.362,
+        "l_shoulder_roll": 1.444,
+        "l_wrist_pitch": -0.362,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5980000000000002,
+        "r_shoulder_roll": 1.444,
+        "l_shoulder_pitch": -1.232,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.11279999999999997,
+        "r_shoulder_pitch": -1.232,
+        "r_shoulder_yaw": -0.11279999999999997
+      }
+    },
+    {
+      "t": 6.4,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5820000000000003,
+        "r_wrist_pitch": -0.35800000000000004,
+        "l_shoulder_roll": 1.446,
+        "l_wrist_pitch": -0.35800000000000004,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5820000000000003,
+        "r_shoulder_roll": 1.446,
+        "l_shoulder_pitch": -1.238,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.11519999999999997,
+        "r_shoulder_pitch": -1.238,
+        "r_shoulder_yaw": -0.11519999999999997
+      }
+    },
+    {
+      "t": 6.45,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5660000000000003,
+        "r_wrist_pitch": -0.35400000000000004,
+        "l_shoulder_roll": 1.448,
+        "l_wrist_pitch": -0.35400000000000004,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5660000000000003,
+        "r_shoulder_roll": 1.448,
+        "l_shoulder_pitch": -1.244,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.11759999999999997,
+        "r_shoulder_pitch": -1.244,
+        "r_shoulder_yaw": -0.11759999999999997
+      }
+    },
+    {
+      "t": 6.5,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 6.55,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 6.6,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 6.65,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 6.7,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 6.75,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 6.8,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 6.85,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 6.9,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 6.95,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.0,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.05,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.1,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.15,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.2,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.25,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.3,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.35,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.4,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.45,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.5,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.55,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.6,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.65,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.7,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.75,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.8,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.85,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.9,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 7.95,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.0,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.05,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.1,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.15,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.2,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.25,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.3,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.35,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.4,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.45,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.5,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.55,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.6,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.65,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.7,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.75,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.8,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.85,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.9,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 8.95,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.0,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.05,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.1,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.15,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.2,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.25,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.3,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.35,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.4,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.45,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.5,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.55,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.6,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.65,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.7,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.75,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.8,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.85,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.9,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 9.95,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.0,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.05,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.1,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.15,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.2,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.25,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.3,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.35,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.4,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.45,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.5,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.55,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.6,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.65,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.7,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.75,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.8,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.85,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.9,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 10.95,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 11.0,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 11.05,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 11.1,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 11.15,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 11.2,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 11.25,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 11.3,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 11.35,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 11.4,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 11.45,
+      "joints": {
+        "l_shoulder_pitch": -1.25,
+        "l_shoulder_roll": 1.45,
+        "l_shoulder_yaw": 0.12,
+        "l_elbow": 0.55,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_roll": 1.45,
+        "r_shoulder_yaw": -0.12,
+        "r_elbow": 0.55,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": -0.35,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 11.5,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.55,
+        "r_wrist_pitch": -0.35,
+        "l_shoulder_roll": 1.45,
+        "l_wrist_pitch": -0.35,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.55,
+        "r_shoulder_roll": 1.45,
+        "l_shoulder_pitch": -1.25,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.12,
+        "r_shoulder_pitch": -1.25,
+        "r_shoulder_yaw": -0.12
+      }
+    },
+    {
+      "t": 11.55,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5539166666666667,
+        "r_wrist_pitch": -0.3441666666666666,
+        "l_shoulder_roll": 1.4344999999999999,
+        "l_wrist_pitch": -0.3441666666666666,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5539166666666667,
+        "r_shoulder_roll": 1.4344999999999999,
+        "l_shoulder_pitch": -1.2378333333333333,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.118,
+        "r_shoulder_pitch": -1.2378333333333333,
+        "r_shoulder_yaw": -0.118
+      }
+    },
+    {
+      "t": 11.6,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5578333333333334,
+        "r_wrist_pitch": -0.3383333333333333,
+        "l_shoulder_roll": 1.419,
+        "l_wrist_pitch": -0.3383333333333333,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5578333333333334,
+        "r_shoulder_roll": 1.419,
+        "l_shoulder_pitch": -1.2256666666666667,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.11599999999999999,
+        "r_shoulder_pitch": -1.2256666666666667,
+        "r_shoulder_yaw": -0.11599999999999999
+      }
+    },
+    {
+      "t": 11.65,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5617500000000001,
+        "r_wrist_pitch": -0.33249999999999996,
+        "l_shoulder_roll": 1.4035,
+        "l_wrist_pitch": -0.33249999999999996,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5617500000000001,
+        "r_shoulder_roll": 1.4035,
+        "l_shoulder_pitch": -1.2135,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.11399999999999999,
+        "r_shoulder_pitch": -1.2135,
+        "r_shoulder_yaw": -0.11399999999999999
+      }
+    },
+    {
+      "t": 11.7,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5656666666666668,
+        "r_wrist_pitch": -0.32666666666666666,
+        "l_shoulder_roll": 1.388,
+        "l_wrist_pitch": -0.32666666666666666,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5656666666666668,
+        "r_shoulder_roll": 1.388,
+        "l_shoulder_pitch": -1.2013333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.11199999999999999,
+        "r_shoulder_pitch": -1.2013333333333334,
+        "r_shoulder_yaw": -0.11199999999999999
+      }
+    },
+    {
+      "t": 11.75,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5695833333333333,
+        "r_wrist_pitch": -0.3208333333333333,
+        "l_shoulder_roll": 1.3725,
+        "l_wrist_pitch": -0.3208333333333333,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5695833333333333,
+        "r_shoulder_roll": 1.3725,
+        "l_shoulder_pitch": -1.1891666666666667,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.11,
+        "r_shoulder_pitch": -1.1891666666666667,
+        "r_shoulder_yaw": -0.11
+      }
+    },
+    {
+      "t": 11.8,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5735,
+        "r_wrist_pitch": -0.315,
+        "l_shoulder_roll": 1.357,
+        "l_wrist_pitch": -0.315,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5735,
+        "r_shoulder_roll": 1.357,
+        "l_shoulder_pitch": -1.177,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.108,
+        "r_shoulder_pitch": -1.177,
+        "r_shoulder_yaw": -0.108
+      }
+    },
+    {
+      "t": 11.85,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5774166666666667,
+        "r_wrist_pitch": -0.30916666666666665,
+        "l_shoulder_roll": 1.3415,
+        "l_wrist_pitch": -0.30916666666666665,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5774166666666667,
+        "r_shoulder_roll": 1.3415,
+        "l_shoulder_pitch": -1.1648333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.106,
+        "r_shoulder_pitch": -1.1648333333333334,
+        "r_shoulder_yaw": -0.106
+      }
+    },
+    {
+      "t": 11.9,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5813333333333334,
+        "r_wrist_pitch": -0.30333333333333334,
+        "l_shoulder_roll": 1.326,
+        "l_wrist_pitch": -0.30333333333333334,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5813333333333334,
+        "r_shoulder_roll": 1.326,
+        "l_shoulder_pitch": -1.1526666666666667,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.104,
+        "r_shoulder_pitch": -1.1526666666666667,
+        "r_shoulder_yaw": -0.104
+      }
+    },
+    {
+      "t": 11.95,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.58525,
+        "r_wrist_pitch": -0.2975,
+        "l_shoulder_roll": 1.3105,
+        "l_wrist_pitch": -0.2975,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.58525,
+        "r_shoulder_roll": 1.3105,
+        "l_shoulder_pitch": -1.1405,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.102,
+        "r_shoulder_pitch": -1.1405,
+        "r_shoulder_yaw": -0.102
+      }
+    },
+    {
+      "t": 12.0,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5891666666666667,
+        "r_wrist_pitch": -0.29166666666666663,
+        "l_shoulder_roll": 1.295,
+        "l_wrist_pitch": -0.29166666666666663,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5891666666666667,
+        "r_shoulder_roll": 1.295,
+        "l_shoulder_pitch": -1.1283333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.1,
+        "r_shoulder_pitch": -1.1283333333333334,
+        "r_shoulder_yaw": -0.1
+      }
+    },
+    {
+      "t": 12.05,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5930833333333334,
+        "r_wrist_pitch": -0.28583333333333333,
+        "l_shoulder_roll": 1.2795,
+        "l_wrist_pitch": -0.28583333333333333,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5930833333333334,
+        "r_shoulder_roll": 1.2795,
+        "l_shoulder_pitch": -1.1161666666666668,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.098,
+        "r_shoulder_pitch": -1.1161666666666668,
+        "r_shoulder_yaw": -0.098
+      }
+    },
+    {
+      "t": 12.1,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.5970000000000001,
+        "r_wrist_pitch": -0.27999999999999997,
+        "l_shoulder_roll": 1.264,
+        "l_wrist_pitch": -0.27999999999999997,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.5970000000000001,
+        "r_shoulder_roll": 1.264,
+        "l_shoulder_pitch": -1.104,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.096,
+        "r_shoulder_pitch": -1.104,
+        "r_shoulder_yaw": -0.096
+      }
+    },
+    {
+      "t": 12.15,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6009166666666668,
+        "r_wrist_pitch": -0.27416666666666667,
+        "l_shoulder_roll": 1.2485,
+        "l_wrist_pitch": -0.27416666666666667,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6009166666666668,
+        "r_shoulder_roll": 1.2485,
+        "l_shoulder_pitch": -1.0918333333333332,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.094,
+        "r_shoulder_pitch": -1.0918333333333332,
+        "r_shoulder_yaw": -0.094
+      }
+    },
+    {
+      "t": 12.2,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6048333333333333,
+        "r_wrist_pitch": -0.2683333333333333,
+        "l_shoulder_roll": 1.2329999999999999,
+        "l_wrist_pitch": -0.2683333333333333,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6048333333333333,
+        "r_shoulder_roll": 1.2329999999999999,
+        "l_shoulder_pitch": -1.0796666666666666,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.092,
+        "r_shoulder_pitch": -1.0796666666666666,
+        "r_shoulder_yaw": -0.092
+      }
+    },
+    {
+      "t": 12.25,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.60875,
+        "r_wrist_pitch": -0.26249999999999996,
+        "l_shoulder_roll": 1.2174999999999998,
+        "l_wrist_pitch": -0.26249999999999996,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.60875,
+        "r_shoulder_roll": 1.2174999999999998,
+        "l_shoulder_pitch": -1.0675,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.09,
+        "r_shoulder_pitch": -1.0675,
+        "r_shoulder_yaw": -0.09
+      }
+    },
+    {
+      "t": 12.3,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6126666666666667,
+        "r_wrist_pitch": -0.2566666666666666,
+        "l_shoulder_roll": 1.202,
+        "l_wrist_pitch": -0.2566666666666666,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6126666666666667,
+        "r_shoulder_roll": 1.202,
+        "l_shoulder_pitch": -1.0553333333333332,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.088,
+        "r_shoulder_pitch": -1.0553333333333332,
+        "r_shoulder_yaw": -0.088
+      }
+    },
+    {
+      "t": 12.35,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6165833333333334,
+        "r_wrist_pitch": -0.2508333333333333,
+        "l_shoulder_roll": 1.1864999999999999,
+        "l_wrist_pitch": -0.2508333333333333,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6165833333333334,
+        "r_shoulder_roll": 1.1864999999999999,
+        "l_shoulder_pitch": -1.0431666666666666,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.086,
+        "r_shoulder_pitch": -1.0431666666666666,
+        "r_shoulder_yaw": -0.086
+      }
+    },
+    {
+      "t": 12.4,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6205,
+        "r_wrist_pitch": -0.24499999999999994,
+        "l_shoulder_roll": 1.1709999999999998,
+        "l_wrist_pitch": -0.24499999999999994,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6205,
+        "r_shoulder_roll": 1.1709999999999998,
+        "l_shoulder_pitch": -1.031,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.08399999999999999,
+        "r_shoulder_pitch": -1.031,
+        "r_shoulder_yaw": -0.08399999999999999
+      }
+    },
+    {
+      "t": 12.45,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6244166666666667,
+        "r_wrist_pitch": -0.23916666666666664,
+        "l_shoulder_roll": 1.1555,
+        "l_wrist_pitch": -0.23916666666666664,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6244166666666667,
+        "r_shoulder_roll": 1.1555,
+        "l_shoulder_pitch": -1.0188333333333333,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.08199999999999999,
+        "r_shoulder_pitch": -1.0188333333333333,
+        "r_shoulder_yaw": -0.08199999999999999
+      }
+    },
+    {
+      "t": 12.5,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6283333333333334,
+        "r_wrist_pitch": -0.23333333333333328,
+        "l_shoulder_roll": 1.14,
+        "l_wrist_pitch": -0.23333333333333328,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6283333333333334,
+        "r_shoulder_roll": 1.14,
+        "l_shoulder_pitch": -1.0066666666666666,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.07999999999999999,
+        "r_shoulder_pitch": -1.0066666666666666,
+        "r_shoulder_yaw": -0.07999999999999999
+      }
+    },
+    {
+      "t": 12.55,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6322500000000001,
+        "r_wrist_pitch": -0.22749999999999995,
+        "l_shoulder_roll": 1.1244999999999998,
+        "l_wrist_pitch": -0.22749999999999995,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6322500000000001,
+        "r_shoulder_roll": 1.1244999999999998,
+        "l_shoulder_pitch": -0.9944999999999999,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.07799999999999999,
+        "r_shoulder_pitch": -0.9944999999999999,
+        "r_shoulder_yaw": -0.07799999999999999
+      }
+    },
+    {
+      "t": 12.6,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6361666666666668,
+        "r_wrist_pitch": -0.22166666666666662,
+        "l_shoulder_roll": 1.109,
+        "l_wrist_pitch": -0.22166666666666662,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6361666666666668,
+        "r_shoulder_roll": 1.109,
+        "l_shoulder_pitch": -0.9823333333333333,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.07599999999999998,
+        "r_shoulder_pitch": -0.9823333333333333,
+        "r_shoulder_yaw": -0.07599999999999998
+      }
+    },
+    {
+      "t": 12.65,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6400833333333334,
+        "r_wrist_pitch": -0.21583333333333327,
+        "l_shoulder_roll": 1.0935,
+        "l_wrist_pitch": -0.21583333333333327,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6400833333333334,
+        "r_shoulder_roll": 1.0935,
+        "l_shoulder_pitch": -0.9701666666666666,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.07399999999999998,
+        "r_shoulder_pitch": -0.9701666666666666,
+        "r_shoulder_yaw": -0.07399999999999998
+      }
+    },
+    {
+      "t": 12.7,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6440000000000001,
+        "r_wrist_pitch": -0.20999999999999994,
+        "l_shoulder_roll": 1.0779999999999998,
+        "l_wrist_pitch": -0.20999999999999994,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6440000000000001,
+        "r_shoulder_roll": 1.0779999999999998,
+        "l_shoulder_pitch": -0.958,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.07199999999999998,
+        "r_shoulder_pitch": -0.958,
+        "r_shoulder_yaw": -0.07199999999999998
+      }
+    },
+    {
+      "t": 12.75,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6479166666666667,
+        "r_wrist_pitch": -0.2041666666666666,
+        "l_shoulder_roll": 1.0624999999999998,
+        "l_wrist_pitch": -0.2041666666666666,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6479166666666667,
+        "r_shoulder_roll": 1.0624999999999998,
+        "l_shoulder_pitch": -0.9458333333333333,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.06999999999999998,
+        "r_shoulder_pitch": -0.9458333333333333,
+        "r_shoulder_yaw": -0.06999999999999998
+      }
+    },
+    {
+      "t": 12.8,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6518333333333334,
+        "r_wrist_pitch": -0.19833333333333325,
+        "l_shoulder_roll": 1.0469999999999997,
+        "l_wrist_pitch": -0.19833333333333325,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6518333333333334,
+        "r_shoulder_roll": 1.0469999999999997,
+        "l_shoulder_pitch": -0.9336666666666665,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.06799999999999998,
+        "r_shoulder_pitch": -0.9336666666666665,
+        "r_shoulder_yaw": -0.06799999999999998
+      }
+    },
+    {
+      "t": 12.85,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.65575,
+        "r_wrist_pitch": -0.19249999999999992,
+        "l_shoulder_roll": 1.0314999999999999,
+        "l_wrist_pitch": -0.19249999999999992,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.65575,
+        "r_shoulder_roll": 1.0314999999999999,
+        "l_shoulder_pitch": -0.9214999999999999,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.06599999999999998,
+        "r_shoulder_pitch": -0.9214999999999999,
+        "r_shoulder_yaw": -0.06599999999999998
+      }
+    },
+    {
+      "t": 12.9,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6596666666666667,
+        "r_wrist_pitch": -0.1866666666666666,
+        "l_shoulder_roll": 1.0159999999999998,
+        "l_wrist_pitch": -0.1866666666666666,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6596666666666667,
+        "r_shoulder_roll": 1.0159999999999998,
+        "l_shoulder_pitch": -0.9093333333333332,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.06399999999999997,
+        "r_shoulder_pitch": -0.9093333333333332,
+        "r_shoulder_yaw": -0.06399999999999997
+      }
+    },
+    {
+      "t": 12.95,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6635833333333334,
+        "r_wrist_pitch": -0.18083333333333323,
+        "l_shoulder_roll": 1.0004999999999997,
+        "l_wrist_pitch": -0.18083333333333323,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6635833333333334,
+        "r_shoulder_roll": 1.0004999999999997,
+        "l_shoulder_pitch": -0.8971666666666664,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.06199999999999997,
+        "r_shoulder_pitch": -0.8971666666666664,
+        "r_shoulder_yaw": -0.06199999999999997
+      }
+    },
+    {
+      "t": 13.0,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6675000000000001,
+        "r_wrist_pitch": -0.1749999999999999,
+        "l_shoulder_roll": 0.9849999999999998,
+        "l_wrist_pitch": -0.1749999999999999,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6675000000000001,
+        "r_shoulder_roll": 0.9849999999999998,
+        "l_shoulder_pitch": -0.8849999999999998,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.05999999999999997,
+        "r_shoulder_pitch": -0.8849999999999998,
+        "r_shoulder_yaw": -0.05999999999999997
+      }
+    },
+    {
+      "t": 13.05,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6714166666666668,
+        "r_wrist_pitch": -0.16916666666666655,
+        "l_shoulder_roll": 0.9694999999999998,
+        "l_wrist_pitch": -0.16916666666666655,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6714166666666668,
+        "r_shoulder_roll": 0.9694999999999998,
+        "l_shoulder_pitch": -0.8728333333333331,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.05799999999999997,
+        "r_shoulder_pitch": -0.8728333333333331,
+        "r_shoulder_yaw": -0.05799999999999997
+      }
+    },
+    {
+      "t": 13.1,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6753333333333335,
+        "r_wrist_pitch": -0.16333333333333325,
+        "l_shoulder_roll": 0.9539999999999997,
+        "l_wrist_pitch": -0.16333333333333325,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6753333333333335,
+        "r_shoulder_roll": 0.9539999999999997,
+        "l_shoulder_pitch": -0.8606666666666665,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.055999999999999966,
+        "r_shoulder_pitch": -0.8606666666666665,
+        "r_shoulder_yaw": -0.055999999999999966
+      }
+    },
+    {
+      "t": 13.15,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6792500000000001,
+        "r_wrist_pitch": -0.1574999999999999,
+        "l_shoulder_roll": 0.9384999999999998,
+        "l_wrist_pitch": -0.1574999999999999,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6792500000000001,
+        "r_shoulder_roll": 0.9384999999999998,
+        "l_shoulder_pitch": -0.8484999999999998,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.053999999999999965,
+        "r_shoulder_pitch": -0.8484999999999998,
+        "r_shoulder_yaw": -0.053999999999999965
+      }
+    },
+    {
+      "t": 13.2,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6831666666666668,
+        "r_wrist_pitch": -0.15166666666666653,
+        "l_shoulder_roll": 0.9229999999999997,
+        "l_wrist_pitch": -0.15166666666666653,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6831666666666668,
+        "r_shoulder_roll": 0.9229999999999997,
+        "l_shoulder_pitch": -0.8363333333333332,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.05199999999999996,
+        "r_shoulder_pitch": -0.8363333333333332,
+        "r_shoulder_yaw": -0.05199999999999996
+      }
+    },
+    {
+      "t": 13.25,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6870833333333335,
+        "r_wrist_pitch": -0.14583333333333323,
+        "l_shoulder_roll": 0.9074999999999998,
+        "l_wrist_pitch": -0.14583333333333323,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6870833333333335,
+        "r_shoulder_roll": 0.9074999999999998,
+        "l_shoulder_pitch": -0.8241666666666665,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.04999999999999996,
+        "r_shoulder_pitch": -0.8241666666666665,
+        "r_shoulder_yaw": -0.04999999999999996
+      }
+    },
+    {
+      "t": 13.3,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6910000000000001,
+        "r_wrist_pitch": -0.13999999999999987,
+        "l_shoulder_roll": 0.8919999999999997,
+        "l_wrist_pitch": -0.13999999999999987,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6910000000000001,
+        "r_shoulder_roll": 0.8919999999999997,
+        "l_shoulder_pitch": -0.8119999999999998,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.04799999999999996,
+        "r_shoulder_pitch": -0.8119999999999998,
+        "r_shoulder_yaw": -0.04799999999999996
+      }
+    },
+    {
+      "t": 13.35,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6949166666666668,
+        "r_wrist_pitch": -0.13416666666666652,
+        "l_shoulder_roll": 0.8764999999999996,
+        "l_wrist_pitch": -0.13416666666666652,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6949166666666668,
+        "r_shoulder_roll": 0.8764999999999996,
+        "l_shoulder_pitch": -0.7998333333333331,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.04599999999999996,
+        "r_shoulder_pitch": -0.7998333333333331,
+        "r_shoulder_yaw": -0.04599999999999996
+      }
+    },
+    {
+      "t": 13.4,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.6988333333333334,
+        "r_wrist_pitch": -0.12833333333333322,
+        "l_shoulder_roll": 0.8609999999999998,
+        "l_wrist_pitch": -0.12833333333333322,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.6988333333333334,
+        "r_shoulder_roll": 0.8609999999999998,
+        "l_shoulder_pitch": -0.7876666666666665,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.043999999999999956,
+        "r_shoulder_pitch": -0.7876666666666665,
+        "r_shoulder_yaw": -0.043999999999999956
+      }
+    },
+    {
+      "t": 13.45,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7027500000000001,
+        "r_wrist_pitch": -0.12249999999999986,
+        "l_shoulder_roll": 0.8454999999999997,
+        "l_wrist_pitch": -0.12249999999999986,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7027500000000001,
+        "r_shoulder_roll": 0.8454999999999997,
+        "l_shoulder_pitch": -0.7754999999999997,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.041999999999999954,
+        "r_shoulder_pitch": -0.7754999999999997,
+        "r_shoulder_yaw": -0.041999999999999954
+      }
+    },
+    {
+      "t": 13.5,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7066666666666668,
+        "r_wrist_pitch": -0.11666666666666656,
+        "l_shoulder_roll": 0.8299999999999997,
+        "l_wrist_pitch": -0.11666666666666656,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7066666666666668,
+        "r_shoulder_roll": 0.8299999999999997,
+        "l_shoulder_pitch": -0.7633333333333332,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.039999999999999966,
+        "r_shoulder_pitch": -0.7633333333333332,
+        "r_shoulder_yaw": -0.039999999999999966
+      }
+    },
+    {
+      "t": 13.55,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7105833333333335,
+        "r_wrist_pitch": -0.11083333333333326,
+        "l_shoulder_roll": 0.8144999999999998,
+        "l_wrist_pitch": -0.11083333333333326,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7105833333333335,
+        "r_shoulder_roll": 0.8144999999999998,
+        "l_shoulder_pitch": -0.7511666666666665,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.037999999999999964,
+        "r_shoulder_pitch": -0.7511666666666665,
+        "r_shoulder_yaw": -0.037999999999999964
+      }
+    },
+    {
+      "t": 13.6,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7145000000000001,
+        "r_wrist_pitch": -0.10499999999999993,
+        "l_shoulder_roll": 0.7989999999999998,
+        "l_wrist_pitch": -0.10499999999999993,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7145000000000001,
+        "r_shoulder_roll": 0.7989999999999998,
+        "l_shoulder_pitch": -0.7389999999999999,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.035999999999999976,
+        "r_shoulder_pitch": -0.7389999999999999,
+        "r_shoulder_yaw": -0.035999999999999976
+      }
+    },
+    {
+      "t": 13.65,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7184166666666667,
+        "r_wrist_pitch": -0.09916666666666663,
+        "l_shoulder_roll": 0.7834999999999999,
+        "l_wrist_pitch": -0.09916666666666663,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7184166666666667,
+        "r_shoulder_roll": 0.7834999999999999,
+        "l_shoulder_pitch": -0.7268333333333332,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.03399999999999999,
+        "r_shoulder_pitch": -0.7268333333333332,
+        "r_shoulder_yaw": -0.03399999999999999
+      }
+    },
+    {
+      "t": 13.7,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7223333333333334,
+        "r_wrist_pitch": -0.09333333333333332,
+        "l_shoulder_roll": 0.7679999999999999,
+        "l_wrist_pitch": -0.09333333333333332,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7223333333333334,
+        "r_shoulder_roll": 0.7679999999999999,
+        "l_shoulder_pitch": -0.7146666666666667,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.03199999999999999,
+        "r_shoulder_pitch": -0.7146666666666667,
+        "r_shoulder_yaw": -0.03199999999999999
+      }
+    },
+    {
+      "t": 13.75,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7262500000000001,
+        "r_wrist_pitch": -0.08750000000000002,
+        "l_shoulder_roll": 0.7525,
+        "l_wrist_pitch": -0.08750000000000002,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7262500000000001,
+        "r_shoulder_roll": 0.7525,
+        "l_shoulder_pitch": -0.7025,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.03,
+        "r_shoulder_pitch": -0.7025,
+        "r_shoulder_yaw": -0.03
+      }
+    },
+    {
+      "t": 13.8,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7301666666666666,
+        "r_wrist_pitch": -0.08166666666666667,
+        "l_shoulder_roll": 0.7370000000000001,
+        "l_wrist_pitch": -0.08166666666666667,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7301666666666666,
+        "r_shoulder_roll": 0.7370000000000001,
+        "l_shoulder_pitch": -0.6903333333333334,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.02800000000000001,
+        "r_shoulder_pitch": -0.6903333333333334,
+        "r_shoulder_yaw": -0.02800000000000001
+      }
+    },
+    {
+      "t": 13.85,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7340833333333333,
+        "r_wrist_pitch": -0.07583333333333336,
+        "l_shoulder_roll": 0.7215000000000001,
+        "l_wrist_pitch": -0.07583333333333336,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7340833333333333,
+        "r_shoulder_roll": 0.7215000000000001,
+        "l_shoulder_pitch": -0.6781666666666668,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.02600000000000001,
+        "r_shoulder_pitch": -0.6781666666666668,
+        "r_shoulder_yaw": -0.02600000000000001
+      }
+    },
+    {
+      "t": 13.9,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.738,
+        "r_wrist_pitch": -0.07000000000000006,
+        "l_shoulder_roll": 0.7060000000000002,
+        "l_wrist_pitch": -0.07000000000000006,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.738,
+        "r_shoulder_roll": 0.7060000000000002,
+        "l_shoulder_pitch": -0.6660000000000001,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.02400000000000002,
+        "r_shoulder_pitch": -0.6660000000000001,
+        "r_shoulder_yaw": -0.02400000000000002
+      }
+    },
+    {
+      "t": 13.95,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7419166666666667,
+        "r_wrist_pitch": -0.06416666666666676,
+        "l_shoulder_roll": 0.6905000000000002,
+        "l_wrist_pitch": -0.06416666666666676,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7419166666666667,
+        "r_shoulder_roll": 0.6905000000000002,
+        "l_shoulder_pitch": -0.6538333333333335,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.022000000000000033,
+        "r_shoulder_pitch": -0.6538333333333335,
+        "r_shoulder_yaw": -0.022000000000000033
+      }
+    },
+    {
+      "t": 14.0,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7458333333333333,
+        "r_wrist_pitch": -0.05833333333333346,
+        "l_shoulder_roll": 0.6750000000000003,
+        "l_wrist_pitch": -0.05833333333333346,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7458333333333333,
+        "r_shoulder_roll": 0.6750000000000003,
+        "l_shoulder_pitch": -0.6416666666666669,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.02000000000000003,
+        "r_shoulder_pitch": -0.6416666666666669,
+        "r_shoulder_yaw": -0.02000000000000003
+      }
+    },
+    {
+      "t": 14.05,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7497499999999999,
+        "r_wrist_pitch": -0.0525000000000001,
+        "l_shoulder_roll": 0.6595000000000003,
+        "l_wrist_pitch": -0.0525000000000001,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7497499999999999,
+        "r_shoulder_roll": 0.6595000000000003,
+        "l_shoulder_pitch": -0.6295000000000003,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.018000000000000044,
+        "r_shoulder_pitch": -0.6295000000000003,
+        "r_shoulder_yaw": -0.018000000000000044
+      }
+    },
+    {
+      "t": 14.1,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7536666666666666,
+        "r_wrist_pitch": -0.0466666666666668,
+        "l_shoulder_roll": 0.6440000000000003,
+        "l_wrist_pitch": -0.0466666666666668,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7536666666666666,
+        "r_shoulder_roll": 0.6440000000000003,
+        "l_shoulder_pitch": -0.6173333333333336,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.016000000000000056,
+        "r_shoulder_pitch": -0.6173333333333336,
+        "r_shoulder_yaw": -0.016000000000000056
+      }
+    },
+    {
+      "t": 14.15,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7575833333333333,
+        "r_wrist_pitch": -0.0408333333333335,
+        "l_shoulder_roll": 0.6285000000000005,
+        "l_wrist_pitch": -0.0408333333333335,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7575833333333333,
+        "r_shoulder_roll": 0.6285000000000005,
+        "l_shoulder_pitch": -0.6051666666666671,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.014000000000000054,
+        "r_shoulder_pitch": -0.6051666666666671,
+        "r_shoulder_yaw": -0.014000000000000054
+      }
+    },
+    {
+      "t": 14.2,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7614999999999998,
+        "r_wrist_pitch": -0.0350000000000002,
+        "l_shoulder_roll": 0.6130000000000005,
+        "l_wrist_pitch": -0.0350000000000002,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7614999999999998,
+        "r_shoulder_roll": 0.6130000000000005,
+        "l_shoulder_pitch": -0.5930000000000004,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.012000000000000066,
+        "r_shoulder_pitch": -0.5930000000000004,
+        "r_shoulder_yaw": -0.012000000000000066
+      }
+    },
+    {
+      "t": 14.25,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7654166666666665,
+        "r_wrist_pitch": -0.029166666666666896,
+        "l_shoulder_roll": 0.5975000000000006,
+        "l_wrist_pitch": -0.029166666666666896,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7654166666666665,
+        "r_shoulder_roll": 0.5975000000000006,
+        "l_shoulder_pitch": -0.5808333333333338,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.010000000000000064,
+        "r_shoulder_pitch": -0.5808333333333338,
+        "r_shoulder_yaw": -0.010000000000000064
+      }
+    },
+    {
+      "t": 14.3,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7693333333333332,
+        "r_wrist_pitch": -0.02333333333333354,
+        "l_shoulder_roll": 0.5820000000000006,
+        "l_wrist_pitch": -0.02333333333333354,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7693333333333332,
+        "r_shoulder_roll": 0.5820000000000006,
+        "l_shoulder_pitch": -0.5686666666666672,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.008000000000000076,
+        "r_shoulder_pitch": -0.5686666666666672,
+        "r_shoulder_yaw": -0.008000000000000076
+      }
+    },
+    {
+      "t": 14.35,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7732499999999999,
+        "r_wrist_pitch": -0.017500000000000238,
+        "l_shoulder_roll": 0.5665000000000007,
+        "l_wrist_pitch": -0.017500000000000238,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7732499999999999,
+        "r_shoulder_roll": 0.5665000000000007,
+        "l_shoulder_pitch": -0.5565000000000005,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.006000000000000089,
+        "r_shoulder_pitch": -0.5565000000000005,
+        "r_shoulder_yaw": -0.006000000000000089
+      }
+    },
+    {
+      "t": 14.4,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7771666666666666,
+        "r_wrist_pitch": -0.011666666666666936,
+        "l_shoulder_roll": 0.5510000000000007,
+        "l_wrist_pitch": -0.011666666666666936,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7771666666666666,
+        "r_shoulder_roll": 0.5510000000000007,
+        "l_shoulder_pitch": -0.5443333333333339,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.004000000000000087,
+        "r_shoulder_pitch": -0.5443333333333339,
+        "r_shoulder_yaw": -0.004000000000000087
+      }
+    },
+    {
+      "t": 14.45,
+      "joints": {
+        "r_wrist_yaw": 0.698,
+        "r_elbow": 0.7810833333333331,
+        "r_wrist_pitch": -0.005833333333333635,
+        "l_shoulder_roll": 0.5355000000000008,
+        "l_wrist_pitch": -0.005833333333333635,
+        "l_wrist_yaw": 0.698,
+        "l_elbow": 0.7810833333333331,
+        "r_shoulder_roll": 0.5355000000000008,
+        "l_shoulder_pitch": -0.5321666666666673,
+        "l_wrist_prosup": 0.0,
+        "r_wrist_prosup": 0.0,
+        "l_shoulder_yaw": 0.002000000000000099,
+        "r_shoulder_pitch": -0.5321666666666673,
+        "r_shoulder_yaw": -0.002000000000000099
+      }
+    },
+    {
+      "t": 14.5,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 14.55,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 14.6,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 14.65,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 14.7,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 14.75,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 14.8,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 14.85,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 14.9,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 14.95,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 15.0,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 15.05,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 15.1,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 15.15,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 15.2,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 15.25,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 15.3,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 15.35,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 15.4,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    },
+    {
+      "t": 15.45,
+      "joints": {
+        "l_shoulder_pitch": -0.52,
+        "l_shoulder_roll": 0.52,
+        "l_shoulder_yaw": 0.0,
+        "l_elbow": 0.785,
+        "l_wrist_prosup": 0.0,
+        "l_wrist_pitch": 0.0,
+        "l_wrist_yaw": 0.698,
+        "r_shoulder_pitch": -0.52,
+        "r_shoulder_roll": 0.52,
+        "r_shoulder_yaw": 0.0,
+        "r_elbow": 0.785,
+        "r_wrist_prosup": 0.0,
+        "r_wrist_pitch": 0.0,
+        "r_wrist_yaw": 0.698
+      }
+    }
+  ]
+}
