@@ -77,19 +77,22 @@ python3 "$ROOT/scripts/verify_no_regression.py" \
 
 cp "$WORKDIR/gazebo_raw.png" "$RAW_PROOF"
 
-# Comparable layout: full robot + both boxes on the left; two readable force
-# plots on the right. No simulation content is painted onto the camera frame.
-convert "$WORKDIR/gazebo_raw.png" -crop 620x650+300+40 +repage \
-  -resize 820x700 -background '#d0d0d0' -gravity center \
-  -extent 820x720 "$WORKDIR/gazebo_view.png"
-convert "$WORKDIR/r_hand_plot.png" -resize 440x300 "$WORKDIR/r_plot_view.png"
-convert "$WORKDIR/l_hand_plot.png" -resize 440x300 "$WORKDIR/l_plot_view.png"
+# Comparable layout with strict separation: the unobstructed camera view is
+# above, and the two plots are below it. No window covers the robot or boxes,
+# and no simulation content is painted onto the camera frame.
+convert "$WORKDIR/gazebo_raw.png" -crop 600x600+340+120 +repage \
+  -resize 500x500 \
+  -background '#d0d0d0' -gravity center -extent 1280x500 \
+  "$WORKDIR/gazebo_view.png"
+convert "$WORKDIR/r_hand_plot.png" -resize 340x210 "$WORKDIR/r_plot_view.png"
+convert "$WORKDIR/l_hand_plot.png" -resize 340x210 "$WORKDIR/l_plot_view.png"
 convert -size 1280x720 xc:white "$WORKDIR/gazebo_view.png" \
   -gravity northwest -geometry +0+0 -composite "$WORKDIR/r_plot_view.png" \
-  -gravity northwest -geometry +830+45 -composite "$WORKDIR/l_plot_view.png" \
-  -gravity northwest -geometry +830+375 -composite \
+  -gravity northwest -geometry +290+505 -composite "$WORKDIR/l_plot_view.png" \
+  -gravity northwest -geometry +650+505 -composite \
+  -stroke '#777777' -strokewidth 2 -draw 'line 0,502 1280,502' \
   -fill '#202020' -pointsize 18 -annotate +840+20 \
-  "Real /release_camera frame + real /vectorview contact topics" \
+  "Unobstructed /release_camera frame" \
   "$WORKDIR/current_view.png"
 convert "$WORKDIR/current_view.png" -gravity north -background white -splice 0x40 \
   -fill black -pointsize 28 -annotate +20+8 "v2.0+ (Gazebo Harmonic)" "$WORKDIR/current.png"

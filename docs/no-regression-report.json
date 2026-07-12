@@ -43,16 +43,16 @@
       "topic": "/vectorview/iCub_fixed/l_hand",
       "samples": 299,
       "messages": 47,
-      "nonzero_samples": 295,
-      "duration_seconds": 11.988348983999458,
+      "nonzero_samples": 298,
+      "duration_seconds": 11.988325061000069,
       "max_force_newtons": 353.04434957353016
     },
     "right_hand": {
       "topic": "/vectorview/iCub_fixed/r_hand",
       "samples": 299,
       "messages": 48,
-      "nonzero_samples": 295,
-      "duration_seconds": 11.974119919002987,
+      "nonzero_samples": 298,
+      "duration_seconds": 11.980361366993748,
       "max_force_newtons": 321.5875290928798
     }
   },
