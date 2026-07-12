@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "source": "unmodified /release_camera frame and /vectorview contact topics",
+  "contacts": {
+    "left_hand": {
+      "upper_box_contact": true,
+      "message_bytes": 1900,
+      "sha256": "f79340bcc4f8f0d9454374d7f258ba352a71d66475631ef727320a20a6d18981"
+    },
+    "right_hand": {
+      "upper_box_contact": true,
+      "message_bytes": 1904,
+      "sha256": "6f8823bd30105afd3365958b5d1f2b75594c3362050f530fd950dac480537077"
+    }
+  },
+  "raw_frame": {
+    "width": 1280,
+    "height": 720,
+    "sha256": "e76d5337aca7ce6e560d00d1b4fb54f7d40572a7ab0e689a00710576d71bf372",
+    "foreground_bounds": {
+      "x_min": 487,
+      "x_max": 749,
+      "y_min": 177,
+      "y_max": 710
+    },
+    "blue_pixels": 1397,
+    "separated_arrow_regions": [
+      {
+        "x_min": 610,
+        "x_max": 636,
+        "pixels": 484
+      },
+      {
+        "x_min": 664,
+        "x_max": 726,
+        "pixels": 871
+      }
+    ],
+    "red_overlay_pixels": 0
+  },
+  "plots": {
+    "left_hand": {
+      "topic": "/vectorview/iCub_fixed/l_hand",
+      "samples": 299,
+      "messages": 47,
+      "nonzero_samples": 295,
+      "duration_seconds": 11.988348983999458,
+      "max_force_newtons": 353.04434957353016
+    },
+    "right_hand": {
+      "topic": "/vectorview/iCub_fixed/r_hand",
+      "samples": 299,
+      "messages": 48,
+      "nonzero_samples": 295,
+      "duration_seconds": 11.974119919002987,
+      "max_force_newtons": 321.5875290928798
+    }
+  },
+  "capture_pipeline": {
+    "overlay_script_referenced": false
+  }
+}

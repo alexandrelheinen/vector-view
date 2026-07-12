@@ -6,7 +6,7 @@ export GZ_SIM_SYSTEM_PLUGIN_PATH="$ROOT/build:${GZ_SIM_SYSTEM_PLUGIN_PATH:-}"
 export GZ_SIM_RESOURCE_PATH="$ROOT/assets/models:${GZ_SIM_RESOURCE_PATH:-}"
 export GZ_SIM_USER_PATH="$ROOT/assets/worlds:${GZ_SIM_USER_PATH:-}"
 
-pkill -9 -x gz 2>/dev/null || true
+pkill -9 -f '^gz sim( |$)' 2>/dev/null || true
 sleep 2
 DISPLAY= gz sim -s -r --headless-rendering "$ROOT/assets/worlds/release_demo.world" > /tmp/gz_test.log 2>&1 &
 sleep 14
@@ -19,7 +19,7 @@ echo "=== R HAND ===" >> /tmp/contact_test.txt
 timeout 6 gz topic -e -t /vectorview/iCub_fixed/r_hand -n 1 >> /tmp/contact_test.txt 2>&1 || true
 python3 "$ROOT/scripts/save_camera_frame.py" --output /tmp/contact_capture.png --timeout 15
 wait "$ANIM_PID" || true
-pkill -9 -x gz 2>/dev/null || true
+pkill -9 -f '^gz sim( |$)' 2>/dev/null || true
 echo "=== COLLISIONS ==="
 grep 'name:' /tmp/contact_test.txt | sort -u
 python3 - <<'PY'

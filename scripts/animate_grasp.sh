@@ -123,7 +123,7 @@ animate_pose 2.5 \
   "/grasp_demo/r_wrist_pitch,${REACH_WY},${PRESS_WY}"
 
 echo "Grasp demo: hold contact (force arrows visible)"
-hold_pose 5.0 \
+hold_pose 5.0 0.1 \
   "/grasp_demo/l_shoulder_pitch,${PRESS_SP}" \
   "/grasp_demo/l_shoulder_roll,${PRESS_SR}" \
   "/grasp_demo/l_shoulder_yaw,0.12" \

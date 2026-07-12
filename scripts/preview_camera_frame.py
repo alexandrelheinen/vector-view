@@ -25,7 +25,11 @@ def main() -> None:
     env["GZ_SIM_RESOURCE_PATH"] = f"{root / 'assets/models'}:{env.get('GZ_SIM_RESOURCE_PATH', '')}"
     env["GZ_SIM_USER_PATH"] = f"{root / 'assets/worlds'}:{env.get('GZ_SIM_USER_PATH', '')}"
 
-    subprocess.run(["pkill", "-9", "-x", "gz"], check=False, capture_output=True)
+    subprocess.run(
+        ["pkill", "-9", "-f", r"^gz sim( |$)"],
+        check=False,
+        capture_output=True,
+    )
     time.sleep(1)
 
     world = root / args.world
@@ -60,7 +64,11 @@ def main() -> None:
     except subprocess.TimeoutExpired:
         anim.kill()
     proc.kill()
-    subprocess.run(["pkill", "-9", "-x", "gz"], check=False, capture_output=True)
+    subprocess.run(
+        ["pkill", "-9", "-f", r"^gz sim( |$)"],
+        check=False,
+        capture_output=True,
+    )
     print(f"saved {out}")
 
 

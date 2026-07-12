@@ -49,7 +49,8 @@ class VectorView : public gz::sim::System,
   gz::sim::Entity modelEntity{gz::sim::kNullEntity};
   gz::sim::Entity linkEntity{gz::sim::kNullEntity};
   gz::sim::Entity arrowShaftEntity{gz::sim::kNullEntity};
-  gz::sim::Entity arrowHeadEntity{gz::sim::kNullEntity};
+  gz::sim::Entity arrowHeadUpperEntity{gz::sim::kNullEntity};
+  gz::sim::Entity arrowHeadLowerEntity{gz::sim::kNullEntity};
   gz::transport::Node node;
   gz::math::Pose3d linkWorldPose;
   std::string contactTopic;
