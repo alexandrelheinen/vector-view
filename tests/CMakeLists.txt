@@ -30,3 +30,7 @@ add_test(
 add_test(
   NAME GraspController
   COMMAND python3 ${PROJECT_SOURCE_DIR}/tests/test_grasp_controller.py)
+
+add_test(
+  NAME ReleaseVideo
+  COMMAND python3 ${PROJECT_SOURCE_DIR}/tests/test_release_video.py)

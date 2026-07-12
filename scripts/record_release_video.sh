@@ -92,17 +92,24 @@ gz service -s "$RECORD_TOPIC" \
   --timeout 30000 \
   --req "stop: true"
 
+REPORT="${OUTPUT%.*}-report.json"
+
 # Keep gz sim alive while the recorder finalizes the MP4 on disk.
 for _ in $(seq 1 90); do
   if [ -f "$OUTPUT" ] && [ -s "$OUTPUT" ]; then
-    echo "Video saved: $OUTPUT ($(du -h "$OUTPUT" | awk '{print $1}'))"
-    trap - EXIT
-    stop_sim
-    exit 0
+    break
   fi
   sleep 1
 done
 
-echo "error: video file was not created at $OUTPUT" >&2
-tail -n 80 "$SIM_LOG" >&2 || true
-exit 1
+if [ ! -f "$OUTPUT" ] || [ ! -s "$OUTPUT" ]; then
+  echo "error: video file was not created at $OUTPUT" >&2
+  tail -n 80 "$SIM_LOG" >&2 || true
+  exit 1
+fi
+
+echo "Video saved: $OUTPUT ($(du -h "$OUTPUT" | awk '{print $1}'))"
+python3 "$ROOT/scripts/verify_release_video.py" "$OUTPUT" --report "$REPORT"
+
+trap - EXIT
+stop_sim

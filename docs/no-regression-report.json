@@ -50,39 +50,39 @@
       "upper_box_contact": true,
       "position_m": {
         "x": 0.2,
-        "y": 0.1897755039725859,
-        "z": 0.4736000310575163
+        "y": 0.18977543204212474,
+        "z": 0.47360023433097104
       },
-      "message_bytes": 1900,
-      "sha256": "f79340bcc4f8f0d9454374d7f258ba352a71d66475631ef727320a20a6d18981"
+      "message_bytes": 1902,
+      "sha256": "3f67671d3a1c034d6a1cc27a35200aa06a0ff0f240cf178e8eea097614847047"
     },
     "right_hand": {
       "upper_box_contact": true,
       "position_m": {
         "x": 0.2,
-        "y": -0.1904542911133771,
-        "z": 0.47370784060806914
+        "y": -0.19045443872560866,
+        "z": 0.47370674756292297
       },
-      "message_bytes": 1904,
-      "sha256": "6f8823bd30105afd3365958b5d1f2b75594c3362050f530fd950dac480537077"
+      "message_bytes": 1907,
+      "sha256": "b0f6a93acd28228d03a1191d67ee435dd704ee71ff1d27c0bf3f9a7a1e0c1a32"
     }
   },
   "comparison_frame": {
     "width": 1280,
     "height": 720,
-    "sha256": "0d638c77855f40a86c6804d1aeb846f5ce44c100222692b64ee5a66609acfb92",
+    "sha256": "dc02b5c6d3c6bca988392d4fd9971deded6da6da5f9d486487190490c8b133bd",
     "foreground_bounds": {
-      "x_min": 242,
-      "x_max": 878,
-      "y_min": 116,
-      "y_max": 693
+      "x_min": 298,
+      "x_max": 817,
+      "y_min": 84,
+      "y_max": 551
     },
     "red_overlay_pixels": 0
   },
   "arrow_frame": {
     "width": 1280,
     "height": 720,
-    "sha256": "e76d5337aca7ce6e560d00d1b4fb54f7d40572a7ab0e689a00710576d71bf372",
+    "sha256": "3387d23cba0866e274bf2f725cbcda7be21bfdebedcd9ced3c614b76451a32f0",
     "foreground_bounds": {
       "x_min": 487,
       "x_max": 749,
@@ -90,21 +90,21 @@
       "y_max": 710
     },
     "red_overlay_pixels": 0,
-    "blue_pixels": 1397,
+    "blue_pixels": 1396,
     "separated_arrow_regions": [
       {
         "x_min": 610,
         "x_max": 636,
         "y_min": 367,
         "y_max": 413,
-        "pixels": 484
+        "pixels": 485
       },
       {
         "x_min": 664,
         "x_max": 726,
         "y_min": 345,
         "y_max": 386,
-        "pixels": 871
+        "pixels": 869
       }
     ]
   },
@@ -113,16 +113,16 @@
       "topic": "/vectorview/iCub_fixed/l_hand",
       "samples": 300,
       "messages": 47,
-      "nonzero_samples": 293,
-      "duration_seconds": 11.996734423999442,
+      "nonzero_samples": 295,
+      "duration_seconds": 11.991429748013616,
       "max_force_newtons": 353.04434957353016
     },
     "right_hand": {
       "topic": "/vectorview/iCub_fixed/r_hand",
       "samples": 300,
-      "messages": 47,
-      "nonzero_samples": 293,
-      "duration_seconds": 11.992058480012929,
+      "messages": 48,
+      "nonzero_samples": 295,
+      "duration_seconds": 11.989718780998373,
       "max_force_newtons": 321.5875290928798
     }
   },
