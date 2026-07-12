@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Unit tests for golden trajectory generation (no Gazebo required)."""
+"""Unit tests for golden trajectory generation and CoDyCo log import."""
 
 from __future__ import annotations
 
@@ -11,7 +11,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
+from codyco_log_import import build_golden_from_codyco_log  # noqa: E402
 from trajectory_lib import (  # noqa: E402
+    ARM_JOINTS,
     build_golden_document,
     joints_at_time,
     load_golden,
@@ -49,6 +51,54 @@ class TrajectoryLibTest(unittest.TestCase):
         first = build_golden_document(source="test", source_detail="test")
         second = build_golden_document(source="test", source_detail="test")
         self.assertEqual(sha256_document(first), sha256_document(second))
+
+
+class CodycoLogImportTest(unittest.TestCase):
+    def test_import_codyco_v1_matches_hold_pose(self) -> None:
+        path = ROOT / "tests/fixtures/stage_test_tasks.codyco-log.json"
+        document = build_golden_from_codyco_log(path, rate_hz=20.0)
+        self.assertEqual(document["source"], "codyco-log")
+        joints = joints_at_time(document, 10.0)
+        press = press_arm_pose()
+        for joint in ARM_JOINTS:
+            self.assertAlmostEqual(joints[joint], press[joint], places=2)
+
+    def test_import_jsonl(self) -> None:
+        path = ROOT / "tests/fixtures/stage_test_tasks.frames.jsonl"
+        document = build_golden_from_codyco_log(path, rate_hz=20.0)
+        self.assertGreater(len(document["frames"]), 20)
+
+    def test_import_csv(self) -> None:
+        path = ROOT / "tests/fixtures/stage_test_tasks.frames.csv"
+        document = build_golden_from_codyco_log(path, rate_hz=20.0)
+        self.assertGreater(len(document["frames"]), 20)
+
+    def test_record_script_round_trip(self) -> None:
+        bootstrap = ROOT / "assets/trajectories/stage_test_tasks.golden.json"
+        output = ROOT / "build/test_imported.golden.json"
+        output.parent.mkdir(parents=True, exist_ok=True)
+
+        import subprocess
+
+        subprocess.run(
+            [
+                "python3",
+                str(ROOT / "scripts/record_golden_trajectory.py"),
+                "--source",
+                "codyco-log",
+                "--codyco-log",
+                str(ROOT / "tests/fixtures/stage_test_tasks.codyco-log.json"),
+                "--output",
+                str(output),
+            ],
+            check=True,
+            cwd=ROOT,
+        )
+        imported = load_golden(output)
+        expected = joints_at_time(load_golden(bootstrap), 10.0)
+        actual = joints_at_time(imported, 10.0)
+        for joint in ARM_JOINTS:
+            self.assertAlmostEqual(actual[joint], expected[joint], places=2)
 
 
 if __name__ == "__main__":

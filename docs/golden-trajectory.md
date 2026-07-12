@@ -35,14 +35,15 @@ When a canonical CoDyCo `StageTestTasks` recording is available from the legacy
 stack, replace the bootstrap file:
 
 ```bash
-# future: import a CoDyCo joint-command log
 python3 scripts/record_golden_trajectory.py \
   --source codyco-log \
-  --codyco-log /path/to/stage_test_tasks.log \
+  --codyco-log /path/to/stage_test_tasks.codyco-log.json \
+  --rate-hz 20 \
   --output assets/trajectories/stage_test_tasks.golden.json
 ```
 
-Until the `codyco-log` importer exists, regenerate the bootstrap file with:
+See [CoDyCo log format](codyco-log-format.md) and
+[legacy recording procedure](../scripts/legacy/README.md).
 
 ```bash
 python3 scripts/record_golden_trajectory.py
@@ -73,8 +74,9 @@ and contact evidence at a fixed hold-phase time, and checks motion parity in
 
 1. Run Gazebo Classic + `ISIRWholeBodyController --sequence StageTestTasks` in
    the pinned `codyco-superbuild` container.
-2. Log every joint position command sent to the iCub control board at ≥20 Hz.
-3. Export the log in the JSON frame format above with `source: codyco-log`.
+2. Record arm joint commands with
+   `scripts/legacy/record_stage_test_tasks_yarp.py` (≥20 Hz recommended).
+3. Import the log with `record_golden_trajectory.py --source codyco-log`.
 4. Commit the replacement golden file and update `source_detail` with the
    container image digest and recording date.
 5. Re-run `scripts/capture_comparison.sh`; the visual/contact requirements must
