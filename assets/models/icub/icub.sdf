@@ -1327,10 +1327,21 @@
           <emissive>0 0.15 1 1</emissive>
         </material>
       </visual>
-      <visual name='vectorview_arrow_head'>
+      <visual name='vectorview_arrow_head_upper'>
         <pose>0 0 -10 0 0 0</pose>
         <geometry>
-          <box><size>0.04 0.04 0.04</size></box>
+          <box><size>0.08 0.02 0.02</size></box>
+        </geometry>
+        <material>
+          <ambient>0 0 1 1</ambient>
+          <diffuse>0 0 1 1</diffuse>
+          <emissive>0 0.15 1 1</emissive>
+        </material>
+      </visual>
+      <visual name='vectorview_arrow_head_lower'>
+        <pose>0 0 -10 0 0 0</pose>
+        <geometry>
+          <box><size>0.08 0.02 0.02</size></box>
         </geometry>
         <material>
           <ambient>0 0 1 1</ambient>
@@ -1887,10 +1898,21 @@
           <emissive>0 0.15 1 1</emissive>
         </material>
       </visual>
-      <visual name='vectorview_arrow_head'>
+      <visual name='vectorview_arrow_head_upper'>
         <pose>0 0 -10 0 0 0</pose>
         <geometry>
-          <box><size>0.04 0.04 0.04</size></box>
+          <box><size>0.08 0.02 0.02</size></box>
+        </geometry>
+        <material>
+          <ambient>0 0 1 1</ambient>
+          <diffuse>0 0 1 1</diffuse>
+          <emissive>0 0.15 1 1</emissive>
+        </material>
+      </visual>
+      <visual name='vectorview_arrow_head_lower'>
+        <pose>0 0 -10 0 0 0</pose>
+        <geometry>
+          <box><size>0.08 0.02 0.02</size></box>
         </geometry>
         <material>
           <ambient>0 0 1 1</ambient>

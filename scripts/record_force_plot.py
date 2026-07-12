@@ -5,52 +5,23 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
-import subprocess
+import threading
 import time
 from pathlib import Path
 
-
-def gz_echo(topic: str, count: int) -> str:
-    proc = subprocess.run(
-        ["timeout", "2", "gz", "topic", "-e", "-t", topic, "-n", str(count)],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    return proc.stdout
+from gz.msgs10.contacts_pb2 import Contacts
+from gz.transport13 import Node
 
 
-def parse_forces(text: str) -> list[tuple[float, float]]:
-    samples: list[tuple[float, float]] = []
-    blocks = re.split(r"\n(?=header \{)", text)
-
-    force_pattern = re.compile(
-        r"body_1_wrench\s*\{.*?force\s*\{([^}]*)\}",
-        flags=re.S,
-    )
-
-    for block in blocks:
-        sec_match = re.search(r"sec:\s*([0-9]+)", block)
-        nsec_match = re.search(r"nsec:\s*([0-9]+)", block)
-        if not sec_match:
-            continue
-        current_time = float(sec_match.group(1))
-        if nsec_match:
-            current_time += float(nsec_match.group(1)) * 1e-9
-
-        peak = 0.0
-        for force_block in force_pattern.findall(block):
-            fx = float(m.group(1)) if (m := re.search(r"x:\s*([-0-9.eE]+)", force_block)) else 0.0
-            fy = float(m.group(1)) if (m := re.search(r"y:\s*([-0-9.eE]+)", force_block)) else 0.0
-            fz = float(m.group(1)) if (m := re.search(r"z:\s*([-0-9.eE]+)", force_block)) else 0.0
-            magnitude = (fx * fx + fy * fy + fz * fz) ** 0.5
+def force_magnitude(message: Contacts) -> float:
+    """Return the largest body-1 force magnitude in one contact message."""
+    peak = 0.0
+    for contact in message.contact:
+        for wrench in contact.wrench:
+            force = wrench.body_1_wrench.force
+            magnitude = (force.x * force.x + force.y * force.y + force.z * force.z) ** 0.5
             peak = max(peak, magnitude)
-
-        if peak > 1e-3:
-            samples.append((current_time, peak))
-
-    return samples
+    return peak
 
 
 def simple_filter(values: list[float], alpha: float = 0.2) -> list[float]:
@@ -91,6 +62,14 @@ def draw_plot(label: str, times: list[float], raw: list[float], filtered: list[f
         y = y1 - (value / max_force) * plot_height
         return x, y
 
+    for fraction in (0.0, 0.5, 1.0):
+        x = x0 + fraction * plot_width
+        y = y1 - fraction * plot_height
+        draw.line((x, y0, x, y1), fill="#e6e6e6", width=1)
+        draw.line((x0, y, x1, y), fill="#e6e6e6", width=1)
+        draw.text((x - 8, y1 + 4), f"{fraction * max_time:.1f}", fill="#555555")
+        draw.text((2, y - 5), f"{fraction * max_force:.0f}", fill="#555555")
+
     if len(times) >= 2:
         raw_points = [to_xy(t, v) for t, v in zip(times, raw)]
         filt_points = [to_xy(t, v) for t, v in zip(times, filtered)]
@@ -114,39 +93,52 @@ def main() -> None:
     parser.add_argument("--seconds", type=float, default=8.0)
     args = parser.parse_args()
 
-    chunks: list[str] = []
-    end = time.time() + args.seconds
-    misses = 0
-    while time.time() < end:
-        chunk = gz_echo(args.topic, 1)
-        if chunk.strip():
-            chunks.append(chunk)
-            misses = 0
-        else:
-            misses += 1
-            if misses >= 5 and not chunks:
-                break
-        time.sleep(0.08)
+    node = Node()
+    lock = threading.Lock()
+    latest_force = 0.0
+    messages = 0
 
-    samples = parse_forces("\n".join(chunks))
-    if len(samples) < 2:
-        # Emit a minimal placeholder plot instead of aborting capture.
-        output = Path(args.output)
-        draw_plot(args.label, [0.0, 1.0], [0.0, 0.0], [0.0, 0.0], output)
-        output.with_suffix(".json").write_text(
-            json.dumps({"topic": args.topic, "samples": len(samples), "warning": "no data"}, indent=2)
+    def on_contacts(message: Contacts) -> None:
+        nonlocal latest_force, messages
+        with lock:
+            latest_force = force_magnitude(message)
+            messages += 1
+
+    if not node.subscribe(Contacts, args.topic, on_contacts):
+        raise SystemExit(f"failed to subscribe to {args.topic}")
+
+    times: list[float] = []
+    raw: list[float] = []
+    start = time.monotonic()
+    while (elapsed := time.monotonic() - start) < args.seconds:
+        with lock:
+            magnitude = latest_force
+        times.append(elapsed)
+        raw.append(magnitude)
+        time.sleep(1.0 / 25.0)
+
+    nonzero_samples = sum(value > 1e-3 for value in raw)
+    if messages == 0 or nonzero_samples < 2:
+        raise SystemExit(
+            f"no real force trace on {args.topic}: "
+            f"messages={messages}, nonzero_samples={nonzero_samples}"
         )
-        return
 
-    samples.sort(key=lambda sample: sample[0])
-    t0 = samples[0][0]
-    times = [sample[0] - t0 for sample in samples]
-    raw = [sample[1] for sample in samples]
     filtered = simple_filter(raw)
     output = Path(args.output)
     draw_plot(args.label, times, raw, filtered, output)
     output.with_suffix(".json").write_text(
-        json.dumps({"topic": args.topic, "samples": len(samples)}, indent=2)
+        json.dumps(
+            {
+                "topic": args.topic,
+                "samples": len(raw),
+                "messages": messages,
+                "nonzero_samples": nonzero_samples,
+                "duration_seconds": times[-1],
+                "max_force_newtons": max(raw),
+            },
+            indent=2,
+        )
     )
 
 

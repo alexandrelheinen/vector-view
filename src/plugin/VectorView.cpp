@@ -87,6 +87,25 @@ gz::math::Quaterniond RotationFromXAxis(const gz::math::Vector3d& direction) {
   return gz::math::Quaterniond(axis / sinAngle, std::atan2(sinAngle, cosAngle));
 }
 
+void SetSegmentVisual(gz::sim::EntityComponentManager& ecm,
+                      const gz::sim::Entity visual,
+                      const gz::math::Vector3d& start,
+                      const gz::math::Vector3d& end,
+                      const double width) {
+  if (visual == gz::sim::kNullEntity) {
+    return;
+  }
+  const gz::math::Vector3d delta = end - start;
+  const double length = delta.Length();
+  if (length < 1e-6) {
+    return;
+  }
+  SetBoxGeometry(ecm, visual, length, width, width);
+  SetVisualPose(
+      ecm, visual,
+      gz::math::Pose3d(0.5 * (start + end), RotationFromXAxis(delta)));
+}
+
 }  // namespace
 
 VectorView::VectorView() = default;
@@ -125,8 +144,10 @@ void VectorView::Configure(const gz::sim::Entity& entity,
     this->linkEntity = model.LinkByName(ecm, link_name);
     this->arrowShaftEntity =
         FindChildVisual(ecm, this->linkEntity, "vectorview_arrow_shaft");
-    this->arrowHeadEntity =
-        FindChildVisual(ecm, this->linkEntity, "vectorview_arrow_head");
+    this->arrowHeadUpperEntity =
+        FindChildVisual(ecm, this->linkEntity, "vectorview_arrow_head_upper");
+    this->arrowHeadLowerEntity =
+        FindChildVisual(ecm, this->linkEntity, "vectorview_arrow_head_lower");
     if (this->arrowShaftEntity == gz::sim::kNullEntity) {
       gzwarn << "[VectorView] Missing vectorview_arrow_shaft visual on link "
              << link_name << "\n";
@@ -144,8 +165,9 @@ void VectorView::Configure(const gz::sim::Entity& entity,
   if (sdf->HasElement("marker_service")) {
     this->markerServices.push_back(sdf->Get<std::string>("marker_service"));
   } else {
-    this->markerServices.push_back("/release_camera/marker");
-    this->markerServices.push_back("/sensors/marker");
+    // MarkerManager consumes /marker in the interactive GUI. Do not submit
+    // marker lines to headless camera services: they use a different scene
+    // frame and can render detached from the hand-linked geometry below.
     this->markerServices.push_back("/marker");
   }
 
@@ -233,8 +255,11 @@ void VectorView::HideArrowVisuals(gz::sim::EntityComponentManager& ecm) const {
   if (this->arrowShaftEntity != gz::sim::kNullEntity) {
     SetVisualPose(ecm, this->arrowShaftEntity, hidden);
   }
-  if (this->arrowHeadEntity != gz::sim::kNullEntity) {
-    SetVisualPose(ecm, this->arrowHeadEntity, hidden);
+  if (this->arrowHeadUpperEntity != gz::sim::kNullEntity) {
+    SetVisualPose(ecm, this->arrowHeadUpperEntity, hidden);
+  }
+  if (this->arrowHeadLowerEntity != gz::sim::kNullEntity) {
+    SetVisualPose(ecm, this->arrowHeadLowerEntity, hidden);
   }
 }
 
@@ -253,25 +278,36 @@ void VectorView::UpdateArrowVisuals(gz::sim::EntityComponentManager& ecm,
   }
 
   const gz::math::Vector3d direction = local_force.Normalized();
-  const gz::math::Quaterniond rotation = RotationFromXAxis(direction);
   const double shaftLength = std::min(std::max(length, 0.05), MAX_GEOMETRY_ARROW_LENGTH);
-  const double headSize = std::max(0.03, 0.2 * shaftLength);
-  const gz::math::Pose3d shaftPose(0.5 * shaftLength * direction, rotation);
-  const gz::math::Pose3d headPose(shaftLength * direction, rotation);
+  constexpr double headLength = 0.08;
+  constexpr double headWidth = 0.04;
+  constexpr double lineWidth = 0.02;
 
-  SetBoxGeometry(ecm, this->arrowShaftEntity, shaftLength, 0.02, 0.02);
-  SetVisualPose(ecm, this->arrowShaftEntity, shaftPose);
-  if (this->arrowHeadEntity != gz::sim::kNullEntity) {
-    SetBoxGeometry(ecm, this->arrowHeadEntity, headSize, headSize, headSize);
-    SetVisualPose(ecm, this->arrowHeadEntity, headPose);
+  // Anchor the arrow tip at the hand (the point of force application).
+  // The shaft extends away from the hand, so the visual stays outside the
+  // contacted object instead of disappearing through its geometry.
+  const gz::math::Vector3d tip = gz::math::Vector3d::Zero;
+  const gz::math::Vector3d shaftStart = -shaftLength * direction;
+
+  gz::math::Vector3d perpendicular = direction.Cross(gz::math::Vector3d::UnitZ);
+  if (perpendicular.Length() < 1e-6) {
+    perpendicular = direction.Cross(gz::math::Vector3d::UnitY);
   }
+  perpendicular.Normalize();
+  const gz::math::Vector3d headBase = -headLength * direction;
+  const gz::math::Vector3d upper = headBase + headWidth * perpendicular;
+  const gz::math::Vector3d lower = headBase - headWidth * perpendicular;
+
+  SetSegmentVisual(ecm, this->arrowShaftEntity, shaftStart, tip, lineWidth);
+  SetSegmentVisual(ecm, this->arrowHeadUpperEntity, upper, tip, lineWidth);
+  SetSegmentVisual(ecm, this->arrowHeadLowerEntity, lower, tip, lineWidth);
 }
 
 void VectorView::PublishArrow(const gz::math::Vector3d& force) {
-  const gz::math::Vector3d begin = gz::math::Vector3d::Zero;
   const gz::math::Vector3d local_force =
       this->linkWorldPose.Rot().RotateVectorReverse(force);
-  const gz::math::Vector3d end = begin + FORCE_SCALE * local_force;
+  const gz::math::Vector3d end = gz::math::Vector3d::Zero;
+  const gz::math::Vector3d begin = end - FORCE_SCALE * local_force;
 
   const auto to_world = [this](const gz::math::Vector3d& local_point) {
     return this->linkWorldPose.Pos() + this->linkWorldPose.Rot().RotateVector(local_point);

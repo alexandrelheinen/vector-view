@@ -11,7 +11,7 @@
 #define ARROW_LENGTH .05
 
 // Headless geometry arrows clamp shaft length while preserving force direction.
-#define MAX_GEOMETRY_ARROW_LENGTH 0.35
+#define MAX_GEOMETRY_ARROW_LENGTH 0.22
 
 // Contact sensor and plot update rate (Hz).
 #define RATE 25

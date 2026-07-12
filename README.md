@@ -249,6 +249,30 @@ vector-gui l_hand iCub default
 
 Pass a link name (`l_hand`), not the sensor name (`l_hand_contact`). Short names map to `/vectorview/iCub_fixed/l_hand`.
 
+### Release-demo no-regression proof
+
+```bash
+cmake --build build
+scripts/capture_comparison.sh
+```
+
+The command fails unless all of these are true in the same live run:
+
+- both hand contact topics name `object::main::collision`;
+- the unmodified `/release_camera` frame contains two separated blue arrows;
+- the full robot and both boxes fit inside the camera frame;
+- both plots contain sustained, non-zero force samples;
+- the raw frame contains no red overlay pixels.
+
+Successful runs update:
+
+- `docs/images/execution_comparison.png` — reference and current output;
+- `docs/images/execution_current_raw.png` — unmodified camera frame;
+- `docs/no-regression-report.json` — machine-readable assertions and measurements.
+
+`scripts/verify_no_regression.py` performs the checks before the comparison
+layout is generated. The capture script does not add arrows to images.
+
 ## Topic paths
 
 Topic and collision names are built by `vectorview::TopicPath` in `src/common/TopicPath.cpp`.
