@@ -261,11 +261,15 @@ scripts/capture_comparison.sh
 
 The command fails unless all of these are true in the same live run:
 
+- grasp motion is replayed from `assets/trajectories/stage_test_tasks.golden.json`;
 - both hand contact topics name `object::main::collision`;
 - the unmodified side `/release_camera` frame contains the full robot and boxes;
 - the unmodified `/arrow_camera` frame contains two separated blue arrows;
 - both plots contain sustained, non-zero force samples;
 - the raw frame contains no red overlay pixels.
+
+See [golden trajectory replay](docs/golden-trajectory.md) for the motion oracle
+format and how to replace the bootstrap file with a canonical CoDyCo recording.
 
 Successful runs update:
 

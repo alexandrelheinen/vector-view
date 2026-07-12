@@ -22,3 +22,7 @@ add_executable(test_force_filter
 target_link_libraries(test_force_filter vector_view_filters dspfilters)
 
 add_test(NAME ForceFilter COMMAND $<TARGET_FILE:test_force_filter>)
+
+add_test(
+  NAME TrajectoryLib
+  COMMAND python3 ${PROJECT_SOURCE_DIR}/tests/test_trajectory_lib.py)

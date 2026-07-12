@@ -24,6 +24,14 @@ not merely a similar-looking image.
 | D2 | Each plot shows original and filtered force in newtons over time, including contact transients. | At least 200 samples, 20 messages, 10 non-zero samples, 10 seconds, and a peak above 1 N per hand. |
 | D3 | Camera frames, contacts, and plots come from one simulation execution. | One `capture_comparison.sh` process owns the run and invokes the verifier before layout. |
 
+## Motion requirements
+
+| ID | Requirement | Acceptance evidence |
+| --- | --- | --- |
+| M1 | Grasp motion is driven by the committed golden trajectory file. | `assets/trajectories/stage_test_tasks.golden.json` SHA-256 in `no-regression-report.json`. |
+| M2 | The capture pipeline replays that file; it does not run ad-hoc shell joint tweens. | `capture_comparison.sh` invokes `replay_golden_trajectory.py`. |
+| M3 | Joint commands at the capture instant match the golden frame within tolerance. | `motion.joint_checks` in the report; default tolerance 0.02 rad. |
+
 ## Integrity requirements
 
 | ID | Requirement | Acceptance evidence |
