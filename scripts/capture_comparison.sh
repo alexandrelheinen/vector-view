@@ -11,6 +11,7 @@ SIM_WARMUP_SEC=12
 CAPTURE_AT_SEC=10
 PLOT_SECONDS=12
 RAW_PROOF="$ROOT/docs/images/execution_current_raw.png"
+ARROW_PROOF="$ROOT/docs/images/execution_arrows_raw.png"
 REPORT="$ROOT/docs/no-regression-report.json"
 
 export VECTOR_VIEW="$ROOT"
@@ -57,7 +58,12 @@ timeout 5 gz topic -e -t /vectorview/iCub_fixed/l_hand -n 1 \
   >"$WORKDIR/l_hand_contact.txt" 2>&1 &
 CONTACT_L=$!
 python3 "$ROOT/scripts/save_camera_frame.py" \
-  --output "$WORKDIR/gazebo_raw.png" --timeout 15
+  --topic /release_camera --output "$WORKDIR/gazebo_raw.png" --timeout 15 &
+FRAME_SIDE=$!
+python3 "$ROOT/scripts/save_camera_frame.py" \
+  --topic /arrow_camera --output "$WORKDIR/arrows_raw.png" --timeout 15 &
+FRAME_ARROWS=$!
+wait "$FRAME_SIDE" "$FRAME_ARROWS"
 wait "$CONTACT_R" "$CONTACT_L"
 
 wait "$PLOT_R" "$PLOT_L"
@@ -68,7 +74,8 @@ cleanup_gz
 # This verifier runs on the unmodified /release_camera frame and raw topic
 # evidence, before any layout work. It is the executable no-regression proof.
 python3 "$ROOT/scripts/verify_no_regression.py" \
-  --frame "$WORKDIR/gazebo_raw.png" \
+  --comparison-frame "$WORKDIR/gazebo_raw.png" \
+  --arrow-frame "$WORKDIR/arrows_raw.png" \
   --left-contact "$WORKDIR/l_hand_contact.txt" \
   --right-contact "$WORKDIR/r_hand_contact.txt" \
   --left-plot "$WORKDIR/l_hand_plot.json" \
@@ -76,13 +83,19 @@ python3 "$ROOT/scripts/verify_no_regression.py" \
   --output "$REPORT"
 
 cp "$WORKDIR/gazebo_raw.png" "$RAW_PROOF"
+cp "$WORKDIR/arrows_raw.png" "$ARROW_PROOF"
 
 # Comparable layout with strict separation: the unobstructed camera view is
-# above, and the two plots are below it. No window covers the robot or boxes,
-# and no simulation content is painted onto the camera frame.
-convert "$WORKDIR/gazebo_raw.png" -crop 600x600+340+120 +repage \
-  -resize 500x500 \
-  -background '#d0d0d0' -gravity center -extent 1280x500 \
+# above, and the two plots are below it. The side view matches the reference;
+# the front-oblique view proves that two distinct arrows exist. No window
+# covers either camera frame, and no simulation content is painted onto them.
+convert "$WORKDIR/gazebo_raw.png" -crop 700x650+200+40 +repage \
+  -resize 520x480 -background '#d0d0d0' -gravity center \
+  -extent 640x500 "$WORKDIR/side_view.png"
+convert "$WORKDIR/arrows_raw.png" -crop 600x600+340+120 +repage \
+  -resize 480x480 -background '#d0d0d0' -gravity center \
+  -extent 640x500 "$WORKDIR/arrow_view.png"
+convert "$WORKDIR/side_view.png" "$WORKDIR/arrow_view.png" +append \
   "$WORKDIR/gazebo_view.png"
 convert "$WORKDIR/r_hand_plot.png" -resize 340x210 "$WORKDIR/r_plot_view.png"
 convert "$WORKDIR/l_hand_plot.png" -resize 340x210 "$WORKDIR/l_plot_view.png"
@@ -90,9 +103,9 @@ convert -size 1280x720 xc:white "$WORKDIR/gazebo_view.png" \
   -gravity northwest -geometry +0+0 -composite "$WORKDIR/r_plot_view.png" \
   -gravity northwest -geometry +290+505 -composite "$WORKDIR/l_plot_view.png" \
   -gravity northwest -geometry +650+505 -composite \
+  -fill '#202020' -pointsize 16 -annotate +20+24 "Reference-matched side view" \
+  -fill '#202020' -pointsize 16 -annotate +660+24 "Two-hand arrow evidence view" \
   -stroke '#777777' -strokewidth 2 -draw 'line 0,502 1280,502' \
-  -fill '#202020' -pointsize 18 -annotate +840+20 \
-  "Unobstructed /release_camera frame" \
   "$WORKDIR/current_view.png"
 convert "$WORKDIR/current_view.png" -gravity north -background white -splice 0x40 \
   -fill black -pointsize 28 -annotate +20+8 "v2.0+ (Gazebo Harmonic)" "$WORKDIR/current.png"
@@ -104,6 +117,7 @@ convert "$WORKDIR/legacy.png" "$WORKDIR/current.png" +append -background white \
 
 echo "Comparison saved to $OUTPUT"
 echo "Raw camera proof saved to $RAW_PROOF"
+echo "Raw arrow proof saved to $ARROW_PROOF"
 echo "No-regression report saved to $REPORT"
 ls -lh "$OUTPUT"
 cat "$REPORT"
