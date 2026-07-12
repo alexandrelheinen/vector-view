@@ -6,7 +6,6 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUTPUT="${1:-$ROOT/docs/images/execution_comparison.png}"
 LEGACY="$ROOT/docs/images/execution_example.png"
-GOLDEN_TRAJECTORY="${GOLDEN_TRAJECTORY:-$ROOT/assets/trajectories/stage_test_tasks.golden.json}"
 WORKDIR="$(mktemp -d)"
 SIM_WARMUP_SEC=12
 CAPTURE_AT_SEC=10
@@ -44,11 +43,10 @@ python3 "$ROOT/scripts/record_force_plot.py" \
 PLOT_L=$!
 
 sleep 0.5
-python3 "$ROOT/scripts/replay_golden_trajectory.py" \
-  --trajectory "$GOLDEN_TRAJECTORY" \
+python3 "$ROOT/scripts/grasp_task_controller.py" \
   --snapshot-at "$CAPTURE_AT_SEC" \
   --snapshot-file "$WORKDIR/motion_snapshot.json" \
-  >/tmp/capture_replay.log 2>&1 &
+  >/tmp/capture_controller.log 2>&1 &
 ANIM_PID=$!
 
 sleep "$CAPTURE_AT_SEC"
@@ -85,7 +83,6 @@ python3 "$ROOT/scripts/verify_no_regression.py" \
   --right-contact "$WORKDIR/r_hand_contact.txt" \
   --left-plot "$WORKDIR/l_hand_plot.json" \
   --right-plot "$WORKDIR/r_hand_plot.json" \
-  --golden-trajectory "$GOLDEN_TRAJECTORY" \
   --motion-snapshot "$WORKDIR/motion_snapshot.json" \
   --capture-time "$CAPTURE_AT_SEC" \
   --output "$REPORT"

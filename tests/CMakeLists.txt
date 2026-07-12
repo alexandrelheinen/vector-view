@@ -26,3 +26,7 @@ add_test(NAME ForceFilter COMMAND $<TARGET_FILE:test_force_filter>)
 add_test(
   NAME TrajectoryLib
   COMMAND python3 ${PROJECT_SOURCE_DIR}/tests/test_trajectory_lib.py)
+
+add_test(
+  NAME GraspController
+  COMMAND python3 ${PROJECT_SOURCE_DIR}/tests/test_grasp_controller.py)

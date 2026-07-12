@@ -1,8 +1,9 @@
-# Golden trajectory replay
+# Golden trajectory replay (optional / superseded)
 
-The release demo no longer depends on ad-hoc shell joint tweens at capture
-time. Motion is driven by a versioned **golden trajectory** file and replayed
-deterministically in Gazebo Harmonic.
+> **Note:** The release demo now uses the live controller in
+> [`modern-grasp-controller.md`](modern-grasp-controller.md). The golden
+> trajectory machinery below remains for regression experiments but is **not**
+> used by `capture_comparison.sh`.
 
 ## File format
 

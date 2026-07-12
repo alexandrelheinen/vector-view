@@ -21,84 +21,29 @@
     "I3": true
   },
   "motion": {
-    "golden_trajectory": "/workspace/assets/trajectories/stage_test_tasks.golden.json",
-    "golden_sha256": "9546a4521e73a7224c5436e5465e194e4b6cde969a2eaadfb31c26aaeb3cb3fb",
-    "source": "animate-grasp-keyframes",
+    "controller": "grasp_task_controller",
+    "phase": "HOLD",
     "capture_time_seconds": 10.0,
-    "joint_tolerance_rad": 0.02,
-    "joint_checks": {
-      "l_shoulder_pitch": {
-        "expected": -1.25,
-        "actual": -1.25,
-        "abs_error": 0.0
-      },
-      "l_shoulder_roll": {
-        "expected": 1.45,
-        "actual": 1.45,
-        "abs_error": 0.0
-      },
-      "l_shoulder_yaw": {
-        "expected": 0.12,
-        "actual": 0.12,
-        "abs_error": 0.0
-      },
-      "l_elbow": {
-        "expected": 0.55,
-        "actual": 0.55,
-        "abs_error": 0.0
-      },
-      "l_wrist_prosup": {
-        "expected": 0.0,
-        "actual": 0.0,
-        "abs_error": 0.0
-      },
-      "l_wrist_pitch": {
-        "expected": -0.35,
-        "actual": -0.35,
-        "abs_error": 0.0
-      },
-      "l_wrist_yaw": {
-        "expected": 0.698,
-        "actual": 0.698,
-        "abs_error": 0.0
-      },
-      "r_shoulder_pitch": {
-        "expected": -1.25,
-        "actual": -1.25,
-        "abs_error": 0.0
-      },
-      "r_shoulder_roll": {
-        "expected": 1.45,
-        "actual": 1.45,
-        "abs_error": 0.0
-      },
-      "r_shoulder_yaw": {
-        "expected": -0.12,
-        "actual": -0.12,
-        "abs_error": 0.0
-      },
-      "r_elbow": {
-        "expected": 0.55,
-        "actual": 0.55,
-        "abs_error": 0.0
-      },
-      "r_wrist_prosup": {
-        "expected": 0.0,
-        "actual": 0.0,
-        "abs_error": 0.0
-      },
-      "r_wrist_pitch": {
-        "expected": -0.35,
-        "actual": -0.35,
-        "abs_error": 0.0
-      },
-      "r_wrist_yaw": {
-        "expected": 0.698,
-        "actual": 0.698,
-        "abs_error": 0.0
-      }
+    "left_on_box": true,
+    "right_on_box": true,
+    "both_on_box": true,
+    "joints": {
+      "l_shoulder_pitch": -0.95,
+      "l_shoulder_roll": 1.35,
+      "l_shoulder_yaw": 0.0,
+      "l_elbow": 1.35,
+      "l_wrist_prosup": 0.0,
+      "l_wrist_pitch": -0.55,
+      "l_wrist_yaw": 0.698,
+      "r_shoulder_pitch": -0.95,
+      "r_shoulder_roll": 1.35,
+      "r_shoulder_yaw": 0.0,
+      "r_elbow": 1.35,
+      "r_wrist_prosup": 0.0,
+      "r_wrist_pitch": -0.55,
+      "r_wrist_yaw": 0.698
     },
-    "motion_snapshot_sha256": "16566460ffc53fd00db965a5c304022461f622256170cfb288e2cd482170c7b4"
+    "motion_snapshot_sha256": "452d755aebb9b4a168b0214e82e3495f9f7137d972bef734a4189883d35f6e99"
   },
   "contacts": {
     "left_hand": {
@@ -168,16 +113,16 @@
       "topic": "/vectorview/iCub_fixed/l_hand",
       "samples": 300,
       "messages": 47,
-      "nonzero_samples": 296,
-      "duration_seconds": 11.991633604018716,
+      "nonzero_samples": 293,
+      "duration_seconds": 11.996734423999442,
       "max_force_newtons": 353.04434957353016
     },
     "right_hand": {
       "topic": "/vectorview/iCub_fixed/r_hand",
       "samples": 300,
-      "messages": 48,
-      "nonzero_samples": 296,
-      "duration_seconds": 11.987744774989551,
+      "messages": 47,
+      "nonzero_samples": 293,
+      "duration_seconds": 11.992058480012929,
       "max_force_newtons": 321.5875290928798
     }
   },
