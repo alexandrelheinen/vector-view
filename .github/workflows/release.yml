@@ -18,7 +18,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y cmake g++ pkg-config qt6-base-dev libqt6opengl6-dev \
-            curl lsb-release gnupg bc
+            curl lsb-release gnupg bc ffmpeg python3-numpy python3-pil
 
       - name: Install Gazebo Harmonic
         run: |
