@@ -1,0 +1,5 @@
+[submodule ".guidelines"]
+	path = .guidelines
+	url = git@github.com:alexandrelheinen/guidelines.git
+	branch = main
+	update = merge
